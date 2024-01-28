@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyB8X-9qzjx0VUZ5XKr6cpc-TyxpDtlB-Cs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>995024296435</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>challenge.global.envawareness</string>
+	<key>PROJECT_ID</key>
+	<string>envawareness-game</string>
+	<key>STORAGE_BUCKET</key>
+	<string>envawareness-game.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:995024296435:ios:059f5db47b8e8ac406da86</string>
+</dict>
+</plist>
