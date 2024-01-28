@@ -8,7 +8,6 @@ final navigatorKey = GlobalKey<NavigatorState>();
 final appRouter = GoRouter(
   initialLocation: SplashPage.routePath,
   navigatorKey: navigatorKey,
-  debugLogDiagnostics: true,
   observers: [],
   routes: [
     GoRoute(

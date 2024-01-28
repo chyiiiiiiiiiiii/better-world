@@ -2,6 +2,7 @@ import 'package:envawareness/router/app_router.dart';
 import 'package:envawareness/widgets/connectivity_detector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -32,6 +33,8 @@ class _AppState extends State<App> {
         routerConfig: appRouter,
         debugShowCheckedModeBanner: false,
         title: 'Envawareness',
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         builder: (
           BuildContext context,
           Widget? child,
