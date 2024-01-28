@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "995024296435",
+    "project_id": "envawareness-game",
+    "storage_bucket": "envawareness-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995024296435:android:b7597cf160ce20b006da86",
+        "android_client_info": {
+          "package_name": "challenge.global.envawareness"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD21gHg5t3UAp3TlA-wgORw39MxVBMacIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
