@@ -3,6 +3,7 @@ import 'package:envawareness/widgets/connectivity_detector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -19,6 +20,42 @@ class _AppState extends State<App> {
     init();
   }
 
+  bool _isDarkTheme = false;
+
+  void _toggleTheme() {
+    setState(() {
+      _isDarkTheme = !_isDarkTheme;
+    });
+  }
+
+  // This widget is the root of your application.
+  ThemeData _buildTheme(Brightness brightness) {
+    var baseTheme = ThemeData(
+      brightness: brightness,
+      useMaterial3: true,
+    );
+    return baseTheme.copyWith(
+      scaffoldBackgroundColor: brightness == Brightness.light
+          ? const Color(0xfff6f8e7)
+          : const Color(0xff1a1a1a),
+      textTheme:
+          GoogleFonts.mPlusRounded1cTextTheme(baseTheme.textTheme.copyWith(
+        headlineLarge: GoogleFonts.mPlusRounded1c(
+          textStyle: baseTheme.textTheme.headlineLarge,
+          fontWeight: FontWeight.w800,
+        ),
+        headlineMedium: GoogleFonts.mPlusRounded1c(
+          textStyle: baseTheme.textTheme.headlineMedium,
+          fontWeight: FontWeight.w800,
+        ),
+        headlineSmall: GoogleFonts.mPlusRounded1c(
+          textStyle: baseTheme.textTheme.headlineSmall,
+          fontWeight: FontWeight.w800,
+        ),
+      )),
+    );
+  }
+
   void init() {
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -31,6 +68,9 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
         routerConfig: appRouter,
+        theme: _isDarkTheme
+            ? _buildTheme(Brightness.dark)
+            : _buildTheme(Brightness.light),
         debugShowCheckedModeBanner: false,
         title: 'Envawareness',
         localizationsDelegates: AppLocalizations.localizationsDelegates,
