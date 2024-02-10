@@ -1,3 +1,8 @@
+import 'package:envawareness/features/home/home_screen.dart';
+import 'package:envawareness/features/home/particle.dart';
+import 'package:envawareness/features/home/trash_monster.dart';
+import 'package:envawareness/zdogs/dash_zdog.dart';
+import 'package:envawareness/zdogs/earth_zdog.dart';
 import 'package:flutter/material.dart';
 
 class GamePage extends StatelessWidget {
@@ -7,6 +12,16 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Material(child: Center());
+    return const Material(
+      child: Stack(
+        children: [
+          ParticleArea(),
+          EarthZdog(),
+          HomeScreen(),
+          IgnorePointer(child: DashZdog()),
+          TrashMonster(),
+        ],
+      ),
+    );
   }
 }
