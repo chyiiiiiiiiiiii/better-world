@@ -1,10 +1,10 @@
 name: envawareness
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
+  sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
   flutter:
@@ -13,16 +13,35 @@ dependencies:
     sdk: flutter
   intl: any
 
-  firebase_core: ^2.24.2
-  firebase_database: ^10.4.0
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.17.4
+  cloud_firestore: ^4.15.4
+
   connectivity_plus: ^5.0.2
+
   go_router: ^13.1.0
+
+  flutter_riverpod: ^2.4.10
+  riverpod_annotation: ^2.3.4
+  freezed: ^2.4.7
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
+  cached_network_image: ^3.3.1
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+
+  very_good_analysis: ^5.1.0
+  riverpod_generator: ^2.3.11
+  riverpod_lint: ^2.3.9
+  build_runner: ^2.4.8
+  json_serializable: ^6.7.1
 
 flutter:
   uses-material-design: true
   generate: true
+
+  assets:
+    - assets/images/
