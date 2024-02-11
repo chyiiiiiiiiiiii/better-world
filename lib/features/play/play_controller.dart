@@ -1,19 +1,23 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:confetti/confetti.dart';
 import 'package:envawareness/data/level_info.dart';
 import 'package:envawareness/data/user.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/repositories/game_repository.dart';
 import 'package:envawareness/states/game_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:simple_animations/animation_builder/custom_animation_builder.dart';
 
-part 'game_controller.g.dart';
+part 'play_controller.g.dart';
 
 @riverpod
-class GameController extends _$GameController {
+class PlayController extends _$PlayController {
   StreamSubscription<DocumentSnapshot<PlayInfo>>? _playInfoSubscription;
+  Timer? _scoresPerSecondTimer;
 
   String get _userId => ref.watch(authRepositoryProvider).userId;
 
@@ -26,10 +30,14 @@ class GameController extends _$GameController {
         (playInfo.currentScore / levelInfo.passScore).clamp(0.5, 1.0);
 
     listenPlayInfo();
+    updateScoresPerSecond();
 
     ref.onDispose(() {
       _playInfoSubscription?.cancel();
       _playInfoSubscription = null;
+
+      _scoresPerSecondTimer?.cancel();
+      _scoresPerSecondTimer = null;
     });
 
     return GameState(
@@ -38,6 +46,20 @@ class GameController extends _$GameController {
       levelTotalCount: levelTotalCount,
       finishProgress: finishProgress,
     );
+  }
+
+  void updateScoresPerSecond() {
+    _scoresPerSecondTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      final isGameCompleted = state.requireValue.playInfo.isGameCompleted;
+      if (isGameCompleted) {
+        _scoresPerSecondTimer?.cancel();
+        _scoresPerSecondTimer = null;
+
+        return;
+      }
+
+      updateMyScore();
+    });
   }
 
   Future<PlayInfo> getPlayInfo() async {
@@ -139,7 +161,9 @@ class GameController extends _$GameController {
       return false;
     }
 
-    ref.read(showMessageProvider.notifier).show('恭喜你拯救了所有星球，你真的是個環保英雄！');
+    ref.read(showMessageProvider.notifier).show(
+          'Congratulations on saving the all planets, you are truly an environmental hero!',
+        );
 
     final playInfo = state.requireValue.playInfo;
     final newPlayInfo = playInfo.copyWith(isGameCompleted: true);
@@ -147,6 +171,18 @@ class GameController extends _$GameController {
     await ref.watch(gameRepositoryProvider).updateUser(playInfo: newPlayInfo);
 
     return true;
+  }
+
+  void onEarthTap() {
+    final blockEarth = ref.read(isEarthBlockProvider);
+    if (blockEarth) {
+      return;
+    }
+
+    ref.read(confettiControllerProvider).stop();
+    ref.read(confettiControllerProvider).play();
+
+    updateMyScore();
   }
 
   Future<void> updateMyScore() async {
@@ -174,4 +210,48 @@ class GameController extends _$GameController {
 
     return newPlayInfo;
   }
+
+  void onLeaderBoardTap() {
+    ref.read(isEarthBlockProvider.notifier).state =
+        !ref.read(isEarthBlockProvider);
+
+    ref.read(leaderBoardAnimationControllerProvider.notifier).toggle();
+  }
 }
+
+final isEarthBlockProvider = StateProvider<bool>((ref) {
+  return false;
+});
+
+final leaderBoardAnimationControllerProvider =
+    NotifierProvider.autoDispose<ControllerNameController, Control>(
+  ControllerNameController.new,
+);
+
+class ControllerNameController extends AutoDisposeNotifier<Control> {
+  void toggle() {
+    if (state == Control.stop) {
+      state = Control.play;
+    } else if (state == Control.playReverse) {
+      state = Control.play;
+    } else {
+      state = Control.playReverse;
+    }
+  }
+
+  void update(Control control) {
+    state = control;
+  }
+
+  @override
+  Control build() {
+    return Control.stop;
+  }
+}
+
+final confettiControllerProvider = Provider<ConfettiController>((ref) {
+  final confettiController =
+      ConfettiController(duration: const Duration(milliseconds: 20));
+
+  return confettiController;
+});

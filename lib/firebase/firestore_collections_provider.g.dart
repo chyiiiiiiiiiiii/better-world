@@ -7,7 +7,7 @@ part of 'firestore_collections_provider.dart';
 // **************************************************************************
 
 String _$levelCollectionReferenceHash() =>
-    r'9e5927ce7734ecfa24e0217ed021d4a67d230f00';
+    r'5b8c794f33d25cc02ee060cfb8cea3b42a3f167c';
 
 /// See also [levelCollectionReference].
 @ProviderFor(levelCollectionReference)
@@ -25,7 +25,7 @@ final levelCollectionReferenceProvider =
 typedef LevelCollectionReferenceRef
     = AutoDisposeProviderRef<CollectionReference<LevelInfo>>;
 String _$userCollectionReferenceHash() =>
-    r'780354193a8d952ee368710bbb2f80172b1719b9';
+    r'9edb9c30da0f5d037fa2a3c606155b326aceae7a';
 
 /// See also [userCollectionReference].
 @ProviderFor(userCollectionReference)

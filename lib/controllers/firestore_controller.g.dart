@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'firestore_provider.dart';
+part of 'firestore_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator

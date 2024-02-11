@@ -1,7 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:envawareness/controllers/auth_controller.dart';
-import 'package:envawareness/controllers/game_controller.dart';
+import 'package:envawareness/features/particle/particle.dart';
+import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/features/play/play_view.dart';
+import 'package:envawareness/features/trash/trash_monster.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
+import 'package:envawareness/zdogs/dash_zdog.dart';
+import 'package:envawareness/zdogs/earth_zdog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -52,8 +55,6 @@ class GamePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final screenWidth = MediaQuery.sizeOf(context).width;
-
     ref.listen(showMessageProvider, (previous, next) async {
       if (next.isEmpty) {
         return;
@@ -67,64 +68,17 @@ class GamePage extends ConsumerWidget {
       ref.invalidate(showMessageProvider);
     });
 
-    final username = ref.watch(
-      authControllerProvider.select((state) => state?.displayName ?? ''),
-    );
-
     return Material(
       child: Center(
-        child: ref.watch(gameControllerProvider).when(
+        child: ref.watch(playControllerProvider).when(
           data: (gameState) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Hi, $username',
-                  style: const TextStyle(
-                    fontSize: 24,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Level: ${gameState.levelInfo.level}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Pass Score: ${gameState.levelInfo.passScore}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Opacity(
-                  opacity: gameState.finishProgress,
-                  child: GestureDetector(
-                    onTap: () => ref
-                        .read(gameControllerProvider.notifier)
-                        .updateMyScore(),
-                    child: CachedNetworkImage(
-                      imageUrl: gameState.levelInfo.earthImageUrl,
-                      width: screenWidth * 0.8,
-                      height: screenWidth * 0.8,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'My Score: ${gameState.playInfo.currentScore}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 40),
-                ElevatedButton(
-                  onPressed: () =>
-                      ref.read(authControllerProvider.notifier).signOut(),
-                  child: const Text('Sign Out'),
-                ),
+            return const Stack(
+              children: [
+                ParticleArea(),
+                EarthZdog(),
+                PlayView(),
+                IgnorePointer(child: DashZdog()),
+                TrashMonster(),
               ],
             );
           },

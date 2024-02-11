@@ -44,7 +44,7 @@ class GameRepository {
   }
 
   Future<LevelInfo?> getLevelInfo({required int level}) async {
-    final query = levelCollectionReference.doc('level$level');
+    final query = levelCollectionReference.doc('level_$level');
     final snapshot = await query.get();
     final lastData = snapshot.data();
 

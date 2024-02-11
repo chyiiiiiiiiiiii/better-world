@@ -19,8 +19,8 @@ GoRouter appRouter(AppRouterRef ref) {
     initialLocation: SplashPage.routePath,
     navigatorKey: navigatorKey,
     observers: [],
-    redirect: (context, state) {
-      final isAuthenticated = authRepository.isAuthenticated;
+    redirect: (context, state) async {
+      final isAuthenticated = await authRepository.isAuthenticated();
       if (!isAuthenticated) {
         return SignInPage.routePath;
       }
