@@ -1,5 +1,4 @@
 import 'package:envawareness/pages/game_page.dart';
-import 'package:envawareness/pages/sign_in_page.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/router/app_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +10,7 @@ part 'auth_controller.g.dart';
 class AuthController extends _$AuthController {
   @override
   User? build() {
-    return null;
+    return ref.watch(authRepositoryProvider).currentUser;
   }
 
   Future<void> signIn() async {
@@ -27,6 +26,5 @@ class AuthController extends _$AuthController {
 
   Future<void> signOut() async {
     await ref.watch(authRepositoryProvider).signOut();
-    ref.read(appRouterProvider).go(SignInPage.routePath);
   }
 }

@@ -28,6 +28,17 @@ dependencies:
   json_annotation: ^4.8.1
   cached_network_image: ^3.3.1
   google_sign_in: ^6.2.1
+  zflutter:
+    git:
+      url: https://github.com/CarGuo/zflutter.git
+      ref: 3f5e569ba96f4c94a5847aad96617f273d88629d
+      path: zflutter/
+  confetti: ^0.7.0
+  fade_out_particle: ^1.2.1
+  google_fonts: ^6.1.0
+  animated_flip_counter: ^0.2.6
+  simple_animations: ^5.0.2
+  sprite: ^0.0.3
 
 dev_dependencies:
   flutter_test:
@@ -42,6 +53,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
-
   assets:
     - assets/images/
+    - assets/images/trash_sprite/
