@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:envawareness/constants/firestore_collections.dart';
 import 'package:envawareness/controllers/firestore_controller.dart';
 import 'package:envawareness/data/level_info.dart';
 import 'package:envawareness/data/user.dart';
@@ -12,7 +13,7 @@ CollectionReference<LevelInfo> levelCollectionReference(
 ) {
   final firestore = ref.watch(fireStoreProvider);
 
-  return firestore.collection('level').withConverter(
+  return firestore.collection(FirestoreCollections.level).withConverter(
         fromFirestore: (
           DocumentSnapshot<Map<String, dynamic>> snapshot,
           SnapshotOptions? options,
@@ -28,7 +29,7 @@ CollectionReference<PlayInfo> userCollectionReference(
 ) {
   final firestore = ref.watch(fireStoreProvider);
 
-  return firestore.collection('user').withConverter(
+  return firestore.collection(FirestoreCollections.playInfo).withConverter(
         fromFirestore: (
           DocumentSnapshot<Map<String, dynamic>> snapshot,
           SnapshotOptions? options,
