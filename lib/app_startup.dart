@@ -30,14 +30,17 @@ class AppStartupWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appStartupState = ref.watch(appStartupProvider);
 
-    return appStartupState.when(
-      data: (_) => onLoaded(context),
-      loading: () => const _LoadingWidget(),
-      error: (e, st) => _ErrorWidget(
-        message: e.toString(),
-        onRetry: () {
-          ref.invalidate(appStartupProvider);
-        },
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: appStartupState.when(
+        data: (_) => onLoaded(context),
+        loading: () => const _LoadingWidget(),
+        error: (e, st) => _ErrorWidget(
+          message: e.toString(),
+          onRetry: () {
+            ref.invalidate(appStartupProvider);
+          },
+        ),
       ),
     );
   }
