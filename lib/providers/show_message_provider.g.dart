@@ -6,12 +6,11 @@ part of 'show_message_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$showMessageHash() => r'd5fa7351df2e5e0f867759fa23b4a17dcf4241db';
+String _$showMessageHash() => r'4f6d308c078b12cd28f94e2cf08a11a69b01d86e';
 
 /// See also [ShowMessage].
 @ProviderFor(ShowMessage)
-final showMessageProvider =
-    AutoDisposeNotifierProvider<ShowMessage, String>.internal(
+final showMessageProvider = NotifierProvider<ShowMessage, String>.internal(
   ShowMessage.new,
   name: r'showMessageProvider',
   debugGetCreateSourceHash:
@@ -20,6 +19,6 @@ final showMessageProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ShowMessage = AutoDisposeNotifier<String>;
+typedef _$ShowMessage = Notifier<String>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

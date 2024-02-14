@@ -19,7 +19,6 @@ class _ParticleAreaState extends ConsumerState<ParticleArea> {
     final center =
         Offset(size.width / 2, size.height / 2); // Center of the circle
     final path = Path();
-
     // Adding a circle to the path
     path.addOval(Rect.fromCircle(center: center, radius: radius));
 

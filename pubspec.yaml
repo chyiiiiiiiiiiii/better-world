@@ -1,10 +1,10 @@
 name: envawareness
-description: "A new Flutter project."
-publish_to: "none"
+description: 'A new Flutter project.'
+publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ">=3.2.5 <4.0.0"
+  sdk: '>=3.2.5 <4.0.0'
 
 dependencies:
   flutter:
@@ -39,6 +39,7 @@ dependencies:
   animated_flip_counter: ^0.2.6
   simple_animations: ^5.0.2
   sprite: ^0.0.3
+  appinio_swiper: ^2.1.0
   flutter_animate: ^4.5.0
 
 dev_dependencies:

@@ -85,6 +85,7 @@ class GamePage extends ConsumerWidget {
     print(validPurchases.length);
 
     return Material(
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Center(
         child: ref.watch(playControllerProvider).when(
           data: (gameState) {

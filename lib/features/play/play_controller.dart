@@ -246,19 +246,22 @@ class PlayController extends _$PlayController {
     updateMyScore();
   }
 
-  Future<void> updateMyScore() async {
+  Future<void> updateMyScore({int? extraScore}) async {
     final playInfo = state.requireValue.playInfo;
     final isGameCompleted = await checkIsGameCompleted();
     if (isGameCompleted) {
       return;
     }
 
-    final newScore = playInfo.currentScore + playInfo.perClickScore;
-    final newTotalScore = playInfo.totalScore + playInfo.perClickScore;
-    final newPlayInfo = playInfo.copyWith(
-      currentScore: newScore,
-      totalScore: newTotalScore,
-    );
+    var newScore = playInfo.currentScore;
+
+    if (extraScore != null) {
+      newScore += extraScore;
+    } else {
+      newScore += playInfo.perClickScore;
+    }
+
+    final newPlayInfo = playInfo.copyWith(currentScore: newScore);
 
     await ref
         .watch(gameRepositoryProvider)

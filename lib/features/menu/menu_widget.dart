@@ -1,8 +1,10 @@
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/pages/recycle_game_page.dart';
 import 'package:envawareness/repositories/game_repository.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class MenuWidget extends ConsumerWidget {
   const MenuWidget({
@@ -46,6 +48,12 @@ class MenuWidget extends ConsumerWidget {
                   .updateLevelInfo(level: 1);
               ref.read(playControllerProvider.notifier).updateScoresPerSecond();
             },
+          ),
+          DefaultButton(
+            onPressed: () {
+              context.push(RecycleGamePage.routePath);
+            },
+            text: 'GAME',
           ),
           DefaultButton(
             onPressed: () {
