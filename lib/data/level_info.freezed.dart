@@ -22,8 +22,6 @@ LevelInfo _$LevelInfoFromJson(Map<String, dynamic> json) {
 mixin _$LevelInfo {
   @JsonKey(name: 'level')
   int get level => throw _privateConstructorUsedError;
-  @JsonKey(name: 'earth_image_url')
-  String get earthImageUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'pass_score')
   int get passScore => throw _privateConstructorUsedError;
 
@@ -40,7 +38,6 @@ abstract class $LevelInfoCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'level') int level,
-      @JsonKey(name: 'earth_image_url') String earthImageUrl,
       @JsonKey(name: 'pass_score') int passScore});
 }
 
@@ -58,7 +55,6 @@ class _$LevelInfoCopyWithImpl<$Res, $Val extends LevelInfo>
   @override
   $Res call({
     Object? level = null,
-    Object? earthImageUrl = null,
     Object? passScore = null,
   }) {
     return _then(_value.copyWith(
@@ -66,10 +62,6 @@ class _$LevelInfoCopyWithImpl<$Res, $Val extends LevelInfo>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as int,
-      earthImageUrl: null == earthImageUrl
-          ? _value.earthImageUrl
-          : earthImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
       passScore: null == passScore
           ? _value.passScore
           : passScore // ignore: cast_nullable_to_non_nullable
@@ -88,7 +80,6 @@ abstract class _$$LevelInfoImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'level') int level,
-      @JsonKey(name: 'earth_image_url') String earthImageUrl,
       @JsonKey(name: 'pass_score') int passScore});
 }
 
@@ -104,7 +95,6 @@ class __$$LevelInfoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? level = null,
-    Object? earthImageUrl = null,
     Object? passScore = null,
   }) {
     return _then(_$LevelInfoImpl(
@@ -112,10 +102,6 @@ class __$$LevelInfoImplCopyWithImpl<$Res>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as int,
-      earthImageUrl: null == earthImageUrl
-          ? _value.earthImageUrl
-          : earthImageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
       passScore: null == passScore
           ? _value.passScore
           : passScore // ignore: cast_nullable_to_non_nullable
@@ -129,7 +115,6 @@ class __$$LevelInfoImplCopyWithImpl<$Res>
 class _$LevelInfoImpl implements _LevelInfo {
   _$LevelInfoImpl(
       {@JsonKey(name: 'level') required this.level,
-      @JsonKey(name: 'earth_image_url') required this.earthImageUrl,
       @JsonKey(name: 'pass_score') required this.passScore});
 
   factory _$LevelInfoImpl.fromJson(Map<String, dynamic> json) =>
@@ -139,15 +124,12 @@ class _$LevelInfoImpl implements _LevelInfo {
   @JsonKey(name: 'level')
   final int level;
   @override
-  @JsonKey(name: 'earth_image_url')
-  final String earthImageUrl;
-  @override
   @JsonKey(name: 'pass_score')
   final int passScore;
 
   @override
   String toString() {
-    return 'LevelInfo(level: $level, earthImageUrl: $earthImageUrl, passScore: $passScore)';
+    return 'LevelInfo(level: $level, passScore: $passScore)';
   }
 
   @override
@@ -156,15 +138,13 @@ class _$LevelInfoImpl implements _LevelInfo {
         (other.runtimeType == runtimeType &&
             other is _$LevelInfoImpl &&
             (identical(other.level, level) || other.level == level) &&
-            (identical(other.earthImageUrl, earthImageUrl) ||
-                other.earthImageUrl == earthImageUrl) &&
             (identical(other.passScore, passScore) ||
                 other.passScore == passScore));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, level, earthImageUrl, passScore);
+  int get hashCode => Object.hash(runtimeType, level, passScore);
 
   @JsonKey(ignore: true)
   @override
@@ -183,7 +163,6 @@ class _$LevelInfoImpl implements _LevelInfo {
 abstract class _LevelInfo implements LevelInfo {
   factory _LevelInfo(
           {@JsonKey(name: 'level') required final int level,
-          @JsonKey(name: 'earth_image_url') required final String earthImageUrl,
           @JsonKey(name: 'pass_score') required final int passScore}) =
       _$LevelInfoImpl;
 
@@ -193,9 +172,6 @@ abstract class _LevelInfo implements LevelInfo {
   @override
   @JsonKey(name: 'level')
   int get level;
-  @override
-  @JsonKey(name: 'earth_image_url')
-  String get earthImageUrl;
   @override
   @JsonKey(name: 'pass_score')
   int get passScore;

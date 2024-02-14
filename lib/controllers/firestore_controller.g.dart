@@ -6,11 +6,11 @@ part of 'firestore_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fireStoreHash() => r'72d5fa069ac2bd7a26e97668c182f56a20e36482';
+String _$fireStoreHash() => r'ebd635c080284ee744da7a5b41366533c0d83030';
 
 /// See also [fireStore].
 @ProviderFor(fireStore)
-final fireStoreProvider = AutoDisposeProvider<FirebaseFirestore>.internal(
+final fireStoreProvider = Provider<FirebaseFirestore>.internal(
   fireStore,
   name: r'fireStoreProvider',
   debugGetCreateSourceHash:
@@ -19,6 +19,6 @@ final fireStoreProvider = AutoDisposeProvider<FirebaseFirestore>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef FireStoreRef = AutoDisposeProviderRef<FirebaseFirestore>;
+typedef FireStoreRef = ProviderRef<FirebaseFirestore>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

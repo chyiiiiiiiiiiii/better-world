@@ -1,6 +1,18 @@
 include: package:very_good_analysis/analysis_options.yaml
 
 analyzer:
+  exclude:
+    # build_runner generates files for model
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    # flutter_gen generates files for resource
+    - "**/*.gen.dart"
+    # Test
+    - "test/.test_coverage.dart"
+    # Firebase"
+    - "**/*/firebase_options.dart"
+    # Generated for Flutter web apps. Since it is auto-generated, errors should be ignored
+    - "lib/generated_plugin_registrant.dart"
   errors:
     invalid_annotation_target: ignore
   plugins:

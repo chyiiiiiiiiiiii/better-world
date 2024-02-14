@@ -1,26 +1,30 @@
+import 'package:envawareness/utils/build_context_extension.dart';
+import 'package:envawareness/utils/spacings.dart';
+import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 
 class DefaultButton extends StatelessWidget {
-  const DefaultButton({super.key, required this.onPressed, required this.text});
+  const DefaultButton({
+    required this.onPressed,
+    required this.text,
+    super.key,
+  });
   final VoidCallback onPressed;
   final String text;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
+    return AppTap(
+      onTap: onPressed,
       child: Container(
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 121, 224, 119),
-          borderRadius: BorderRadius.circular(100),
+          borderRadius: BorderRadius.circular(Spacings.px64),
         ),
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(Spacings.px8),
         child: Text(
           text,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Colors.white,
-                fontSize: 18,
-              ),
+          style: context.textTheme.titleLarge?.copyWith(color: Colors.white),
         ),
       ),
     );

@@ -3,10 +3,13 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:envawareness/data/level_info.dart';
-import 'package:envawareness/data/user.dart';
+import 'package:envawareness/data/play_info.dart';
+import 'package:envawareness/data/product.dart';
+import 'package:envawareness/data/purchase_history.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/repositories/game_repository.dart';
+import 'package:envawareness/repositories/store_repository.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,19 +21,30 @@ part 'play_controller.g.dart';
 class PlayController extends _$PlayController {
   StreamSubscription<DocumentSnapshot<PlayInfo>>? _playInfoSubscription;
   Timer? _scoresPerSecondTimer;
+  Timer? _checkValidPurchaseTimer;
+  Timer? _uploadScoreTimer;
 
   String get _userId => ref.watch(authRepositoryProvider).userId;
+
+  final int _scoreReadyToUpload = 0;
 
   @override
   FutureOr<GameState> build() async {
     final playInfo = await getPlayInfo();
-    final levelInfo = await getLevelInfo(playInfo: playInfo);
+    final levelInfo = await getLevelInfo(level: playInfo.currentLevel);
+    final products = await getProducts();
     final levelTotalCount = await getLevelTotalCount();
     final finishProgress =
         (playInfo.currentScore / levelInfo.passScore).clamp(0.5, 1.0);
+    final purchaseHistoryList =
+        await ref.read(storeRepositoryProvider).getValidPurchaseHistory();
 
     listenPlayInfo();
+
     updateScoresPerSecond();
+    checkValidPurchasePerSecond();
+    _uploadScoreTimer ??=
+        Timer.periodic(const Duration(seconds: 5), (timer) {});
 
     ref.onDispose(() {
       _playInfoSubscription?.cancel();
@@ -38,18 +52,25 @@ class PlayController extends _$PlayController {
 
       _scoresPerSecondTimer?.cancel();
       _scoresPerSecondTimer = null;
+      _checkValidPurchaseTimer?.cancel();
+      _checkValidPurchaseTimer = null;
+      _uploadScoreTimer?.cancel();
+      _uploadScoreTimer = null;
     });
 
     return GameState(
       levelInfo: levelInfo,
       playInfo: playInfo,
+      products: products,
       levelTotalCount: levelTotalCount,
+      validPurchases: purchaseHistoryList,
       finishProgress: finishProgress,
     );
   }
 
   void updateScoresPerSecond() {
-    _scoresPerSecondTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _scoresPerSecondTimer ??=
+        Timer.periodic(const Duration(seconds: 1), (timer) {
       final isGameCompleted = state.requireValue.playInfo.isGameCompleted;
       if (isGameCompleted) {
         _scoresPerSecondTimer?.cancel();
@@ -59,6 +80,26 @@ class PlayController extends _$PlayController {
       }
 
       updateMyScore();
+    });
+  }
+
+  void checkValidPurchasePerSecond() {
+    _checkValidPurchaseTimer ??=
+        Timer.periodic(const Duration(seconds: 1), (timer) {
+      update(
+        (previous) {
+          final filteredData = previous.validPurchases
+              .where(
+                (element) =>
+                    element.endAt > DateTime.now().millisecondsSinceEpoch,
+              )
+              .toList();
+
+          return previous.copyWith(
+            validPurchases: filteredData,
+          );
+        },
+      );
     });
   }
 
@@ -79,11 +120,10 @@ class PlayController extends _$PlayController {
     }
   }
 
-  Future<LevelInfo> getLevelInfo({required PlayInfo playInfo}) async {
+  Future<LevelInfo> getLevelInfo({required int level}) async {
     final gameRepository = ref.watch(gameRepositoryProvider);
 
-    final levelInfo =
-        await gameRepository.getLevelInfo(level: playInfo.currentLevel);
+    final levelInfo = await gameRepository.getLevelInfo(level: level);
     if (levelInfo == null) {
       throw Exception("Can not obtain user's level info");
     }
@@ -91,8 +131,19 @@ class PlayController extends _$PlayController {
     return levelInfo;
   }
 
-  Future<void> updateLevelInfo({required PlayInfo user}) async {
-    final levelInfo = await getLevelInfo(playInfo: user);
+  Future<List<Product>> getProducts() async {
+    final gameRepository = ref.watch(gameRepositoryProvider);
+
+    final products = await gameRepository.getProducts();
+    if (products.isEmpty) {
+      throw Exception('Can not get any product.');
+    }
+
+    return products;
+  }
+
+  Future<void> updateLevelInfo({required int level}) async {
+    final levelInfo = await getLevelInfo(level: level);
 
     await update((previous) => previous.copyWith(levelInfo: levelInfo));
   }
@@ -132,6 +183,14 @@ class PlayController extends _$PlayController {
     await checkIsPassLevel(playInfo: playInfo);
   }
 
+  Future<void> addValidPurchase(PurchaseHistory history) async {
+    await update(
+      (previous) => previous.copyWith(
+        validPurchases: [history, ...previous.validPurchases],
+      ),
+    );
+  }
+
   Future<void> checkIsPassLevel({required PlayInfo playInfo}) async {
     final isPassLevel =
         playInfo.currentScore >= state.requireValue.levelInfo.passScore;
@@ -144,12 +203,12 @@ class PlayController extends _$PlayController {
       return;
     }
 
-    ref
-        .read(showMessageProvider.notifier)
-        .show('恭喜你通過第 ${playInfo.currentLevel} 關，繼續拯救星球吧！');
+    ref.read(showMessageProvider.notifier).show(
+          'Congratulations on passing level ${playInfo.currentLevel}, keep saving the planet!',
+        );
 
     final newPlayInfo = await updateMyLevelToNext();
-    await updateLevelInfo(user: newPlayInfo);
+    await updateLevelInfo(level: newPlayInfo.currentLevel);
   }
 
   Future<bool> checkIsGameCompleted() async {
@@ -168,7 +227,9 @@ class PlayController extends _$PlayController {
     final playInfo = state.requireValue.playInfo;
     final newPlayInfo = playInfo.copyWith(isGameCompleted: true);
 
-    await ref.watch(gameRepositoryProvider).updateUser(playInfo: newPlayInfo);
+    await ref
+        .watch(gameRepositoryProvider)
+        .updatePlayInfo(playInfo: newPlayInfo);
 
     return true;
   }
@@ -193,9 +254,15 @@ class PlayController extends _$PlayController {
     }
 
     final newScore = playInfo.currentScore + playInfo.perClickScore;
-    final newPlayInfo = playInfo.copyWith(currentScore: newScore);
+    final newTotalScore = playInfo.totalScore + playInfo.perClickScore;
+    final newPlayInfo = playInfo.copyWith(
+      currentScore: newScore,
+      totalScore: newTotalScore,
+    );
 
-    await ref.watch(gameRepositoryProvider).updateUser(playInfo: newPlayInfo);
+    await ref
+        .watch(gameRepositoryProvider)
+        .updatePlayInfo(playInfo: newPlayInfo);
   }
 
   Future<PlayInfo> updateMyLevelToNext() async {
@@ -206,7 +273,9 @@ class PlayController extends _$PlayController {
       currentScore: 0,
     );
 
-    await ref.watch(gameRepositoryProvider).updateUser(playInfo: newPlayInfo);
+    await ref
+        .watch(gameRepositoryProvider)
+        .updatePlayInfo(playInfo: newPlayInfo);
 
     return newPlayInfo;
   }

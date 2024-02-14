@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'show_message_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class ShowMessage extends _$ShowMessage {
   @override
   String build() {

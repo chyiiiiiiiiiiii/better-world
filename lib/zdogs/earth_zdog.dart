@@ -353,7 +353,7 @@ class CircleTreeZdog extends StatelessWidget {
 class CloudZdog extends StatelessWidget {
   const CloudZdog({
     super.key,
-    this.offset = const Offset(0, 0),
+    this.offset = Offset.zero,
     this.width = 10,
     this.zIndex = 100,
   });

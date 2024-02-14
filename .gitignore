@@ -41,3 +41,28 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+.fvm
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Pubspec
+pubspec.lock
+
+# Build files
+**/*.aab
+**/*.apk
+**/*.ipa
+
+# build_renner generates files for model
+**/*.g.dart
+**/*.freezed.dart

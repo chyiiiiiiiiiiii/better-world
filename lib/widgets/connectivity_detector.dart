@@ -19,8 +19,10 @@ class ConnectivityDetector extends StatelessWidget {
           Positioned.fill(
             child: StreamBuilder(
               stream: Connectivity().onConnectivityChanged,
-              builder: (BuildContext context,
-                  AsyncSnapshot<ConnectivityResult> snapshot) {
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<ConnectivityResult> snapshot,
+              ) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const SizedBox.shrink();
                 }
@@ -33,8 +35,8 @@ class ConnectivityDetector extends StatelessWidget {
 
                 return BackdropFilter(
                   filter: ImageFilter.blur(
-                    sigmaX: 4.0,
-                    sigmaY: 4.0,
+                    sigmaX: 4,
+                    sigmaY: 4,
                   ),
                   child: const Center(
                     child: Text(

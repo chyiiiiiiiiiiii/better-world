@@ -86,7 +86,7 @@ class _DashZdogState extends ConsumerState<DashZdog>
     update();
   }
 
-  update() {
+  void update() {
     Future.delayed(const Duration(), () {
       if (mounted) {
         animationController.forward(from: 0).whenComplete(update);

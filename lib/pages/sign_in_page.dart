@@ -1,4 +1,5 @@
 import 'package:envawareness/controllers/auth_controller.dart';
+import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,7 +13,7 @@ class SignInPage extends ConsumerWidget {
     final screenWidth = MediaQuery.sizeOf(context).width;
 
     return Material(
-      child: GestureDetector(
+      child: AppTap(
         onTap: ref.read(authControllerProvider.notifier).signIn,
         child: Center(
           child: DecoratedBox(

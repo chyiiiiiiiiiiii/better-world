@@ -7,7 +7,6 @@ part 'level_info.g.dart';
 class LevelInfo with _$LevelInfo {
   factory LevelInfo({
     @JsonKey(name: 'level') required int level,
-    @JsonKey(name: 'earth_image_url') required String earthImageUrl,
     @JsonKey(name: 'pass_score') required int passScore,
   }) = _LevelInfo;
 

@@ -39,6 +39,7 @@ dependencies:
   animated_flip_counter: ^0.2.6
   simple_animations: ^5.0.2
   sprite: ^0.0.3
+  flutter_animate: ^4.5.0
 
 dev_dependencies:
   flutter_test:

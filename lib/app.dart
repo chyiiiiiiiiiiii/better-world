@@ -35,7 +35,7 @@ class _AppState extends ConsumerState<App> {
         baseTheme.textTheme.copyWith(
           titleLarge: GoogleFonts.mPlusRounded1c(
             textStyle: baseTheme.textTheme.titleLarge,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w800,
           ),
           headlineLarge: GoogleFonts.mPlusRounded1c(
             textStyle: baseTheme.textTheme.headlineLarge,
@@ -47,6 +47,18 @@ class _AppState extends ConsumerState<App> {
           ),
           headlineSmall: GoogleFonts.mPlusRounded1c(
             textStyle: baseTheme.textTheme.headlineSmall,
+            fontWeight: FontWeight.w800,
+          ),
+          displaySmall: GoogleFonts.mPlusRounded1c(
+            textStyle: baseTheme.textTheme.displaySmall,
+            fontWeight: FontWeight.w800,
+          ),
+          displayMedium: GoogleFonts.mPlusRounded1c(
+            textStyle: baseTheme.textTheme.displayMedium,
+            fontWeight: FontWeight.w800,
+          ),
+          displayLarge: GoogleFonts.mPlusRounded1c(
+            textStyle: baseTheme.textTheme.displayLarge,
             fontWeight: FontWeight.w800,
           ),
         ),

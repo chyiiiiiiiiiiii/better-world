@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final trashMonsterControllerProvider =
     NotifierProvider.autoDispose<TrashMonsterController, void>(
-        TrashMonsterController.new);
+  TrashMonsterController.new,
+);
 
 class TrashMonsterController extends AutoDisposeNotifier<void> {
   void createMonster() {

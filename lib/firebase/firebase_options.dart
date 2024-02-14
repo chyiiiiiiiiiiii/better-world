@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyCefoHQFuLV3hi5Iiy994K1tVT6B9Mnv2E',
     appId: '1:995024296435:web:e04a3488d207470e06da86',
+    databaseURL: 'https://envawareness-game-default-rtdb.firebaseio.com',
     messagingSenderId: '995024296435',
     projectId: 'envawareness-game',
     authDomain: 'envawareness-game.firebaseapp.com',

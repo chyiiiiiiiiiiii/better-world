@@ -13,4 +13,5 @@ final class Spacings {
   static const px32 = 32.0;
   static const px48 = 48.0;
   static const px64 = 64.0;
+  static const px84 = 84.0;
 }
