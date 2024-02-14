@@ -1,12 +1,12 @@
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:envawareness/controllers/auth_controller.dart';
-import 'package:envawareness/controllers/dash_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
-import 'package:envawareness/features/trash/trash_monster_controller.dart';
+import 'package:envawareness/pages/recycle_game_page.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:simple_animations/animation_builder/play_animation_builder.dart';
 
 class PlayView extends ConsumerWidget {
@@ -141,27 +141,39 @@ class PlayView extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                // TextButton(
+                //   onPressed: () {
+                //     ref.read(showDashProvider.notifier).state =
+                //         !ref.read(showDashProvider);
+                //   },
+                //   child: const Text(
+                //     'showDash',
+                //     style: TextStyle(
+                //       fontSize: 8,
+                //       color: Colors.grey,
+                //     ),
+                //   ),
+                // ),
+                // TextButton(
+                //   onPressed: () {
+                //     ref
+                //         .read(trashMonsterControllerProvider.notifier)
+                //         .createMonster();
+                //   },
+                //   child: const Text(
+                //     'createMonster',
+                //     style: TextStyle(
+                //       fontSize: 8,
+                //       color: Colors.grey,
+                //     ),
+                //   ),
+                // ),
                 TextButton(
                   onPressed: () {
-                    ref.read(showDashProvider.notifier).state =
-                        !ref.read(showDashProvider);
+                    context.push(RecycleGamePage.routePath);
                   },
                   child: const Text(
-                    'showDash',
-                    style: TextStyle(
-                      fontSize: 8,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    ref
-                        .read(trashMonsterControllerProvider.notifier)
-                        .createMonster();
-                  },
-                  child: const Text(
-                    'createMonster',
+                    'game',
                     style: TextStyle(
                       fontSize: 8,
                       color: Colors.grey,

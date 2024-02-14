@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.6"
+  appinio_swiper:
+    dependency: "direct main"
+    description:
+      name: appinio_swiper
+      sha256: "1946476dcdf2cda6a0bfa5c9fde8d98131228a2c675be26beb14bfa58e479bbc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   args:
     dependency: transitive
     description:
