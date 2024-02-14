@@ -1,4 +1,5 @@
 import 'package:envawareness/pages/game_page.dart';
+import 'package:envawareness/pages/recycle_game_page.dart';
 import 'package:envawareness/pages/sign_in_page.dart';
 import 'package:envawareness/pages/splash_page.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
@@ -48,6 +49,13 @@ GoRouter appRouter(AppRouterRef ref) {
         name: 'game',
         builder: (context, state) {
           return const GamePage();
+        },
+      ),
+      GoRoute(
+        path: RecycleGamePage.routePath,
+        name: 'recycle-game',
+        builder: (context, state) {
+          return const RecycleGamePage();
         },
       ),
     ],
