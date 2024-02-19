@@ -1,3 +1,4 @@
+import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/utils/radient.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class EarthZdog extends ConsumerStatefulWidget {
 class _EarthZDogState extends ConsumerState<EarthZdog> {
   Control control = Control.stop; // define variable
 
-  final earthClicktween = MovieTween()
+  final earthClickTween = MovieTween()
     ..tween(
       'zoom',
       Tween<double>(begin: 1, end: 0.88),
@@ -27,7 +28,7 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
       begin: const Duration(milliseconds: 100),
     );
 
-  final leaderTween = MovieTween()
+  final earthFlipTween = MovieTween()
     ..tween(
       'zoom',
       Tween<double>(begin: 1, end: 3.5),
@@ -51,10 +52,16 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
     });
   }
 
+  bool changingEditMode = false;
+
   @override
   Widget build(BuildContext context) {
     final leaderBoardControl =
         ref.watch(leaderBoardAnimationControllerProvider);
+    final editMode = ref.watch(editModeProvider);
+    ref.listen(editModeProvider, (_, editMode) {
+      changingEditMode = true;
+    });
 
     return GestureDetector(
       onTap: () {
@@ -62,43 +69,32 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
         _toggleDirection();
       },
       child: CustomAnimationBuilder<Movie>(
-        tween: leaderTween,
+        tween: earthFlipTween,
         control: leaderBoardControl,
         duration: const Duration(milliseconds: 800),
         builder: (context, leaderMovie, __) {
           final rotate = ZVector.only(y: leaderMovie.get('rotate'));
-          return MirrorAnimationBuilder(
-            tween: Tween(begin: 0.1, end: 20),
-            duration: const Duration(seconds: 5),
-            builder: (context, cloudValue, __) {
-              return CustomAnimationBuilder<Movie>(
-                tween: earthClicktween,
-                control: control,
-                duration: const Duration(milliseconds: 150),
-                builder: (context, value, __) {
-                  return Stack(
-                    children: [
-                      Transform.scale(
-                        scale: value.get('zoom'),
-                        child: ZIllustration(
+          return CustomAnimationBuilder<Movie>(
+            tween: earthClickTween,
+            control: control,
+            duration: const Duration(milliseconds: 150),
+            builder: (context, value, __) {
+              return Stack(
+                children: [
+                  Transform.scale(
+                    scale: value.get('zoom'),
+                    child: ZDragDetector(
+                      builder: (context, zDragController) {
+                        if (changingEditMode) {
+                          zDragController.value = ZVector.zero;
+                          changingEditMode = false;
+                        }
+                        return ZIllustration(
                           zoom: leaderMovie.get('zoom'),
                           children: [
-                            if (leaderMovie.get<double>('translate') < 1)
-                              const ZPositioned(
-                                translate: ZVector.only(z: 105),
-                                child: TriangleTreeZdog(
-                                  degree: 90,
-                                ),
-                              ),
-                            if (leaderMovie.get<double>('translate') < 1)
-                              const ZPositioned(
-                                translate: ZVector.only(z: 105, x: 20),
-                                child: CircleTreeZdog(
-                                  degree: 80,
-                                ),
-                              ),
                             ZPositioned(
-                              rotate: rotate,
+                              rotate:
+                                  editMode ? zDragController.rotate : rotate,
                               translate: ZVector.only(
                                 y: leaderMovie.get('translate'),
                               ),
@@ -115,9 +111,48 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                               ),
                             ),
                             ZPositioned(
-                              rotate: rotate,
+                              rotate:
+                                  editMode ? zDragController.rotate : rotate,
+                              translate: ZVector.only(
+                                y: leaderMovie.get('translate'),
+                              ),
                               child: ZGroup(
                                 children: [
+                                  WindTurbines(
+                                    translate: const ZVector.only(
+                                      y: -10,
+                                      x: 80,
+                                      z: 100,
+                                    ),
+                                    rotate: ZVector.only(
+                                      x: 0.toRadius(),
+                                      z: 90.toRadius(),
+                                      y: -50.toRadius(),
+                                    ),
+                                  ),
+                                  SolarPanel(
+                                    translate:
+                                        const ZVector.only(y: -105, x: 100),
+                                    rotate: ZVector.only(
+                                      x: 90.toRadius(),
+                                    ),
+                                  ),
+                                  TriangleTreeZdog(
+                                    translate: const ZVector.only(y: -105),
+                                    rotate: ZVector.only(
+                                      x: 90.toRadius(),
+                                    ),
+                                  ),
+                                  CircleTreeZdog(
+                                    translate: const ZVector.only(
+                                      y: -105,
+                                      x: 10,
+                                      z: 20,
+                                    ),
+                                    rotate: ZVector.only(
+                                      x: 90.toRadius(),
+                                    ),
+                                  ),
                                   ZGroup(
                                     children: [
                                       PlanteZdog(
@@ -195,7 +230,7 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                                           ZLine.only(
                                             x: -40,
                                             y: 80,
-                                            z: 100,
+                                            z: 20,
                                           ),
                                         ],
                                       ),
@@ -204,65 +239,15 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                                 ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      Transform.scale(
-                        scale: value.get('zoom'),
-                        child: ZIllustration(
-                          zoom: leaderMovie.get('zoom'),
-                          children: const [],
-                        ),
-                      ),
-                      ZIllustration(
-                        zoom: leaderMovie.get('zoom'),
-                        children: [
-                          ZPositioned(
-                            rotate: rotate,
-                            child: ZGroup(
-                              children: [
-                                ZPositioned(
-                                  translate: ZVector.only(
-                                    y: cloudValue.toDouble(),
-                                  ),
-                                  child: ZGroup(
-                                    children: const [
-                                      CloudZdog(
-                                        offset: Offset(65, 40),
-                                        width: 30,
-                                      ),
-                                      CloudZdog(
-                                        offset: Offset(78, 30),
-                                        width: 5,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                ZPositioned(
-                                  translate: ZVector.only(
-                                    y: -cloudValue.toDouble() / 2,
-                                  ),
-                                  child: ZGroup(
-                                    children: const [
-                                      CloudZdog(
-                                        offset: Offset(-100, -20),
-                                        width: 30,
-                                      ),
-                                      CloudZdog(
-                                        offset: Offset(-85, -30),
-                                        width: 5,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                            CloudZdog(
+                              editMode ? zDragController.rotate : ZVector.zero,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                },
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
               );
             },
           );
@@ -272,22 +257,247 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
   }
 }
 
+class CloudZdog extends StatelessWidget {
+  const CloudZdog(this.rotate, {super.key});
+  final ZVector rotate;
+
+  @override
+  Widget build(BuildContext context) {
+    return MirrorAnimationBuilder<double>(
+      tween: Tween(begin: -10, end: 10),
+      duration: const Duration(seconds: 15),
+      curve: Curves.easeInOut,
+      builder: (context, value, __) {
+        return ZPositioned(
+          rotate: rotate,
+          child: ZGroup(
+            children: [
+              ZPositioned(
+                translate: ZVector.only(y: value),
+                child: ZGroup(
+                  children: const [
+                    CloudPieceZdog(
+                      offset: Offset(65, 40),
+                      width: 30,
+                    ),
+                    CloudPieceZdog(
+                      offset: Offset(78, 30),
+                      width: 5,
+                    ),
+                  ],
+                ),
+              ),
+              ZPositioned(
+                translate: ZVector.only(y: -value),
+                child: ZGroup(
+                  children: const [
+                    CloudPieceZdog(
+                      offset: Offset(-100, -20),
+                      width: 30,
+                    ),
+                    CloudPieceZdog(
+                      offset: Offset(-85, -30),
+                      width: 5,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class WindTurbines extends StatelessWidget {
+  const WindTurbines({
+    required this.rotate,
+    required this.translate,
+    super.key,
+  });
+  final ZVector rotate;
+  final ZVector translate;
+  @override
+  Widget build(BuildContext context) {
+    return LoopAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 360),
+      duration: const Duration(seconds: 5),
+      builder: (context, value, __) {
+        return ZPositioned(
+          rotate: rotate,
+          translate: translate,
+          child: ZGroup(
+            children: [
+              ZPositioned(
+                translate: const ZVector.only(z: 15),
+                rotate: ZVector.only(y: value.toRadius()),
+                child: ZGroup(
+                  children: [
+                    ZShape(
+                      closed: false,
+                      stroke: 4,
+                      color: Colors.white,
+                      path: [
+                        ZMove.only(),
+                        ZLine.only(
+                          z: -9,
+                          x: -12,
+                        ),
+                      ],
+                    ),
+                    ZShape(
+                      closed: false,
+                      stroke: 4,
+                      color: Colors.white,
+                      path: [
+                        ZMove.only(),
+                        ZLine.only(
+                          z: -9,
+                          x: 12,
+                        ),
+                      ],
+                    ),
+                    ZShape(
+                      closed: false,
+                      stroke: 4,
+                      color: Colors.white,
+                      path: [
+                        ZMove.only(),
+                        ZLine.only(
+                          z: 15,
+                        ),
+                      ],
+                    ),
+                    ZShape(
+                      stroke: 6,
+                      path: [
+                        ZMove.only(y: 2),
+                      ],
+                      color: const Color.fromARGB(255, 255, 236, 175),
+                    ),
+                  ],
+                ),
+              ),
+              ZCylinder(
+                diameter: 3,
+                length: 20,
+                frontface: Colors.white,
+                color: Colors.white,
+                backface: Colors.grey,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class SolarPanel extends StatelessWidget {
+  const SolarPanel({
+    required this.rotate,
+    required this.translate,
+    super.key,
+  });
+  final ZVector rotate;
+  final ZVector translate;
+  @override
+  Widget build(BuildContext context) {
+    return LoopAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 360),
+      duration: const Duration(seconds: 5),
+      builder: (context, value, __) {
+        return ZPositioned(
+          rotate: rotate,
+          translate: translate,
+          child: ZGroup(
+            children: [
+              ZPositioned(
+                translate: const ZVector.only(z: 15),
+                rotate: ZVector.only(y: value.toRadius()),
+                child: ZGroup(
+                  children: [
+                    ZShape(
+                      closed: false,
+                      stroke: 4,
+                      color: Colors.white,
+                      path: [
+                        ZMove.only(),
+                        ZLine.only(
+                          z: -9,
+                          x: -12,
+                        ),
+                      ],
+                    ),
+                    ZShape(
+                      closed: false,
+                      stroke: 4,
+                      color: Colors.white,
+                      path: [
+                        ZMove.only(),
+                        ZLine.only(
+                          z: -9,
+                          x: 12,
+                        ),
+                      ],
+                    ),
+                    ZShape(
+                      closed: false,
+                      stroke: 4,
+                      color: Colors.white,
+                      path: [
+                        ZMove.only(),
+                        ZLine.only(
+                          z: 15,
+                        ),
+                      ],
+                    ),
+                    ZShape(
+                      stroke: 6,
+                      path: [
+                        ZMove.only(y: 2),
+                      ],
+                      color: const Color.fromARGB(255, 255, 236, 175),
+                    ),
+                  ],
+                ),
+              ),
+              ZCylinder(
+                diameter: 3,
+                length: 20,
+                frontface: Colors.white,
+                color: Colors.white,
+                backface: Colors.grey,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
 class TriangleTreeZdog extends StatelessWidget {
-  const TriangleTreeZdog({required this.degree, super.key});
-  final double degree;
+  const TriangleTreeZdog({
+    required this.rotate,
+    required this.translate,
+    super.key,
+  });
+  final ZVector rotate;
+  final ZVector translate;
   @override
   Widget build(BuildContext context) {
     return ZPositioned(
-      rotate: ZVector.only(
-        x: degree.toRadius(),
-      ),
+      rotate: rotate,
+      translate: translate,
       child: ZGroup(
         children: [
           ZCone(
             diameter: 30,
             length: 20,
             color: const Color.fromARGB(255, 73, 165, 87),
-            backfaceColor: const Color(0xffEEAA00),
+            backfaceColor: const Color.fromARGB(255, 73, 165, 87),
           ),
           ZPositioned(
             translate: const ZVector.only(z: 7),
@@ -295,7 +505,7 @@ class TriangleTreeZdog extends StatelessWidget {
               diameter: 25,
               length: 15,
               color: const Color.fromARGB(255, 84, 183, 99),
-              backfaceColor: const Color(0xffEEAA00),
+              backfaceColor: const Color.fromARGB(255, 84, 183, 99),
             ),
           ),
           ZPositioned(
@@ -304,7 +514,7 @@ class TriangleTreeZdog extends StatelessWidget {
               diameter: 18,
               length: 10,
               color: const Color.fromARGB(255, 87, 193, 103),
-              backfaceColor: const Color(0xffEEAA00),
+              backfaceColor: const Color.fromARGB(255, 87, 193, 103),
             ),
           ),
           ZCylinder(
@@ -321,14 +531,18 @@ class TriangleTreeZdog extends StatelessWidget {
 }
 
 class CircleTreeZdog extends StatelessWidget {
-  const CircleTreeZdog({required this.degree, super.key});
-  final double degree;
+  const CircleTreeZdog({
+    required this.rotate,
+    required this.translate,
+    super.key,
+  });
+  final ZVector rotate;
+  final ZVector translate;
   @override
   Widget build(BuildContext context) {
     return ZPositioned(
-      rotate: ZVector.only(
-        x: 90.toRadius(),
-      ),
+      rotate: rotate,
+      translate: translate,
       child: ZGroup(
         children: [
           ZCylinder(
@@ -350,8 +564,8 @@ class CircleTreeZdog extends StatelessWidget {
   }
 }
 
-class CloudZdog extends StatelessWidget {
-  const CloudZdog({
+class CloudPieceZdog extends StatelessWidget {
+  const CloudPieceZdog({
     super.key,
     this.offset = Offset.zero,
     this.width = 10,

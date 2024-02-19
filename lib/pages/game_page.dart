@@ -82,7 +82,6 @@ class GamePage extends ConsumerWidget {
         (value) => value.value?.validPurchases ?? [],
       ),
     );
-    print(validPurchases.length);
 
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
@@ -95,7 +94,7 @@ class GamePage extends ConsumerWidget {
                 const ParticleArea(),
                 const EarthZdog(),
                 if (!isEarthBlock) const PlayView(),
-                const IgnorePointer(child: DashZdog()),
+                const DashZdog(),
                 if (isEarthBlock)
                   const Positioned.fill(
                     top: 100,

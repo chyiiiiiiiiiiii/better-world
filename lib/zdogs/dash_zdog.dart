@@ -123,42 +123,44 @@ class _DashZdogState extends ConsumerState<DashZdog>
         ),
       ),
     );
-    return CustomAnimationBuilder(
-      tween: flyTween,
-      duration: const Duration(seconds: 10),
-      curve: Curves.easeInOut,
-      control: Control.loop,
-      builder: (context, value, _) {
-        return AnimatedBuilder(
-          animation: animationController,
-          builder: (context, _) {
-            final dash = dashAnimations.fold<double>(
-              0,
-              (previousValue, element) => previousValue + element.value,
-            );
-            return ZDragDetector(
-              builder: (context, controller) {
-                return ZIllustration(
-                  children: [
-                    ZPositioned(
-                      rotate: widget.rotate.copyWith(
-                        y: widget.rotate.y + value.get('z'),
+    return IgnorePointer(
+      child: CustomAnimationBuilder(
+        tween: flyTween,
+        duration: const Duration(seconds: 10),
+        curve: Curves.easeInOut,
+        control: Control.loop,
+        builder: (context, value, _) {
+          return AnimatedBuilder(
+            animation: animationController,
+            builder: (context, _) {
+              final dash = dashAnimations.fold<double>(
+                0,
+                (previousValue, element) => previousValue + element.value,
+              );
+              return ZDragDetector(
+                builder: (context, controller) {
+                  return ZIllustration(
+                    children: [
+                      ZPositioned(
+                        rotate: widget.rotate.copyWith(
+                          y: widget.rotate.y + value.get('z'),
+                        ),
+                        // rotate: controller.rotate,
+                        translate: widget.translate.copyWith(
+                          y: widget.translate.y + value.get('y'),
+                          x: widget.translate.x + value.get('x'),
+                        ),
+                        scale: ZVector.all(widget.scale),
+                        child: Dash(flight: dash),
                       ),
-                      // rotate: controller.rotate,
-                      translate: widget.translate.copyWith(
-                        y: widget.translate.y + value.get('y'),
-                        x: widget.translate.x + value.get('x'),
-                      ),
-                      scale: ZVector.all(widget.scale),
-                      child: Dash(flight: dash),
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-        );
-      },
+                    ],
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

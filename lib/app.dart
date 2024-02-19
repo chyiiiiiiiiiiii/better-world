@@ -29,7 +29,7 @@ class _AppState extends ConsumerState<App> {
     );
     return baseTheme.copyWith(
       scaffoldBackgroundColor: brightness == Brightness.light
-          ? const Color(0xfff6f8e7)
+          ? const Color.fromARGB(255, 229, 207, 171)
           : const Color(0xff1a1a1a),
       textTheme: GoogleFonts.mPlusRounded1cTextTheme(
         baseTheme.textTheme.copyWith(
