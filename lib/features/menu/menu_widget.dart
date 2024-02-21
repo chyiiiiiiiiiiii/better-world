@@ -1,3 +1,4 @@
+import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/pages/recycle_game_page.dart';
 import 'package:envawareness/utils/button.dart';
@@ -13,7 +14,7 @@ class MenuWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isEarthBlocked = ref.watch(isEarthBlockProvider);
-
+    final isEditMode = ref.watch(editModeProvider);
     return Padding(
       padding: const EdgeInsets.all(28),
       child: Row(
@@ -47,6 +48,12 @@ class MenuWidget extends ConsumerWidget {
                   .updateLevelInfo(level: 1);
               ref.read(playControllerProvider.notifier).updateScoresPerSecond();
             },
+          ),
+          DefaultButton(
+            onPressed: () {
+              ref.read(editModeProvider.notifier).toggle();
+            },
+            text: 'EditMode ${isEditMode ? 'OFF' : 'ON'}',
           ),
           DefaultButton(
             onPressed: () {

@@ -7,8 +7,7 @@ part of 'recycle_game_card.dart';
 // **************************************************************************
 
 _$RecycleGameCardImpl _$$RecycleGameCardImplFromJson(
-  Map<String, dynamic> json,
-) =>
+        Map<String, dynamic> json) =>
     _$RecycleGameCardImpl(
       name: json['name'] as String? ?? '',
       nameEn: json['name_en'] as String? ?? '',
@@ -18,8 +17,7 @@ _$RecycleGameCardImpl _$$RecycleGameCardImplFromJson(
     );
 
 Map<String, dynamic> _$$RecycleGameCardImplToJson(
-  _$RecycleGameCardImpl instance,
-) =>
+        _$RecycleGameCardImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'name_en': instance.nameEn,
