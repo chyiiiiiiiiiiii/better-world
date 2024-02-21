@@ -1,6 +1,5 @@
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/pages/recycle_game_page.dart';
-import 'package:envawareness/repositories/game_repository.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,9 +39,9 @@ class MenuWidget extends ConsumerWidget {
                     usedScore: 0,
                   );
 
-              await ref
-                  .watch(gameRepositoryProvider)
-                  .updatePlayInfo(playInfo: newPlayInfo);
+              await ref.watch(playControllerProvider.notifier).updatePlayInfo(
+                    newPlayInfo,
+                  );
               await ref
                   .read(playControllerProvider.notifier)
                   .updateLevelInfo(level: 1);

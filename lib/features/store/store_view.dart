@@ -2,6 +2,8 @@ import 'package:envawareness/data/play_info.dart';
 import 'package:envawareness/data/product.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/features/store/store_controller.dart';
+import 'package:envawareness/providers/show_message_provider.dart';
+import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/spacings.dart';
@@ -18,7 +20,11 @@ class StoreView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final products = ref.watch(playControllerProvider).requireValue.products;
+    final products = ref.watch(
+      playControllerProvider.select(
+        (value) => value.requireValue.products,
+      ),
+    );
     final availableScore = ref.watch(
       playControllerProvider.select(
         (value) => value.requireValue.playInfo.availableScore,
@@ -95,11 +101,33 @@ class _Item extends ConsumerWidget {
         (value) => value.requireValue.playInfo.availableScore,
       ),
     );
-    final isProductAvailable = availableScore >= product.price;
+    final validPurchaseProducts = ref.watch(
+      playControllerProvider.select(
+        (value) => value.requireValue.getValidPurchaseProducts(),
+      ),
+    );
+    final hasEnoughScore = availableScore >= product.price;
+    final isProductGot = validPurchaseProducts.contains(product);
+    final isProductAvailable = hasEnoughScore && !isProductGot;
 
     return AppTap(
-      onTap: () =>
-          ref.read(storeControllerProvider.notifier).purchase(product: product),
+      onTap: () {
+        if (!hasEnoughScore) {
+          ref
+              .read(showMessageProvider.notifier)
+              .show('You do not have enough score.');
+
+          return;
+        }
+
+        if (isProductGot) {
+          ref.read(showMessageProvider.notifier).show('You have bought it.');
+
+          return;
+        }
+
+        ref.read(storeControllerProvider.notifier).purchase(product: product);
+      },
       child: Column(
         children: [
           Image.asset(
@@ -116,7 +144,7 @@ class _Item extends ConsumerWidget {
                 begin: Offset.zero,
                 end: const Offset(1, 1),
               ),
-          Text('\$${product.addScore}').animate().fade(
+          Text('\$${product.price}').animate().fade(
                 delay: const Duration(
                   milliseconds: 1000,
                 ),

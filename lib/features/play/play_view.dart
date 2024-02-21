@@ -1,6 +1,7 @@
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:envawareness/controllers/auth_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +13,16 @@ class PlayView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final username = ref.watch(
+      authControllerProvider.select((state) => state?.displayName ?? ''),
+    );
+
     final gameState = ref.watch(playControllerProvider).requireValue;
     final levelInfo = gameState.levelInfo;
     final playInfo = gameState.playInfo;
 
-    final username = ref.watch(
-      authControllerProvider.select((state) => state?.displayName ?? ''),
-    );
+    final validProductScore = gameState.getValidProductScore();
+    final scorePerSecond = playInfo.perClickScore + validProductScore;
 
     return SafeArea(
       child: Column(
@@ -65,11 +69,11 @@ class PlayView extends ConsumerWidget {
           ),
           AnimatedFlipCounter(
             duration: const Duration(milliseconds: 500),
-            value: playInfo.currentScore,
+            value: playInfo.currentScore ?? 0,
             textStyle: context.textTheme.displayLarge,
           ),
           Text(
-            '${playInfo.perClickScore}/s',
+            '$scorePerSecond/s',
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall

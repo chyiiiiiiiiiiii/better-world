@@ -11,6 +11,7 @@ import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/repositories/game_repository.dart';
 import 'package:envawareness/repositories/store_repository.dart';
 import 'package:envawareness/states/game_state.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_animations/animation_builder/custom_animation_builder.dart';
@@ -26,7 +27,7 @@ class PlayController extends _$PlayController {
 
   String get _userId => ref.watch(authRepositoryProvider).userId;
 
-  final int _scoreReadyToUpload = 0;
+  PlayInfo get _playInfo => state.requireValue.playInfo;
 
   @override
   FutureOr<GameState> build() async {
@@ -35,28 +36,17 @@ class PlayController extends _$PlayController {
     final products = await getProducts();
     final levelTotalCount = await getLevelTotalCount();
     final finishProgress =
-        (playInfo.currentScore / levelInfo.passScore).clamp(0.5, 1.0);
+        (playInfo.currentScore / levelInfo.passScore).clamp(0.0, 1.0);
     final purchaseHistoryList =
         await ref.read(storeRepositoryProvider).getValidPurchaseHistory();
 
     listenPlayInfo();
 
     updateScoresPerSecond();
+    startUploadScoreTimer();
     checkValidPurchasePerSecond();
-    _uploadScoreTimer ??=
-        Timer.periodic(const Duration(seconds: 5), (timer) {});
 
-    ref.onDispose(() {
-      _playInfoSubscription?.cancel();
-      _playInfoSubscription = null;
-
-      _scoresPerSecondTimer?.cancel();
-      _scoresPerSecondTimer = null;
-      _checkValidPurchaseTimer?.cancel();
-      _checkValidPurchaseTimer = null;
-      _uploadScoreTimer?.cancel();
-      _uploadScoreTimer = null;
-    });
+    onDispose();
 
     return GameState(
       levelInfo: levelInfo,
@@ -66,6 +56,20 @@ class PlayController extends _$PlayController {
       validPurchases: purchaseHistoryList,
       finishProgress: finishProgress,
     );
+  }
+
+  void onDispose() {
+    ref.onDispose(() {
+      _playInfoSubscription?.cancel();
+      _playInfoSubscription = null;
+
+      _scoresPerSecondTimer?.cancel();
+      _scoresPerSecondTimer = null;
+      _uploadScoreTimer?.cancel();
+      _uploadScoreTimer = null;
+      _checkValidPurchaseTimer?.cancel();
+      _checkValidPurchaseTimer = null;
+    });
   }
 
   void updateScoresPerSecond() {
@@ -83,24 +87,65 @@ class PlayController extends _$PlayController {
     });
   }
 
-  void checkValidPurchasePerSecond() {
-    _checkValidPurchaseTimer ??=
-        Timer.periodic(const Duration(seconds: 1), (timer) {
-      update(
-        (previous) {
-          final filteredData = previous.validPurchases
-              .where(
-                (element) =>
-                    element.endAt > DateTime.now().millisecondsSinceEpoch,
-              )
-              .toList();
+  void startUploadScoreTimer() {
+    _uploadScoreTimer ??= Timer.periodic(const Duration(seconds: 5), (timer) {
+      final playInfo = state.value?.playInfo;
+      if (playInfo == null) {
+        return;
+      }
 
-          return previous.copyWith(
-            validPurchases: filteredData,
-          );
-        },
-      );
+      ref.watch(gameRepositoryProvider).updatePlayInfo(playInfo: playInfo);
     });
+  }
+
+  void checkValidPurchasePerSecond() {
+    _checkValidPurchaseTimer?.cancel();
+    _checkValidPurchaseTimer = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) async {
+        await update(
+          (previous) {
+            // final expiredPurchases = previous.validPurchases
+            //     .where(
+            //       (element) =>
+            //           element.endAt < DateTime.now().millisecondsSinceEpoch,
+            //     )
+            //     .toList();
+            // final expiredScores = expiredPurchases
+            //     .map(
+            //       (purchase) =>
+            //           previous
+            //               .getValidPurchaseProducts()
+            //               .firstOrNull
+            //               ?.addScore ??
+            //           0,
+            //     )
+            //     .toList();
+            // final expiredScoresSum = expiredScores.isNotEmpty
+            //     ? expiredScores.reduce(
+            //         (value, element) => value + element,
+            //       )
+            //     : 0;
+
+            // final newPlayInfo = _playInfo.copyWith(
+            //   perClickScore: _playInfo.perClickScore - expiredScoresSum,
+            // );
+
+            final validPurchases = previous.validPurchases
+                .where(
+                  (element) =>
+                      element.endAt > DateTime.now().millisecondsSinceEpoch,
+                )
+                .toList();
+
+            return previous.copyWith(
+              // playInfo: newPlayInfo,
+              validPurchases: validPurchases,
+            );
+          },
+        );
+      },
+    );
   }
 
   Future<PlayInfo> getPlayInfo() async {
@@ -118,6 +163,12 @@ class PlayController extends _$PlayController {
 
       return playInfo;
     }
+  }
+
+  Future<void> updatePlayInfo(PlayInfo playInfo) async {
+    await update(
+      (previous) => previous.copyWith(playInfo: playInfo),
+    );
   }
 
   Future<LevelInfo> getLevelInfo({required int level}) async {
@@ -157,22 +208,21 @@ class PlayController extends _$PlayController {
   }
 
   void listenPlayInfo() {
-    final stream =
-        ref.watch(gameRepositoryProvider).listenUser(userId: _userId);
-    _playInfoSubscription = stream.listen((snapshot) {
-      final playInfo = snapshot.data();
-      if (playInfo == null) {
-        return;
-      }
-
-      onListenPlayInfo(playInfo);
-    });
+    // final stream =
+    //     ref.watch(gameRepositoryProvider).listenUser(userId: _userId);
+    // _playInfoSubscription = stream.listen((snapshot) async {
+    //   final playInfo = snapshot.data();
+    //   if (playInfo == null) {
+    //     return;
+    //   }
+    // );
+    // });
   }
 
   Future<void> onListenPlayInfo(PlayInfo playInfo) async {
     final finishProgress =
         (playInfo.currentScore / state.requireValue.levelInfo.passScore)
-            .clamp(0.5, 1.0);
+            .clamp(0.0, 1.0);
     await update(
       (previous) => previous.copyWith(
         playInfo: playInfo,
@@ -247,25 +297,39 @@ class PlayController extends _$PlayController {
   }
 
   Future<void> updateMyScore({int? extraScore}) async {
-    final playInfo = state.requireValue.playInfo;
-    final isGameCompleted = await checkIsGameCompleted();
-    if (isGameCompleted) {
-      return;
+    try {
+      final playInfo = state.requireValue.playInfo;
+      final isGameCompleted = await checkIsGameCompleted();
+      if (isGameCompleted) {
+        return;
+      }
+
+      var scoreToBeAdded = 0;
+      if (extraScore != null) {
+        scoreToBeAdded = extraScore;
+      } else {
+        scoreToBeAdded = playInfo.perClickScore;
+      }
+
+      final validProductScore = state.requireValue.getValidProductScore();
+      scoreToBeAdded += validProductScore;
+
+      final newScore = playInfo.currentScore + scoreToBeAdded;
+      final newTotalScore = playInfo.totalScore + scoreToBeAdded;
+
+      final newPlayInfo = playInfo.copyWith(
+        currentScore: newScore,
+        totalScore: newTotalScore,
+      );
+
+      // await ref
+      //     .watch(gameRepositoryProvider)
+      //     .updatePlayInfo(playInfo: newPlayInfo);
+
+      await onListenPlayInfo(newPlayInfo);
+    } catch (error) {
+      debugPrint(error.toString());
     }
-
-    var newScore = playInfo.currentScore;
-
-    if (extraScore != null) {
-      newScore += extraScore;
-    } else {
-      newScore += playInfo.perClickScore;
-    }
-
-    final newPlayInfo = playInfo.copyWith(currentScore: newScore);
-
-    await ref
-        .watch(gameRepositoryProvider)
-        .updatePlayInfo(playInfo: newPlayInfo);
   }
 
   Future<PlayInfo> updateMyLevelToNext() async {
@@ -276,6 +340,7 @@ class PlayController extends _$PlayController {
       currentScore: 0,
     );
 
+    await updatePlayInfo(newPlayInfo);
     await ref
         .watch(gameRepositoryProvider)
         .updatePlayInfo(playInfo: newPlayInfo);
