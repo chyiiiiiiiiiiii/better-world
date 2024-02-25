@@ -7,7 +7,7 @@ part of 'recycle_game_controller.dart';
 // **************************************************************************
 
 String _$recycleGameControllerHash() =>
-    r'82f887d9967aa67af068e6cfe973ce69ebbf4454';
+    r'445b17306a54e450c60d14229ebce3286bbad84d';
 
 /// See also [RecycleGameController].
 @ProviderFor(RecycleGameController)

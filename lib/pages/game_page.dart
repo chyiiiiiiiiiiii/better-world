@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/menu/menu_widget.dart';
 import 'package:envawareness/features/particle/particle.dart';
@@ -45,8 +44,6 @@ class GamePage extends ConsumerWidget {
     });
 
     final isEarthBlock = ref.watch(isEarthBlockProvider);
-
-    final editMode = ref.watch(editModeProvider);
 
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,

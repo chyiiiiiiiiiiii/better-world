@@ -1,8 +1,10 @@
 import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/pages/endangered_specise_cards_page.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class MenuWidget extends ConsumerWidget {
   const MenuWidget({
@@ -47,6 +49,12 @@ class MenuWidget extends ConsumerWidget {
             ref.read(editModeProvider.notifier).toggle();
           },
           text: 'EditMode ${isEditMode ? 'OFF' : 'ON'}',
+        ),
+        DefaultButton(
+          onPressed: () {
+            context.push(EndangeredSpeciseCardsPage.routePath);
+          },
+          text: 'cardpage',
         ),
         DefaultButton(
           onPressed: () {

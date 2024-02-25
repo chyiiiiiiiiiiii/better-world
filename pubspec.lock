@@ -464,6 +464,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_tilt:
+    dependency: "direct main"
+    description:
+      name: flutter_tilt
+      sha256: ff3f566ac8277d93f999f7e3303319d92fdb5d3b02ac909074da000677f6f737
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
