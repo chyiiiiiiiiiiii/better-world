@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'endangeredspeciesinfo.freezed.dart';
-part 'endangeredspeciesinfo.g.dart';
+part 'endangered_species_info.freezed.dart';
+part 'endangered_species_info.g.dart';
 
 @freezed
 class EndangeredSpeciesInfo with _$EndangeredSpeciesInfo {

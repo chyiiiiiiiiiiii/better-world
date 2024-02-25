@@ -1,4 +1,4 @@
-import 'package:envawareness/data/endangeredspeciesinfo.dart';
+import 'package:envawareness/data/endangered_species_info.dart';
 
 List<EndangeredSpeciesInfo> get endangeredSpecies {
   return endangeredSpeciesJson.map(EndangeredSpeciesInfo.fromJson).toList();

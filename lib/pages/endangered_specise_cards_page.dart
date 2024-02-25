@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envawareness/constants/endangered_specise_data.dart';
-import 'package:envawareness/data/endangeredspeciesinfo.dart';
+import 'package:envawareness/data/endangered_species_info.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
@@ -27,47 +27,55 @@ class EndangeredSpeciseCardsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: const Text('Endangered Species'),
       ),
-      body: GridView.count(
-        crossAxisCount: 3,
-        children: List.generate(
-          endangeredSpecies.length,
-          (index) {
-            return AppTap(
-              onTap: () {
-                _showDialog(
-                  context,
-                  endangeredSpecies[index],
-                );
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    height: 100,
-                    child: CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      imageUrl: endangeredSpecies[index].image,
-                      placeholder: (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                      memCacheHeight: 200,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: GridView.count(
+          crossAxisCount: 3,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          children: List.generate(
+            endangeredSpecies.length,
+            (index) {
+              return AppTap(
+                onTap: () {
+                  _showDialog(
+                    context,
+                    endangeredSpecies[index],
+                  );
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl: endangeredSpecies[index].image,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          memCacheHeight: 200,
+                        ),
+                      ),
                     ),
-                  ),
-                  Text(
-                    endangeredSpecies[index].name,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            );
-          },
+                    Text(
+                      endangeredSpecies[index].name,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -150,10 +158,7 @@ class SpeciseCard extends StatelessWidget {
                         margin: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(info.image),
-                            fit: BoxFit.cover,
-                          ),
+                          color: Colors.grey,
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.2),
@@ -163,6 +168,19 @@ class SpeciseCard extends StatelessWidget {
                             ),
                           ],
                         ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: info.image,
+                            placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            memCacheHeight: 200,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -171,7 +189,7 @@ class SpeciseCard extends StatelessWidget {
             ],
           ),
           child: Container(
-            height: 500,
+            height: 400,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
