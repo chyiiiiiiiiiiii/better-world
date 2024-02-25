@@ -44,7 +44,9 @@ class GameRepository {
     required PlayInfo playInfo,
   }) async {
     await playInfoCollectionReference.doc(playInfo.userId).set(
-          playInfo,
+          playInfo.copyWith(
+            lastUpdateAt: DateTime.now().millisecondsSinceEpoch,
+          ),
         );
   }
 

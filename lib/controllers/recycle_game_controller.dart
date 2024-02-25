@@ -13,7 +13,10 @@ class RecycleGameController extends _$RecycleGameController {
   Future<void> getPrize(int score) async {
     await ref
         .read(playControllerProvider.notifier)
-        .updateMyScore(extraScore: score * 100);
+        .updateClickCount(needReset: true);
+    await ref
+        .read(playControllerProvider.notifier)
+        .updateMyScore(extraScore: score);
   }
 
   void onSwipe({
@@ -52,7 +55,7 @@ class RecycleGameCards extends _$RecycleGameCards {
 @riverpod
 class RecycleGameScore extends _$RecycleGameScore {
   void addScore() {
-    state++;
+    state += 100;
   }
 
   @override

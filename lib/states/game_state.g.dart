@@ -18,6 +18,7 @@ _$GameStateImpl _$$GameStateImplFromJson(Map<String, dynamic> json) =>
           .toList(),
       levelTotalCount: json['levelTotalCount'] as int,
       finishProgress: (json['finishProgress'] as num).toDouble(),
+      clickCount: json['clickCount'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$GameStateImplToJson(_$GameStateImpl instance) =>
@@ -28,4 +29,5 @@ Map<String, dynamic> _$$GameStateImplToJson(_$GameStateImpl instance) =>
       'validPurchases': instance.validPurchases.map((e) => e.toJson()).toList(),
       'levelTotalCount': instance.levelTotalCount,
       'finishProgress': instance.finishProgress,
+      'clickCount': instance.clickCount,
     };

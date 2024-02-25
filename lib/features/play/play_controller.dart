@@ -105,32 +105,6 @@ class PlayController extends _$PlayController {
       (timer) async {
         await update(
           (previous) {
-            // final expiredPurchases = previous.validPurchases
-            //     .where(
-            //       (element) =>
-            //           element.endAt < DateTime.now().millisecondsSinceEpoch,
-            //     )
-            //     .toList();
-            // final expiredScores = expiredPurchases
-            //     .map(
-            //       (purchase) =>
-            //           previous
-            //               .getValidPurchaseProducts()
-            //               .firstOrNull
-            //               ?.addScore ??
-            //           0,
-            //     )
-            //     .toList();
-            // final expiredScoresSum = expiredScores.isNotEmpty
-            //     ? expiredScores.reduce(
-            //         (value, element) => value + element,
-            //       )
-            //     : 0;
-
-            // final newPlayInfo = _playInfo.copyWith(
-            //   perClickScore: _playInfo.perClickScore - expiredScoresSum,
-            // );
-
             final validPurchases = previous.validPurchases
                 .where(
                   (element) =>
@@ -254,7 +228,7 @@ class PlayController extends _$PlayController {
     }
 
     ref.read(showMessageProvider.notifier).show(
-          'Congratulations on passing level ${playInfo.currentLevel}, keep saving the planet!',
+          'Congratulations on passing level ${playInfo.currentLevel}, keep saving the planet! (Add 1/s)',
         );
 
     final newPlayInfo = await updateMyLevelToNext();
@@ -284,7 +258,7 @@ class PlayController extends _$PlayController {
     return true;
   }
 
-  void onEarthTap() {
+  Future<void> onEarthTap() async {
     final blockEarth = ref.read(isEarthBlockProvider);
     if (blockEarth) {
       return;
@@ -293,7 +267,22 @@ class PlayController extends _$PlayController {
     ref.read(confettiControllerProvider).stop();
     ref.read(confettiControllerProvider).play();
 
-    updateMyScore();
+    await updateClickCount();
+
+    await updateMyScore();
+  }
+
+  Future<int> updateClickCount({
+    bool needReset = false,
+  }) async {
+    final gameState = state.requireValue;
+    final newGameState = gameState.copyWith(
+      clickCount: needReset ? 0 : gameState.clickCount + 1,
+    );
+
+    await update((previous) => newGameState);
+
+    return newGameState.clickCount;
   }
 
   Future<void> updateMyScore({int? extraScore}) async {
@@ -334,10 +323,13 @@ class PlayController extends _$PlayController {
 
   Future<PlayInfo> updateMyLevelToNext() async {
     final playInfo = state.requireValue.playInfo;
+
     final newLevel = playInfo.currentLevel + 1;
+    final newPerClickScore = playInfo.perClickScore + 1;
     final newPlayInfo = playInfo.copyWith(
       currentLevel: newLevel,
       currentScore: 0,
+      perClickScore: newPerClickScore,
     );
 
     await updatePlayInfo(newPlayInfo);

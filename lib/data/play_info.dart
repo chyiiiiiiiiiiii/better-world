@@ -13,6 +13,7 @@ class PlayInfo with _$PlayInfo {
     @JsonKey(name: 'used_score') @Default(0) int usedScore,
     @JsonKey(name: 'per_click_score') @Default(1) int perClickScore,
     @JsonKey(name: 'is_game_completed') @Default(false) bool isGameCompleted,
+    @JsonKey(name: 'last_update_at') @Default(0) int lastUpdateAt,
   }) = _PlayInfo;
 
   factory PlayInfo.fromJson(Map<String, dynamic> json) =>

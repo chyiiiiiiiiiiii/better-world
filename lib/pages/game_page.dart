@@ -1,19 +1,21 @@
+import 'dart:io';
+
 import 'package:envawareness/controllers/earth_controller.dart';
+import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/menu/menu_widget.dart';
 import 'package:envawareness/features/particle/particle.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/features/play/play_view.dart';
+import 'package:envawareness/features/right_side_view.dart';
 import 'package:envawareness/features/store/store_view.dart';
+import 'package:envawareness/features/valid_product_side_view.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
-import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/spacings.dart';
 import 'package:envawareness/zdogs/earth_zdog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class GamePage extends ConsumerWidget {
   const GamePage({super.key});
@@ -23,44 +25,8 @@ class GamePage extends ConsumerWidget {
   Future<void> _showMessage({
     required BuildContext context,
     required String message,
-    required WidgetRef ref,
   }) {
-    return showGeneralDialog(
-      context: context,
-      pageBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-      ) {
-        Future.delayed(const Duration(seconds: 5), () => context.pop());
-
-        return ScaleTransition(
-          scale: animation,
-          child: Dialog(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    message,
-                    style: context.textTheme.headlineSmall,
-                    textAlign: TextAlign.center,
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                    onPressed: () => context.pop(),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
+    return showMessageDialog(context, message: message);
   }
 
   @override
@@ -73,7 +39,6 @@ class GamePage extends ConsumerWidget {
       await _showMessage(
         context: context,
         message: next,
-        ref: ref,
       );
 
       ref.invalidate(showMessageProvider);
@@ -86,62 +51,61 @@ class GamePage extends ConsumerWidget {
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Center(
-        child: ref.watch(playControllerProvider).when(
-          data: (gameState) {
-            final validPurchaseProducts = gameState.getValidPurchaseProducts();
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: Platform.isAndroid ? context.paddingTop / 2 : 0,
+            bottom: context.safePaddingBottom,
+          ),
+          child: ref.watch(playControllerProvider).when(
+            data: (gameState) {
+              final validPurchaseProducts =
+                  gameState.getValidPurchaseProducts();
 
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                const ParticleArea(),
-                const Positioned.fill(top: 100, child: EarthZdog()),
-                if (!isEarthBlock) const PlayView(),
-                if (isEarthBlock)
-                  const Positioned.fill(
-                    top: 100,
-                    child: StoreView(),
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  const ParticleArea(),
+                  const Positioned.fill(top: 100, child: EarthZdog()),
+                  if (!isEarthBlock) const PlayView(),
+                  if (isEarthBlock)
+                    const Positioned.fill(
+                      top: 100,
+                      child: StoreView(),
+                    ),
+                  const Positioned(
+                    bottom: Spacings.px8,
+                    child: MenuWidget(),
                   ),
-                const Positioned(
-                  bottom: Spacings.px8,
-                  child: MenuWidget(),
-                ),
-                Positioned(
-                  left: Spacings.px8,
-                  bottom: Spacings.px84,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: validPurchaseProducts
-                        .map(
-                          (e) => Column(
-                            children: [
-                              Text(
-                                e.name,
-                                style: context.textTheme.titleMedium,
-                              )
-                                  .animate(
-                                    onPlay: (controller) => controller.repeat(
-                                      reverse: true,
-                                    ), // loop
-                                  )
-                                  .fade(duration: Durations.extralong3),
-                              Gaps.h8,
-                            ],
-                          ),
-                        )
-                        .toList(),
+                  const Positioned(
+                    bottom: Spacings.px8,
+                    child: MenuWidget(),
                   ),
-                ),
-              ],
-            );
-          },
-          loading: () {
-            return const CircularProgressIndicator();
-          },
-          error: (error, stackTrace) {
-            return Text(
-              '$error',
-            );
-          },
+                  Positioned(
+                    left: Spacings.px8,
+                    bottom: Spacings.px84,
+                    child: ValidProductSideView(
+                      validPurchaseProducts: validPurchaseProducts,
+                    ),
+                  ),
+                  Positioned(
+                    right: Spacings.px8,
+                    bottom: Spacings.px84,
+                    child: RightSideView(
+                      canPlayRecycleGame: gameState.canPlayRecycleGame,
+                    ),
+                  ),
+                ],
+              );
+            },
+            loading: () {
+              return const CircularProgressIndicator();
+            },
+            error: (error, stackTrace) {
+              return Text(
+                '$error',
+              );
+            },
+          ),
         ),
       ),
     );

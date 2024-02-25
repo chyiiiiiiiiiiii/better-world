@@ -16,6 +16,7 @@ class GameState with _$GameState {
     required List<PurchaseHistory> validPurchases,
     required int levelTotalCount,
     required double finishProgress,
+    @Default(0) int clickCount,
   }) = _GameState;
 
   factory GameState.fromJson(Map<String, dynamic> json) =>
@@ -23,6 +24,8 @@ class GameState with _$GameState {
 }
 
 extension GameStateExtension on GameState {
+  bool get canPlayRecycleGame => clickCount >= 20;
+
   List<Product> getValidPurchaseProducts() {
     final validPurchaseProducts = <Product>[];
 

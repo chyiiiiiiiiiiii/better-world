@@ -14,12 +14,11 @@ class PlayView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final username = ref.watch(
-      authControllerProvider.select((state) => state?.displayName ?? ''),
+    final user = ref.watch(
+      authControllerProvider.select((state) => state),
     );
-    final userPhotoURL = ref.watch(
-      authControllerProvider.select((state) => state?.photoURL ?? ''),
-    );
+    final username = user?.displayName ?? '';
+    final userPhotoURL = user?.photoURL ?? '';
 
     final gameState = ref.watch(playControllerProvider).requireValue;
     final levelInfo = gameState.levelInfo;
