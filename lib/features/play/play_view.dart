@@ -64,19 +64,19 @@ class PlayView extends ConsumerWidget {
                   'Hi, $username',
                   style: context.textTheme.titleMedium,
                 ),
-                Gaps.w24,
-                Row(
-                  children: [
-                    Text(
-                      'Level: ${levelInfo.level}',
-                      style: context.textTheme.titleMedium,
-                    ),
-                    const SizedBox(width: 20),
-                    Text(
-                      'Pass Score: ${levelInfo.passScore}',
-                      style: context.textTheme.titleMedium,
-                    ),
-                  ],
+              ],
+            ),
+            Gaps.h8,
+            Row(
+              children: [
+                Text(
+                  'Level: ${levelInfo.level}',
+                  style: context.textTheme.titleMedium,
+                ),
+                const SizedBox(width: 20),
+                Text(
+                  'Pass Score: ${levelInfo.passScore}',
+                  style: context.textTheme.titleMedium,
                 ),
               ],
             ),

@@ -28,6 +28,7 @@ dependencies:
   json_annotation: ^4.8.1
   cached_network_image: ^3.3.1
   google_sign_in: ^6.2.1
+  sensors_plus: ^4.0.2
   zflutter:
     git:
       url: https://github.com/CarGuo/zflutter.git

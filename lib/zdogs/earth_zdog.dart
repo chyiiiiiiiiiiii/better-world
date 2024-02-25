@@ -2,8 +2,10 @@ import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/features/play/game_level_widgets.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/utils/radient.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:zflutter/zflutter.dart';
 
@@ -53,7 +55,25 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
     });
   }
 
+  // for change edit mode in the first time, we need to set initial value
   bool changingEditMode = false;
+  double _rotationX = 0;
+  double _rotationY = 0;
+
+  @override
+  void initState() {
+    // 使用默认的采样频率获取陀螺仪数据流
+
+    // 监听陀螺仪事件流
+    magnetometerEventStream(samplingPeriod: SensorInterval.gameInterval)
+        .listen((event) {
+      _rotationX = event.x;
+      _rotationY = event.y;
+      setState(() {});
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,12 +113,21 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                           zDragController.value = ZVector.zero;
                           changingEditMode = false;
                         }
+
+                        final dynamicRotate = kIsWeb
+                            ? zDragController.rotate
+                            : ZVector.only(
+                                y: -(_rotationX - 120).toRadius(),
+                                x: (_rotationY + 58).toRadius(),
+                              );
+
+                        final rotateValue = editMode ? dynamicRotate : rotate;
+
                         return ZIllustration(
                           zoom: (earthFlipMovie.get('zoom') as double) + 0.3,
                           children: [
                             ZPositioned(
-                              rotate:
-                                  editMode ? zDragController.rotate : rotate,
+                              rotate: rotateValue,
                               translate: ZVector.only(
                                 y: earthFlipMovie.get('translate'),
                               ),
@@ -115,48 +144,13 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                               ),
                             ),
                             ZPositioned(
-                              rotate:
-                                  editMode ? zDragController.rotate : rotate,
+                              rotate: rotateValue,
                               translate: ZVector.only(
                                 y: earthFlipMovie.get('translate'),
                               ),
                               child: ZGroup(
                                 children: [
                                   ...getLevelWidget(levelInfo.level),
-                                  PlanteZdog(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      244,
-                                      252,
-                                      255,
-                                    ),
-                                    paths: [
-                                      ZMove.only(
-                                        x: -15,
-                                        y: -95,
-                                        z: 20,
-                                      ),
-                                      ZLine.only(
-                                        x: -20,
-                                        y: -87,
-                                        z: 30,
-                                      ),
-                                      ZLine.only(
-                                        y: -80,
-                                        z: 35,
-                                      ),
-                                      ZLine.only(
-                                        x: 15,
-                                        y: -84,
-                                        z: 30,
-                                      ),
-                                      ZLine.only(
-                                        x: 15,
-                                        y: -95,
-                                        z: 20,
-                                      ),
-                                    ],
-                                  ),
                                   PlanteZdog(
                                     paths: [
                                       ZMove.only(
@@ -227,7 +221,7 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                               ),
                             ),
                             CloudZdog(
-                              editMode ? zDragController.rotate : ZVector.zero,
+                              rotate: rotateValue,
                             ),
                           ],
                         );
@@ -350,7 +344,10 @@ class SunZdog extends StatelessWidget {
 }
 
 class CloudZdog extends StatelessWidget {
-  const CloudZdog(this.rotate, {super.key});
+  const CloudZdog({
+    required this.rotate,
+    super.key,
+  });
   final ZVector rotate;
 
   @override
