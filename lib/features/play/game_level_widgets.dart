@@ -86,6 +86,40 @@ List<Widget?> levelWidgets = <Widget?>[
     ),
   ),
   // level 8
+  PlanteZdog(
+    color: const Color.fromARGB(
+      255,
+      244,
+      252,
+      255,
+    ),
+    paths: [
+      ZMove.only(
+        x: -15,
+        y: -95,
+        z: 20,
+      ),
+      ZLine.only(
+        x: -20,
+        y: -87,
+        z: 30,
+      ),
+      ZLine.only(
+        y: -80,
+        z: 35,
+      ),
+      ZLine.only(
+        x: 15,
+        y: -84,
+        z: 30,
+      ),
+      ZLine.only(
+        x: 15,
+        y: -95,
+        z: 20,
+      ),
+    ],
+  ),
 ];
 
 List<Widget> getLevelWidget(int level) {
