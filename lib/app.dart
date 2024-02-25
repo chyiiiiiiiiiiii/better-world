@@ -13,7 +13,7 @@ class App extends ConsumerStatefulWidget {
 }
 
 class _AppState extends ConsumerState<App> {
-  bool _isDarkTheme = false;
+  bool _isDarkTheme = true;
 
   void _toggleTheme() {
     setState(() {

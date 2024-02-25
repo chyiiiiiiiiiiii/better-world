@@ -1,3 +1,4 @@
+import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/features/menu/menu_widget.dart';
 import 'package:envawareness/features/particle/particle.dart';
 import 'package:envawareness/features/play/play_controller.dart';
@@ -83,6 +84,8 @@ class GamePage extends ConsumerWidget {
       ),
     );
 
+    final editMode = ref.watch(editModeProvider);
+
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Center(
@@ -101,6 +104,7 @@ class GamePage extends ConsumerWidget {
                     child: StoreView(),
                   ),
                 // const TrashMonster(),
+
                 const Positioned(
                   bottom: Spacings.px8,
                   child: MenuWidget(),
