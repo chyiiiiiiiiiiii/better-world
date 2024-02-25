@@ -94,7 +94,7 @@ class GamePage extends ConsumerWidget {
               alignment: Alignment.center,
               children: [
                 const ParticleArea(),
-                const EarthZdog(),
+                if (editMode) const EarthZdog(),
                 if (!isEarthBlock) const PlayView(),
                 if (isEarthBlock)
                   const Positioned.fill(
