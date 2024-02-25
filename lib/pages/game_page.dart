@@ -9,7 +9,6 @@ import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/spacings.dart';
-import 'package:envawareness/zdogs/dash_zdog.dart';
 import 'package:envawareness/zdogs/earth_zdog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -97,14 +96,11 @@ class GamePage extends ConsumerWidget {
                 const ParticleArea(),
                 const EarthZdog(),
                 if (!isEarthBlock) const PlayView(),
-                const DashZdog(),
                 if (isEarthBlock)
                   const Positioned.fill(
                     top: 100,
                     child: StoreView(),
                   ),
-                // const TrashMonster(),
-
                 const Positioned(
                   bottom: Spacings.px8,
                   child: MenuWidget(),

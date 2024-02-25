@@ -1,4 +1,5 @@
 import 'package:animated_flip_counter/animated_flip_counter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envawareness/controllers/auth_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/states/game_state.dart';
@@ -16,6 +17,9 @@ class PlayView extends ConsumerWidget {
     final username = ref.watch(
       authControllerProvider.select((state) => state?.displayName ?? ''),
     );
+    final userPhotoURL = ref.watch(
+      authControllerProvider.select((state) => state?.photoURL ?? ''),
+    );
 
     final gameState = ref.watch(playControllerProvider).requireValue;
     final levelInfo = gameState.levelInfo;
@@ -25,62 +29,90 @@ class PlayView extends ConsumerWidget {
     final scorePerSecond = playInfo.perClickScore + validProductScore;
 
     return SafeArea(
-      child: Column(
-        children: [
-          Column(
-            children: [
-              Text(
-                'Hi, $username',
-                style: context.textTheme.titleLarge,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Level: ${levelInfo.level}',
-                    style: context.textTheme.titleLarge,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                CachedNetworkImage(
+                  imageUrl: userPhotoURL,
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 2,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
+                          spreadRadius: 1,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: CircleAvatar(
+                      backgroundImage: imageProvider,
+                      radius: 18,
+                    ),
                   ),
-                  const SizedBox(width: 20),
-                  Text(
-                    'Pass Score: ${levelInfo.passScore}',
-                    style: context.textTheme.titleLarge,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Gaps.h8,
-          const Divider(),
-          Gaps.h8,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Re',
-                style: context.textTheme.headlineMedium,
-                textAlign: TextAlign.center,
-              ),
-              Gaps.w8,
-              Image.asset(
-                'assets/images/recycling.png',
-                height: 28,
-              ),
-            ],
-          ),
-          AnimatedFlipCounter(
-            duration: const Duration(milliseconds: 500),
-            value: playInfo.currentScore ?? 0,
-            textStyle: context.textTheme.displayLarge,
-          ),
-          Text(
-            '$scorePerSecond/s',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(fontSize: 14),
-          ),
-        ],
-      ).animate().fade(),
+                ),
+                Gaps.w12,
+                Text(
+                  'Hi, $username',
+                  style: context.textTheme.titleMedium,
+                ),
+                Gaps.w24,
+                Row(
+                  children: [
+                    Text(
+                      'Level: ${levelInfo.level}',
+                      style: context.textTheme.titleMedium,
+                    ),
+                    const SizedBox(width: 20),
+                    Text(
+                      'Pass Score: ${levelInfo.passScore}',
+                      style: context.textTheme.titleMedium,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Gaps.h8,
+            const Divider(),
+            Gaps.h8,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Re',
+                  style: context.textTheme.headlineSmall,
+                  textAlign: TextAlign.center,
+                ),
+                Gaps.w8,
+                Image.asset(
+                  'assets/images/recycling.png',
+                  height: 28,
+                ),
+              ],
+            ),
+            AnimatedFlipCounter(
+              duration: const Duration(milliseconds: 500),
+              value: playInfo.currentScore ?? 0,
+              textStyle: context.textTheme.displayLarge,
+            ),
+            Text(
+              '$scorePerSecond/s',
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(fontSize: 14),
+            ),
+          ],
+        ).animate().fade(),
+      ),
     );
   }
 }

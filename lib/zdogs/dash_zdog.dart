@@ -1,4 +1,3 @@
-import 'package:envawareness/controllers/dash_controller.dart';
 import 'package:envawareness/utils/radient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,6 +26,51 @@ class _DashZdogState extends ConsumerState<DashZdog>
 
   late MovieTween flyTween;
 
+  MovieTween createOrbitTween(
+    Offset start,
+    Offset end,
+    double maxScale,
+    double rotate,
+  ) {
+    const duration = Duration(seconds: 2);
+    const halfDuration = Duration(milliseconds: 1000);
+
+    return MovieTween()
+      ..tween(
+        'x',
+        Tween<double>(begin: start.dx, end: end.dx),
+        duration: duration,
+      )
+      ..tween(
+        'y',
+        Tween<double>(begin: start.dy, end: end.dy),
+        duration: duration,
+        curve: Curves.easeInOut,
+      )
+      ..tween(
+        'scale',
+        Tween<double>(begin: 1, end: maxScale),
+        duration: halfDuration,
+      )
+      ..tween(
+        'scale',
+        Tween<double>(begin: maxScale, end: 1),
+        duration: halfDuration,
+        begin: halfDuration,
+      )
+      ..tween(
+        'z',
+        Tween<double>(begin: 0, end: -rotate),
+        duration: halfDuration,
+      )
+      ..tween(
+        'z',
+        Tween<double>(begin: -rotate, end: 0),
+        duration: halfDuration,
+        begin: halfDuration,
+      );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -34,62 +78,21 @@ class _DashZdogState extends ConsumerState<DashZdog>
       vsync: this,
       duration: const Duration(seconds: 5),
     );
-    const flyHeight = 5.0;
-    final zRotate = -30.0.toRadius();
-    flyTween = MovieTween()
-      ..tween(
-        'x',
-        Tween<double>(begin: -230, end: 230),
-        duration: const Duration(seconds: 10),
-      )
-      ..tween(
-        'y',
-        Tween<double>(begin: -flyHeight, end: flyHeight)
-            .chain(CurveTween(curve: Curves.easeInOut)),
-        duration: const Duration(milliseconds: 500),
-      )
-      ..tween(
-        'y',
-        Tween<double>(begin: flyHeight, end: -flyHeight)
-            .chain(CurveTween(curve: Curves.easeInOut)),
-        duration: const Duration(milliseconds: 500),
-        begin: const Duration(milliseconds: 500),
-      )
-      ..tween(
-        'y',
-        Tween<double>(begin: -flyHeight, end: flyHeight)
-            .chain(CurveTween(curve: Curves.easeInOut)),
-        duration: const Duration(milliseconds: 500),
-        begin: const Duration(milliseconds: 1000),
-      )
-      ..tween(
-        'y',
-        Tween<double>(begin: flyHeight, end: -flyHeight)
-            .chain(CurveTween(curve: Curves.easeInOut)),
-        duration: const Duration(milliseconds: 500),
-        begin: const Duration(milliseconds: 1500),
-      )
-      ..tween(
-        'z',
-        Tween<double>(begin: zRotate, end: -3.0.toRadius())
-            .chain(CurveTween(curve: Curves.easeInOut)),
-        duration: const Duration(milliseconds: 300),
-        begin: const Duration(milliseconds: 4000),
-      )
-      ..tween(
-        'z',
-        Tween<double>(begin: -3.0.toRadius(), end: zRotate)
-            .chain(CurveTween(curve: Curves.easeInOut)),
-        duration: const Duration(milliseconds: 500),
-        begin: const Duration(milliseconds: 4700),
-      );
-    update();
+
+    flyTween = createOrbitTween(
+      const Offset(-100, -100),
+      const Offset(100, 100),
+      1.5,
+      43.toRadius(),
+    );
+
+    updateFlipWings();
   }
 
-  void update() {
+  void updateFlipWings() {
     Future.delayed(const Duration(), () {
       if (mounted) {
-        animationController.forward(from: 0).whenComplete(update);
+        animationController.forward(from: 0).whenComplete(updateFlipWings);
       }
     });
   }
@@ -103,10 +106,6 @@ class _DashZdogState extends ConsumerState<DashZdog>
 
   @override
   Widget build(BuildContext context) {
-    final showDash = ref.watch(showDashProvider);
-    if (!showDash) {
-      return const SizedBox();
-    }
     final dashAnimations = List<Animation<double>>.generate(
       20,
       (index) => Tween<double>(
@@ -123,44 +122,36 @@ class _DashZdogState extends ConsumerState<DashZdog>
         ),
       ),
     );
-    return IgnorePointer(
-      child: CustomAnimationBuilder(
-        tween: flyTween,
-        duration: const Duration(seconds: 10),
-        curve: Curves.easeInOut,
-        control: Control.loop,
-        builder: (context, value, _) {
-          return AnimatedBuilder(
-            animation: animationController,
-            builder: (context, _) {
-              final dash = dashAnimations.fold<double>(
-                0,
-                (previousValue, element) => previousValue + element.value,
-              );
-              return ZDragDetector(
-                builder: (context, controller) {
-                  return ZIllustration(
-                    children: [
-                      ZPositioned(
-                        rotate: widget.rotate.copyWith(
-                          y: widget.rotate.y + value.get('z'),
-                        ),
-                        // rotate: controller.rotate,
-                        translate: widget.translate.copyWith(
-                          y: widget.translate.y + value.get('y'),
-                          x: widget.translate.x + value.get('x'),
-                        ),
-                        scale: ZVector.all(widget.scale),
-                        child: Dash(flight: dash),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          );
-        },
-      ),
+    return CustomAnimationBuilder(
+      tween: flyTween,
+      duration: const Duration(seconds: 6),
+      curve: Curves.easeInOut,
+      control: Control.loop,
+      builder: (context, value, _) {
+        return AnimatedBuilder(
+          animation: animationController,
+          builder: (context, _) {
+            final dash = dashAnimations.fold<double>(
+              0,
+              (previousValue, element) => previousValue + element.value,
+            );
+            return ZPositioned(
+              rotate: widget.rotate.copyWith(
+                y: widget.rotate.y + value.get('z'),
+              ),
+              // rotate: controller.rotate,
+              translate: widget.translate.copyWith(
+                // y: widget.translate.y + value.get('y'),
+                // x: widget.translate.x + value.get('x'),
+                y: -100,
+                x: -100,
+                z: widget.translate.z + dash,
+              ),
+              child: Dash(flight: dash),
+            );
+          },
+        );
+      },
     );
   }
 }
@@ -182,7 +173,7 @@ class Dash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ZPositioned(
-      translate: ZVector.only(y: flight),
+      translate: ZVector.only(y: flight, z: 50),
       child: ZGroup(
         children: [
           ZShape(

@@ -1,4 +1,5 @@
 import 'package:envawareness/controllers/earth_controller.dart';
+import 'package:envawareness/features/play/game_level_widgets.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/utils/radient.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +64,9 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
       changingEditMode = true;
     });
 
+    final gameState = ref.watch(playControllerProvider).requireValue;
+    final levelInfo = gameState.levelInfo;
+
     return GestureDetector(
       onTap: () {
         ref.read(playControllerProvider.notifier).onEarthTap();
@@ -72,8 +76,8 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
         tween: earthFlipTween,
         control: leaderBoardControl,
         duration: const Duration(milliseconds: 800),
-        builder: (context, leaderMovie, __) {
-          final rotate = ZVector.only(y: leaderMovie.get('rotate'));
+        builder: (context, earthFlipMovie, __) {
+          final rotate = ZVector.only(y: earthFlipMovie.get('rotate'));
           return CustomAnimationBuilder<Movie>(
             tween: earthClickTween,
             control: control,
@@ -90,13 +94,13 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                           changingEditMode = false;
                         }
                         return ZIllustration(
-                          zoom: leaderMovie.get('zoom'),
+                          zoom: (earthFlipMovie.get('zoom') as double) + 0.3,
                           children: [
                             ZPositioned(
                               rotate:
                                   editMode ? zDragController.rotate : rotate,
                               translate: ZVector.only(
-                                y: leaderMovie.get('translate'),
+                                y: earthFlipMovie.get('translate'),
                               ),
                               child: ZHemisphere(
                                 diameter: 120,
@@ -114,151 +118,108 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                               rotate:
                                   editMode ? zDragController.rotate : rotate,
                               translate: ZVector.only(
-                                y: leaderMovie.get('translate'),
+                                y: earthFlipMovie.get('translate'),
                               ),
                               child: ZGroup(
                                 children: [
-                                  const SunZdog(
-                                    translate: ZVector.only(
-                                      y: -100,
-                                      x: 100,
-                                      z: -10,
+                                  ...getLevelWidget(levelInfo.level),
+                                  PlanteZdog(
+                                    color: const Color.fromARGB(
+                                      255,
+                                      244,
+                                      252,
+                                      255,
                                     ),
-                                  ),
-                                  SolarPanel(
-                                    translate: const ZVector.only(
-                                      y: -60,
-                                      x: -55,
-                                      z: 90,
-                                    ),
-                                    rotate: ZVector.only(
-                                      x: 30.toRadius(),
-                                      z: 120.toRadius(),
-                                    ),
-                                  ),
-                                  const SolarPanel(
-                                    translate: ZVector.only(
-                                      y: 100,
-                                      x: 100,
-                                    ),
-                                  ),
-                                  WindTurbines(
-                                    translate: const ZVector.only(
-                                      y: 150,
-                                      x: 100,
-                                    ),
-                                    rotate: ZVector.only(
-                                      x: 90.toRadius(),
-                                    ),
-                                  ),
-                                  WindTurbines(
-                                    translate: const ZVector.only(
-                                      y: -5,
-                                      x: 90,
-                                      z: 80,
-                                    ),
-                                    rotate: ZVector.only(
-                                      x: 0.toRadius(),
-                                      z: 90.toRadius(),
-                                      y: -50.toRadius(),
-                                    ),
-                                  ),
-                                  TriangleTreeZdog(
-                                    translate: const ZVector.only(y: -105),
-                                    rotate: ZVector.only(
-                                      x: 90.toRadius(),
-                                    ),
-                                  ),
-                                  CircleTreeZdog(
-                                    translate: const ZVector.only(
-                                      y: -105,
-                                      x: 10,
-                                      z: 20,
-                                    ),
-                                    rotate: ZVector.only(
-                                      x: 90.toRadius(),
-                                    ),
-                                  ),
-                                  ZGroup(
-                                    children: [
-                                      PlanteZdog(
-                                        paths: [
-                                          ZMove.only(
-                                            x: 50,
-                                            y: -10,
-                                            z: 100,
-                                          ),
-                                          ZLine.only(
-                                            x: 90,
-                                            y: -5,
-                                            z: 100 - 40,
-                                          ),
-                                          ZLine.only(
-                                            x: 80,
-                                            y: 40,
-                                            z: 100 - 40,
-                                          ),
-                                          ZLine.only(
-                                            x: 80,
-                                            y: 50,
-                                            z: 100 - 30,
-                                          ),
-                                          ZLine.only(
-                                            x: 40,
-                                            y: 40,
-                                            z: 100,
-                                          ),
-                                        ],
+                                    paths: [
+                                      ZMove.only(
+                                        x: -15,
+                                        y: -95,
+                                        z: 20,
+                                      ),
+                                      ZLine.only(
+                                        x: -20,
+                                        y: -87,
+                                        z: 30,
+                                      ),
+                                      ZLine.only(
+                                        y: -80,
+                                        z: 35,
+                                      ),
+                                      ZLine.only(
+                                        x: 15,
+                                        y: -84,
+                                        z: 30,
+                                      ),
+                                      ZLine.only(
+                                        x: 15,
+                                        y: -95,
+                                        z: 20,
                                       ),
                                     ],
                                   ),
-                                  ZGroup(
-                                    children: [
-                                      PlanteZdog(
-                                        paths: [
-                                          ZMove.only(
-                                            x: -50,
-                                            y: -70,
-                                            z: 10,
-                                          ),
-                                          ZLine.only(
-                                            x: -90,
-                                            y: -20,
-                                            z: 10,
-                                          ),
-                                          ZLine.only(
-                                            x: -40,
-                                            z: 100 - 30,
-                                          ),
-                                          ZLine.only(
-                                            x: -10,
-                                            y: -20,
-                                            z: 100,
-                                          ),
-                                        ],
+                                  PlanteZdog(
+                                    paths: [
+                                      ZMove.only(
+                                        x: 50,
+                                        y: -10,
+                                        z: 90,
+                                      ),
+                                      ZLine.only(
+                                        x: 90,
+                                        y: -5,
+                                        z: 100 - 40,
+                                      ),
+                                      ZLine.only(
+                                        x: 80,
+                                        y: 50,
+                                        z: 100 - 45,
+                                      ),
+                                      ZLine.only(
+                                        x: 40,
+                                        y: 40,
+                                        z: 90,
                                       ),
                                     ],
                                   ),
-                                  ZGroup(
-                                    children: [
-                                      PlanteZdog(
-                                        paths: [
-                                          ZMove.only(
-                                            x: -50,
-                                            y: 50,
-                                            z: 10,
-                                          ),
-                                          ZLine.only(
-                                            x: -60,
-                                            y: 60,
-                                            z: 10,
-                                          ),
-                                          ZLine.only(
-                                            x: -40,
-                                            y: 80,
-                                            z: 20,
-                                          ),
-                                        ],
+                                  PlanteZdog(
+                                    paths: [
+                                      ZMove.only(
+                                        x: -50,
+                                        y: -70,
+                                        z: 10,
+                                      ),
+                                      ZLine.only(
+                                        x: -90,
+                                        y: -20,
+                                        z: 10,
+                                      ),
+                                      ZLine.only(
+                                        x: -40,
+                                        z: 100 - 30,
+                                      ),
+                                      ZLine.only(
+                                        x: -10,
+                                        y: -20,
+                                        z: 100,
+                                      ),
+                                    ],
+                                  ),
+                                  PlanteZdog(
+                                    paths: [
+                                      ZMove.only(
+                                        x: -50,
+                                        y: 50,
+                                        z: 10,
+                                      ),
+                                      ZLine.only(
+                                        x: -60,
+                                        y: 60,
+                                        z: 10,
+                                      ),
+                                      ZLine.only(
+                                        x: -40,
+                                        y: 80,
+                                        z: 20,
                                       ),
                                     ],
                                   ),
@@ -294,67 +255,96 @@ class SunZdog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ZPositioned(
-      rotate: rotate,
-      translate: translate,
-      child: ZGroup(
-        children: [
-          ZShape(
-            stroke: 80,
-            color: const Color.fromARGB(255, 249, 183, 18),
-          ),
-          ZShape(
-            color: Colors.black,
-            stroke: 3,
-            path: [
-              ZMove.only(x: -10, y: -5, z: 10),
-              ZLine.only(x: -10, y: 5, z: 10),
+    return MirrorAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 20),
+      duration: const Duration(seconds: 5),
+      curve: Curves.easeInOut,
+      builder: (context, value, _) {
+        return ZPositioned(
+          rotate: rotate,
+          translate: translate,
+          child: ZGroup(
+            children: [
+              ZEllipse(
+                width: 120,
+                height: 120,
+                stroke: value,
+                fill: true,
+                color: const Color.fromARGB(255, 255, 226, 154),
+              ),
+              ZEllipse(
+                width: 100,
+                height: 100,
+                stroke: value,
+                fill: true,
+                color: const Color.fromARGB(255, 255, 214, 110),
+              ),
+              // ZShape(
+              //   stroke: 120 + value,
+              //   color: const Color.fromARGB(255, 255, 211, 100),
+              // ),
+              // ZShape(
+              //   stroke: 100 + value / 2,
+              //   color: const Color.fromARGB(255, 255, 202, 69),
+              // ),
+              ZShape(
+                stroke: 80,
+                color: const Color.fromARGB(255, 249, 183, 18),
+              ),
+              ZShape(
+                color: Colors.black,
+                stroke: 3,
+                path: [
+                  ZMove.only(x: -10, y: -5, z: 10),
+                  ZLine.only(x: -10, y: 5, z: 10),
+                ],
+              ),
+              ZShape(
+                color: Colors.black,
+                stroke: 3,
+                path: [
+                  ZMove.only(
+                    x: 10,
+                    y: -5,
+                    z: 10,
+                  ),
+                  ZLine.only(
+                    x: 10,
+                    y: 5,
+                    z: 10,
+                  ),
+                ],
+              ),
+              ZShape(
+                path: [
+                  const ZMove.vector(
+                    ZVector.only(
+                      x: -10,
+                      y: 15,
+                      z: 10,
+                    ),
+                  ), // Start point
+                  ZArc(
+                    // First arc to form the smile
+                    corner: const ZVector.only(
+                      y: 25,
+                      z: 10,
+                    ), // Middle point to curve
+                    end: const ZVector.only(
+                      x: 10,
+                      y: 15,
+                      z: 10,
+                    ), // End point
+                  ),
+                ],
+                stroke: 3.5,
+                color: Colors.black,
+                closed: false,
+              ),
             ],
           ),
-          ZShape(
-            color: Colors.black,
-            stroke: 3,
-            path: [
-              ZMove.only(
-                x: 10,
-                y: -5,
-                z: 10,
-              ),
-              ZLine.only(
-                x: 10,
-                y: 5,
-                z: 10,
-              ),
-            ],
-          ),
-          ZShape(
-            path: [
-              const ZMove.vector(
-                ZVector.only(
-                  x: -10,
-                  y: 15,
-                  z: 10,
-                ),
-              ), // Start point
-              ZArc(
-                // First arc to form the smile
-                corner: const ZVector.only(
-                  y: 25,
-                  z: 10,
-                ), // Middle point to curve
-                end: const ZVector.only(
-                  x: 10,
-                  y: 15,
-                  z: 10,
-                ), // End point
-              ),
-            ],
-            stroke: 3.5,
-            color: Colors.black,
-            closed: false,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -529,8 +519,8 @@ class SolarPanel extends StatelessWidget {
   }
 }
 
-class WindTurbines extends StatelessWidget {
-  const WindTurbines({
+class WindTurbinesZdog extends StatelessWidget {
+  const WindTurbinesZdog({
     required this.translate,
     this.rotate = ZVector.zero,
     super.key,
@@ -602,7 +592,7 @@ class WindTurbines extends StatelessWidget {
                 diameter: 3,
                 length: 20,
                 frontface: Colors.white,
-                color: Colors.white,
+                color: const Color.fromARGB(255, 242, 242, 242),
                 backface: Colors.grey,
               ),
             ],
@@ -615,8 +605,8 @@ class WindTurbines extends StatelessWidget {
 
 class TriangleTreeZdog extends StatelessWidget {
   const TriangleTreeZdog({
-    required this.rotate,
     required this.translate,
+    this.rotate = ZVector.zero,
     super.key,
   });
   final ZVector rotate;
@@ -673,6 +663,7 @@ class CircleTreeZdog extends StatelessWidget {
   });
   final ZVector rotate;
   final ZVector translate;
+  final Color leafColor = const Color.fromARGB(255, 160, 215, 64);
   @override
   Widget build(BuildContext context) {
     return ZPositioned(
@@ -680,17 +671,22 @@ class CircleTreeZdog extends StatelessWidget {
       translate: translate,
       child: ZGroup(
         children: [
-          ZCylinder(
-            diameter: 5,
-            length: 20,
-            color: const Color.fromARGB(255, 161, 119, 56),
-            backface: Colors.green,
+          ZPositioned(
+            translate: const ZVector.only(y: -1),
+            child: ZCylinder(
+              diameter: 5,
+              length: 20,
+              color: const Color.fromARGB(255, 161, 119, 56),
+              backface: leafColor,
+            ),
           ),
           ZPositioned(
-            translate: const ZVector.only(z: 7),
+            translate: const ZVector.only(
+              z: 10,
+            ),
             child: ZShape(
               stroke: 20,
-              color: const Color.fromARGB(255, 84, 183, 99),
+              color: leafColor,
             ),
           ),
         ],
@@ -728,10 +724,12 @@ class CloudPieceZdog extends StatelessWidget {
 class PlanteZdog extends StatelessWidget {
   const PlanteZdog({
     required this.paths,
+    this.color = const Color.fromARGB(255, 120, 204, 97),
     super.key,
   });
 
   final List<ZPathCommand> paths;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -739,7 +737,7 @@ class PlanteZdog extends StatelessWidget {
       path: paths,
       fill: true,
       stroke: 20,
-      color: const Color.fromARGB(255, 87, 193, 103),
+      color: color,
     );
   }
 }
