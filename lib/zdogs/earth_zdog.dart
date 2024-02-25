@@ -1,6 +1,7 @@
 import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/utils/radient.dart';
+import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_animations/simple_animations.dart';
@@ -63,196 +64,186 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
       changingEditMode = true;
     });
 
-    return GestureDetector(
-      onTap: () {
-        ref.read(playControllerProvider.notifier).onEarthTap();
-        _toggleDirection();
-      },
-      child: CustomAnimationBuilder<Movie>(
-        tween: earthFlipTween,
-        control: leaderBoardControl,
-        duration: const Duration(milliseconds: 800),
-        builder: (context, leaderMovie, __) {
-          final rotate = ZVector.only(y: leaderMovie.get('rotate'));
-          return CustomAnimationBuilder<Movie>(
-            tween: earthClickTween,
-            control: control,
-            duration: const Duration(milliseconds: 150),
-            builder: (context, value, __) {
-              return Stack(
-                children: [
-                  Transform.scale(
-                    scale: value.get('zoom'),
-                    child: ZDragDetector(
-                      builder: (context, zDragController) {
-                        if (changingEditMode) {
-                          zDragController.value = ZVector.zero;
-                          changingEditMode = false;
-                        }
-                        return ZIllustration(
-                          zoom: leaderMovie.get('zoom'),
+    return CustomAnimationBuilder<Movie>(
+      tween: earthFlipTween,
+      control: leaderBoardControl,
+      duration: const Duration(milliseconds: 800),
+      builder: (context, leaderMovie, __) {
+        final rotate = ZVector.only(y: leaderMovie.get('rotate'));
+        return CustomAnimationBuilder<Movie>(
+          tween: earthClickTween,
+          control: control,
+          duration: const Duration(milliseconds: 150),
+          builder: (context, value, __) {
+            return AppTap(
+              onTap: () {
+                ref.read(playControllerProvider.notifier).onEarthTap();
+                _toggleDirection();
+              },
+              child: ZDragDetector(
+                builder: (context, zDragController) {
+                  if (changingEditMode) {
+                    zDragController.value = ZVector.zero;
+                    changingEditMode = false;
+                  }
+                  return ZIllustration(
+                    zoom: leaderMovie.get('zoom'),
+                    children: [
+                      ZPositioned(
+                        rotate: editMode ? zDragController.rotate : rotate,
+                        translate: ZVector.only(
+                          y: leaderMovie.get('translate'),
+                        ),
+                        child: ZHemisphere(
+                          diameter: 120,
+                          stroke: 80,
+                          color: const Color.fromARGB(
+                            255,
+                            39,
+                            139,
+                            233,
+                          ),
+                          backfaceColor: const Color(0xffEEAA00),
+                        ),
+                      ),
+                      ZPositioned(
+                        rotate: editMode ? zDragController.rotate : rotate,
+                        translate: ZVector.only(
+                          y: leaderMovie.get('translate'),
+                        ),
+                        child: ZGroup(
                           children: [
-                            ZPositioned(
-                              rotate:
-                                  editMode ? zDragController.rotate : rotate,
-                              translate: ZVector.only(
-                                y: leaderMovie.get('translate'),
+                            WindTurbines(
+                              translate: const ZVector.only(
+                                y: -10,
+                                x: 80,
+                                z: 100,
                               ),
-                              child: ZHemisphere(
-                                diameter: 120,
-                                stroke: 80,
-                                color: const Color.fromARGB(
-                                  255,
-                                  39,
-                                  139,
-                                  233,
-                                ),
-                                backfaceColor: const Color(0xffEEAA00),
+                              rotate: ZVector.only(
+                                x: 0.toRadius(),
+                                z: 90.toRadius(),
+                                y: -50.toRadius(),
                               ),
                             ),
-                            ZPositioned(
-                              rotate:
-                                  editMode ? zDragController.rotate : rotate,
-                              translate: ZVector.only(
-                                y: leaderMovie.get('translate'),
+                            SolarPanel(
+                              translate: const ZVector.only(y: -105, x: 100),
+                              rotate: ZVector.only(
+                                x: 90.toRadius(),
                               ),
-                              child: ZGroup(
-                                children: [
-                                  WindTurbines(
-                                    translate: const ZVector.only(
+                            ),
+                            TriangleTreeZdog(
+                              translate: const ZVector.only(y: -105),
+                              rotate: ZVector.only(
+                                x: 90.toRadius(),
+                              ),
+                            ),
+                            CircleTreeZdog(
+                              translate: const ZVector.only(
+                                y: -105,
+                                x: 10,
+                                z: 20,
+                              ),
+                              rotate: ZVector.only(
+                                x: 90.toRadius(),
+                              ),
+                            ),
+                            ZGroup(
+                              children: [
+                                PlanteZdog(
+                                  paths: [
+                                    ZMove.only(
+                                      x: 50,
                                       y: -10,
-                                      x: 80,
                                       z: 100,
                                     ),
-                                    rotate: ZVector.only(
-                                      x: 0.toRadius(),
-                                      z: 90.toRadius(),
-                                      y: -50.toRadius(),
+                                    ZLine.only(
+                                      x: 90,
+                                      y: -5,
+                                      z: 100 - 40,
                                     ),
-                                  ),
-                                  SolarPanel(
-                                    translate:
-                                        const ZVector.only(y: -105, x: 100),
-                                    rotate: ZVector.only(
-                                      x: 90.toRadius(),
+                                    ZLine.only(
+                                      x: 80,
+                                      y: 40,
+                                      z: 100 - 40,
                                     ),
-                                  ),
-                                  TriangleTreeZdog(
-                                    translate: const ZVector.only(y: -105),
-                                    rotate: ZVector.only(
-                                      x: 90.toRadius(),
+                                    ZLine.only(
+                                      x: 80,
+                                      y: 50,
+                                      z: 100 - 30,
                                     ),
-                                  ),
-                                  CircleTreeZdog(
-                                    translate: const ZVector.only(
-                                      y: -105,
-                                      x: 10,
+                                    ZLine.only(
+                                      x: 40,
+                                      y: 40,
+                                      z: 100,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            ZGroup(
+                              children: [
+                                PlanteZdog(
+                                  paths: [
+                                    ZMove.only(
+                                      x: -50,
+                                      y: -70,
+                                      z: 10,
+                                    ),
+                                    ZLine.only(
+                                      x: -90,
+                                      y: -20,
+                                      z: 10,
+                                    ),
+                                    ZLine.only(
+                                      x: -40,
+                                      z: 100 - 30,
+                                    ),
+                                    ZLine.only(
+                                      x: -10,
+                                      y: -20,
+                                      z: 100,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            ZGroup(
+                              children: [
+                                PlanteZdog(
+                                  paths: [
+                                    ZMove.only(
+                                      x: -50,
+                                      y: 50,
+                                      z: 10,
+                                    ),
+                                    ZLine.only(
+                                      x: -60,
+                                      y: 60,
+                                      z: 10,
+                                    ),
+                                    ZLine.only(
+                                      x: -40,
+                                      y: 80,
                                       z: 20,
                                     ),
-                                    rotate: ZVector.only(
-                                      x: 90.toRadius(),
-                                    ),
-                                  ),
-                                  ZGroup(
-                                    children: [
-                                      PlanteZdog(
-                                        paths: [
-                                          ZMove.only(
-                                            x: 50,
-                                            y: -10,
-                                            z: 100,
-                                          ),
-                                          ZLine.only(
-                                            x: 90,
-                                            y: -5,
-                                            z: 100 - 40,
-                                          ),
-                                          ZLine.only(
-                                            x: 80,
-                                            y: 40,
-                                            z: 100 - 40,
-                                          ),
-                                          ZLine.only(
-                                            x: 80,
-                                            y: 50,
-                                            z: 100 - 30,
-                                          ),
-                                          ZLine.only(
-                                            x: 40,
-                                            y: 40,
-                                            z: 100,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  ZGroup(
-                                    children: [
-                                      PlanteZdog(
-                                        paths: [
-                                          ZMove.only(
-                                            x: -50,
-                                            y: -70,
-                                            z: 10,
-                                          ),
-                                          ZLine.only(
-                                            x: -90,
-                                            y: -20,
-                                            z: 10,
-                                          ),
-                                          ZLine.only(
-                                            x: -40,
-                                            z: 100 - 30,
-                                          ),
-                                          ZLine.only(
-                                            x: -10,
-                                            y: -20,
-                                            z: 100,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  ZGroup(
-                                    children: [
-                                      PlanteZdog(
-                                        paths: [
-                                          ZMove.only(
-                                            x: -50,
-                                            y: 50,
-                                            z: 10,
-                                          ),
-                                          ZLine.only(
-                                            x: -60,
-                                            y: 60,
-                                            z: 10,
-                                          ),
-                                          ZLine.only(
-                                            x: -40,
-                                            y: 80,
-                                            z: 20,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            CloudZdog(
-                              editMode ? zDragController.rotate : ZVector.zero,
+                                  ],
+                                ),
+                              ],
                             ),
                           ],
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      ),
+                        ),
+                      ),
+                      CloudZdog(
+                        editMode ? zDragController.rotate : ZVector.zero,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

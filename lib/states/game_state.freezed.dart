@@ -27,6 +27,7 @@ mixin _$GameState {
       throw _privateConstructorUsedError;
   int get levelTotalCount => throw _privateConstructorUsedError;
   double get finishProgress => throw _privateConstructorUsedError;
+  int get clickCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +46,8 @@ abstract class $GameStateCopyWith<$Res> {
       List<Product> products,
       List<PurchaseHistory> validPurchases,
       int levelTotalCount,
-      double finishProgress});
+      double finishProgress,
+      int clickCount});
 
   $PlayInfoCopyWith<$Res> get playInfo;
   $LevelInfoCopyWith<$Res> get levelInfo;
@@ -70,6 +72,7 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
     Object? validPurchases = null,
     Object? levelTotalCount = null,
     Object? finishProgress = null,
+    Object? clickCount = null,
   }) {
     return _then(_value.copyWith(
       playInfo: null == playInfo
@@ -96,6 +99,10 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
           ? _value.finishProgress
           : finishProgress // ignore: cast_nullable_to_non_nullable
               as double,
+      clickCount: null == clickCount
+          ? _value.clickCount
+          : clickCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
@@ -130,7 +137,8 @@ abstract class _$$GameStateImplCopyWith<$Res>
       List<Product> products,
       List<PurchaseHistory> validPurchases,
       int levelTotalCount,
-      double finishProgress});
+      double finishProgress,
+      int clickCount});
 
   @override
   $PlayInfoCopyWith<$Res> get playInfo;
@@ -155,6 +163,7 @@ class __$$GameStateImplCopyWithImpl<$Res>
     Object? validPurchases = null,
     Object? levelTotalCount = null,
     Object? finishProgress = null,
+    Object? clickCount = null,
   }) {
     return _then(_$GameStateImpl(
       playInfo: null == playInfo
@@ -181,6 +190,10 @@ class __$$GameStateImplCopyWithImpl<$Res>
           ? _value.finishProgress
           : finishProgress // ignore: cast_nullable_to_non_nullable
               as double,
+      clickCount: null == clickCount
+          ? _value.clickCount
+          : clickCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -194,7 +207,8 @@ class _$GameStateImpl implements _GameState {
       required final List<Product> products,
       required final List<PurchaseHistory> validPurchases,
       required this.levelTotalCount,
-      required this.finishProgress})
+      required this.finishProgress,
+      this.clickCount = 0})
       : _products = products,
         _validPurchases = validPurchases;
 
@@ -225,10 +239,13 @@ class _$GameStateImpl implements _GameState {
   final int levelTotalCount;
   @override
   final double finishProgress;
+  @override
+  @JsonKey()
+  final int clickCount;
 
   @override
   String toString() {
-    return 'GameState(playInfo: $playInfo, levelInfo: $levelInfo, products: $products, validPurchases: $validPurchases, levelTotalCount: $levelTotalCount, finishProgress: $finishProgress)';
+    return 'GameState(playInfo: $playInfo, levelInfo: $levelInfo, products: $products, validPurchases: $validPurchases, levelTotalCount: $levelTotalCount, finishProgress: $finishProgress, clickCount: $clickCount)';
   }
 
   @override
@@ -246,7 +263,9 @@ class _$GameStateImpl implements _GameState {
             (identical(other.levelTotalCount, levelTotalCount) ||
                 other.levelTotalCount == levelTotalCount) &&
             (identical(other.finishProgress, finishProgress) ||
-                other.finishProgress == finishProgress));
+                other.finishProgress == finishProgress) &&
+            (identical(other.clickCount, clickCount) ||
+                other.clickCount == clickCount));
   }
 
   @JsonKey(ignore: true)
@@ -258,7 +277,8 @@ class _$GameStateImpl implements _GameState {
       const DeepCollectionEquality().hash(_products),
       const DeepCollectionEquality().hash(_validPurchases),
       levelTotalCount,
-      finishProgress);
+      finishProgress,
+      clickCount);
 
   @JsonKey(ignore: true)
   @override
@@ -281,7 +301,8 @@ abstract class _GameState implements GameState {
       required final List<Product> products,
       required final List<PurchaseHistory> validPurchases,
       required final int levelTotalCount,
-      required final double finishProgress}) = _$GameStateImpl;
+      required final double finishProgress,
+      final int clickCount}) = _$GameStateImpl;
 
   factory _GameState.fromJson(Map<String, dynamic> json) =
       _$GameStateImpl.fromJson;
@@ -298,6 +319,8 @@ abstract class _GameState implements GameState {
   int get levelTotalCount;
   @override
   double get finishProgress;
+  @override
+  int get clickCount;
   @override
   @JsonKey(ignore: true)
   _$$GameStateImplCopyWith<_$GameStateImpl> get copyWith =>

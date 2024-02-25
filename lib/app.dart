@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:envawareness/router/app_router.dart';
 import 'package:envawareness/widgets/connectivity_detector.dart';
 import 'package:flutter/material.dart';

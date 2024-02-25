@@ -48,7 +48,7 @@ GoRouter appRouter(AppRouterRef ref) {
         path: GamePage.routePath,
         name: 'game',
         builder: (context, state) {
-          return const GamePage();
+          return  GamePage();
         },
       ),
       GoRoute(

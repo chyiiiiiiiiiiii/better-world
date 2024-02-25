@@ -7,7 +7,7 @@ part of 'recycle_game_controller.dart';
 // **************************************************************************
 
 String _$recycleGameControllerHash() =>
-    r'e5466900ae6dba1bff39ef8d87ef0c642083b011';
+    r'82f887d9967aa67af068e6cfe973ce69ebbf4454';
 
 /// See also [RecycleGameController].
 @ProviderFor(RecycleGameController)
@@ -39,7 +39,7 @@ final recycleGameCardsProvider = AutoDisposeNotifierProvider<RecycleGameCards,
 );
 
 typedef _$RecycleGameCards = AutoDisposeNotifier<List<RecycleGameCard>>;
-String _$recycleGameScoreHash() => r'5ed4e66fd2159a5be39d1fc5314bb850e903f021';
+String _$recycleGameScoreHash() => r'4ab936cf327bc54313788a81d78ce2d5693e1dfa';
 
 /// See also [RecycleGameScore].
 @ProviderFor(RecycleGameScore)
