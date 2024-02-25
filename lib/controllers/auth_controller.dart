@@ -29,7 +29,7 @@ class AuthController extends _$AuthController {
 
   Future<void> signOut() async {
     await ref.watch(authRepositoryProvider).signOut();
-    await ref.read(appRouterProvider).replaceNamed<void>(SignInPage.routePath);
+    await ref.read(appRouterProvider).replace<void>(SignInPage.routePath);
   }
 }
 

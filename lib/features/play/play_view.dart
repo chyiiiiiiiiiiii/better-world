@@ -1,10 +1,12 @@
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envawareness/controllers/auth_controller.dart';
+import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/gaps.dart';
+import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,27 +36,37 @@ class PlayView extends ConsumerWidget {
           children: [
             Row(
               children: [
-                CachedNetworkImage(
-                  imageUrl: userPhotoURL,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 2,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 10,
-                          spreadRadius: 1,
-                          offset: const Offset(0, 2),
+                AppTap(
+                  onTap: () {
+                    showChooseDialog(
+                      context,
+                      message: 'Want to sign out?',
+                      onConfirm: () =>
+                          ref.read(authControllerProvider.notifier).signOut(),
+                    );
+                  },
+                  child: CachedNetworkImage(
+                    imageUrl: userPhotoURL,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 2,
                         ),
-                      ],
-                    ),
-                    child: CircleAvatar(
-                      backgroundImage: imageProvider,
-                      radius: 18,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 10,
+                            spreadRadius: 1,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: CircleAvatar(
+                        backgroundImage: imageProvider,
+                        radius: 18,
+                      ),
                     ),
                   ),
                 ),
@@ -73,9 +85,11 @@ class PlayView extends ConsumerWidget {
                   style: context.textTheme.titleMedium,
                 ),
                 const SizedBox(width: 20),
-                Text(
-                  'Pass Score: ${levelInfo.passScore}',
-                  style: context.textTheme.titleMedium,
+                Expanded(
+                  child: Text(
+                    'Pass Score: ${levelInfo.passScore}',
+                    style: context.textTheme.titleMedium,
+                  ),
                 ),
               ],
             ),

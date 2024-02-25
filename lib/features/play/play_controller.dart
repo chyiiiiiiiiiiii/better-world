@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:envawareness/data/level_info.dart';
@@ -20,6 +21,8 @@ part 'play_controller.g.dart';
 
 @riverpod
 class PlayController extends _$PlayController {
+  AudioPlayer? _audioPlayer;
+
   StreamSubscription<DocumentSnapshot<PlayInfo>>? _playInfoSubscription;
   Timer? _scoresPerSecondTimer;
   Timer? _checkValidPurchaseTimer;
@@ -31,6 +34,8 @@ class PlayController extends _$PlayController {
 
   @override
   FutureOr<GameState> build() async {
+    _audioPlayer = AudioPlayer();
+
     final playInfo = await getPlayInfo();
     final levelInfo = await getLevelInfo(level: playInfo.currentLevel);
     final products = await getProducts();
@@ -60,6 +65,9 @@ class PlayController extends _$PlayController {
 
   void onDispose() {
     ref.onDispose(() {
+      _audioPlayer?.dispose();
+      _audioPlayer = null;
+
       _playInfoSubscription?.cancel();
       _playInfoSubscription = null;
 
@@ -264,6 +272,8 @@ class PlayController extends _$PlayController {
       return;
     }
 
+    await _audioPlayer?.play(AssetSource('sounds/click.wav'));
+
     ref.read(confettiControllerProvider).stop();
     ref.read(confettiControllerProvider).play();
 
@@ -325,10 +335,12 @@ class PlayController extends _$PlayController {
     final playInfo = state.requireValue.playInfo;
 
     final newLevel = playInfo.currentLevel + 1;
+    final newCurrentScore =
+        playInfo.currentScore - state.requireValue.levelInfo.passScore;
     final newPerClickScore = playInfo.perClickScore + 1;
     final newPlayInfo = playInfo.copyWith(
       currentLevel: newLevel,
-      currentScore: 0,
+      currentScore: newCurrentScore,
       perClickScore: newPerClickScore,
     );
 

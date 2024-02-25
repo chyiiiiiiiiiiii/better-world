@@ -26,7 +26,8 @@ mixin _$RecycleGameCard {
   @JsonKey(name: 'name_jp')
   String get nameJp => throw _privateConstructorUsedError;
   int get value => throw _privateConstructorUsedError;
-  String get image => throw _privateConstructorUsedError;
+  @JsonKey(name: 'image_url')
+  String get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +46,7 @@ abstract class $RecycleGameCardCopyWith<$Res> {
       @JsonKey(name: 'name_en') String nameEn,
       @JsonKey(name: 'name_jp') String nameJp,
       int value,
-      String image});
+      @JsonKey(name: 'image_url') String imageUrl});
 }
 
 /// @nodoc
@@ -65,7 +66,7 @@ class _$RecycleGameCardCopyWithImpl<$Res, $Val extends RecycleGameCard>
     Object? nameEn = null,
     Object? nameJp = null,
     Object? value = null,
-    Object? image = null,
+    Object? imageUrl = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -84,9 +85,9 @@ class _$RecycleGameCardCopyWithImpl<$Res, $Val extends RecycleGameCard>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as int,
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -105,7 +106,7 @@ abstract class _$$RecycleGameCardImplCopyWith<$Res>
       @JsonKey(name: 'name_en') String nameEn,
       @JsonKey(name: 'name_jp') String nameJp,
       int value,
-      String image});
+      @JsonKey(name: 'image_url') String imageUrl});
 }
 
 /// @nodoc
@@ -123,7 +124,7 @@ class __$$RecycleGameCardImplCopyWithImpl<$Res>
     Object? nameEn = null,
     Object? nameJp = null,
     Object? value = null,
-    Object? image = null,
+    Object? imageUrl = null,
   }) {
     return _then(_$RecycleGameCardImpl(
       name: null == name
@@ -142,9 +143,9 @@ class __$$RecycleGameCardImplCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as int,
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -158,7 +159,7 @@ class _$RecycleGameCardImpl implements _RecycleGameCard {
       @JsonKey(name: 'name_en') this.nameEn = '',
       @JsonKey(name: 'name_jp') this.nameJp = '',
       this.value = 0,
-      this.image = ''});
+      @JsonKey(name: 'image_url') this.imageUrl = ''});
 
   factory _$RecycleGameCardImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecycleGameCardImplFromJson(json);
@@ -176,12 +177,12 @@ class _$RecycleGameCardImpl implements _RecycleGameCard {
   @JsonKey()
   final int value;
   @override
-  @JsonKey()
-  final String image;
+  @JsonKey(name: 'image_url')
+  final String imageUrl;
 
   @override
   String toString() {
-    return 'RecycleGameCard(name: $name, nameEn: $nameEn, nameJp: $nameJp, value: $value, image: $image)';
+    return 'RecycleGameCard(name: $name, nameEn: $nameEn, nameJp: $nameJp, value: $value, imageUrl: $imageUrl)';
   }
 
   @override
@@ -193,13 +194,14 @@ class _$RecycleGameCardImpl implements _RecycleGameCard {
             (identical(other.nameEn, nameEn) || other.nameEn == nameEn) &&
             (identical(other.nameJp, nameJp) || other.nameJp == nameJp) &&
             (identical(other.value, value) || other.value == value) &&
-            (identical(other.image, image) || other.image == image));
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, name, nameEn, nameJp, value, image);
+      Object.hash(runtimeType, name, nameEn, nameJp, value, imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -218,11 +220,12 @@ class _$RecycleGameCardImpl implements _RecycleGameCard {
 
 abstract class _RecycleGameCard implements RecycleGameCard {
   factory _RecycleGameCard(
-      {final String name,
-      @JsonKey(name: 'name_en') final String nameEn,
-      @JsonKey(name: 'name_jp') final String nameJp,
-      final int value,
-      final String image}) = _$RecycleGameCardImpl;
+          {final String name,
+          @JsonKey(name: 'name_en') final String nameEn,
+          @JsonKey(name: 'name_jp') final String nameJp,
+          final int value,
+          @JsonKey(name: 'image_url') final String imageUrl}) =
+      _$RecycleGameCardImpl;
 
   factory _RecycleGameCard.fromJson(Map<String, dynamic> json) =
       _$RecycleGameCardImpl.fromJson;
@@ -238,7 +241,8 @@ abstract class _RecycleGameCard implements RecycleGameCard {
   @override
   int get value;
   @override
-  String get image;
+  @JsonKey(name: 'image_url')
+  String get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$$RecycleGameCardImplCopyWith<_$RecycleGameCardImpl> get copyWith =>

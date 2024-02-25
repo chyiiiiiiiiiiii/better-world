@@ -14,15 +14,10 @@ class RightSideView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        AnimatedScale(
-          scale: canPlayRecycleGame ? 1 : 0,
-          duration: Durations.medium2,
-          child: const RecycleWidget(),
-        ),
-      ],
+    return AnimatedScale(
+      scale: canPlayRecycleGame ? 1 : 0,
+      duration: canPlayRecycleGame ? Durations.medium2 : Durations.short2,
+      child: const RecycleWidget(),
     );
   }
 }
@@ -86,9 +81,9 @@ class _RecycleWidgetState extends State<RecycleWidget>
             // ),
             boxShadow: [
               BoxShadow(
-                color: Colors.white.withAlpha(120),
+                color: Colors.white.withAlpha(200),
                 blurRadius: _animation.value + 4,
-                spreadRadius: _animation.value / 2,
+                spreadRadius: _animation.value,
               ),
             ],
           ),

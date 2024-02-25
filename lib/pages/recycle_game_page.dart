@@ -92,64 +92,80 @@ class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
                   children: [
                     Visibility(
                       visible: currentCardIndex != 9,
-                      child: AppinioSwiper(
-                        cardCount: gameCards.length,
-                        onCardPositionChanged: (currentPosition) {
-                          position = currentPosition.offset.dx;
-                          setState(() {});
-                        },
-                        onSwipeEnd: (preIndex, targetIndex, swipe) {
-                          position = 0;
-                          ref
-                              .read(recycleGameControllerProvider.notifier)
-                              .onSwipe(
-                                direction: swipe.direction,
-                                card: gameCards[preIndex],
-                              );
-                          currentCardIndex = preIndex;
-                          setState(() {});
-                        },
-                        cardBuilder: (context, index) => Center(
-                          child: Container(
-                            height: 400,
-                            width: 300,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: const Offset(
-                                    0,
-                                    3,
-                                  ), // changes position of shadow
+                      child: Padding(
+                        padding: const EdgeInsets.all(32),
+                        child: AppinioSwiper(
+                          cardCount: gameCards.length,
+                          onCardPositionChanged: (currentPosition) {
+                            position = currentPosition.offset.dx;
+                            setState(() {});
+                          },
+                          onSwipeEnd: (preIndex, targetIndex, swipe) {
+                            position = 0;
+                            ref
+                                .read(recycleGameControllerProvider.notifier)
+                                .onSwipe(
+                                  direction: swipe.direction,
+                                  card: gameCards[preIndex],
+                                );
+                            currentCardIndex = preIndex;
+                            setState(() {});
+                          },
+                          cardBuilder: (context, index) {
+                            final data = gameCards[index];
+
+                            return Center(
+                              child: Container(
+                                width: double.maxFinite,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: const Offset(
+                                        0,
+                                        3,
+                                      ), // changes position of shadow
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              children: [
-                                const Expanded(child: Placeholder()),
-                                const SizedBox(height: 20),
-                                Text(
-                                  gameCards[index].name,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: Image.asset(
+                                          data.imageUrl,
+                                          width: double.maxFinite,
+                                          height: double.maxFinite,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      data.name,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      data.value.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  gameCards[index].value.toString(),
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),

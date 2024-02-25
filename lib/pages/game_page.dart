@@ -76,10 +76,6 @@ class GamePage extends ConsumerWidget {
                     bottom: Spacings.px8,
                     child: MenuWidget(),
                   ),
-                  const Positioned(
-                    bottom: Spacings.px8,
-                    child: MenuWidget(),
-                  ),
                   Positioned(
                     left: Spacings.px8,
                     bottom: Spacings.px84,
@@ -91,7 +87,8 @@ class GamePage extends ConsumerWidget {
                     right: Spacings.px8,
                     bottom: Spacings.px84,
                     child: RightSideView(
-                      canPlayRecycleGame: gameState.canPlayRecycleGame,
+                      canPlayRecycleGame:
+                          !isEarthBlock && gameState.canPlayRecycleGame,
                     ),
                   ),
                 ],
