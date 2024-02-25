@@ -33,8 +33,16 @@ class _AppState extends ConsumerState<App> {
           : const Color(0xff1a1a1a),
       textTheme: GoogleFonts.mPlusRounded1cTextTheme(
         baseTheme.textTheme.copyWith(
-          titleLarge: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.titleLarge,
+          displaySmall: GoogleFonts.mPlusRounded1c(
+            textStyle: baseTheme.textTheme.displaySmall,
+            fontWeight: FontWeight.w800,
+          ),
+          displayMedium: GoogleFonts.mPlusRounded1c(
+            textStyle: baseTheme.textTheme.displayMedium,
+            fontWeight: FontWeight.w800,
+          ),
+          displayLarge: GoogleFonts.mPlusRounded1c(
+            textStyle: baseTheme.textTheme.displayLarge,
             fontWeight: FontWeight.w800,
           ),
           headlineLarge: GoogleFonts.mPlusRounded1c(
@@ -49,16 +57,12 @@ class _AppState extends ConsumerState<App> {
             textStyle: baseTheme.textTheme.headlineSmall,
             fontWeight: FontWeight.w800,
           ),
-          displaySmall: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.displaySmall,
+          titleLarge: GoogleFonts.mPlusRounded1c(
+            textStyle: baseTheme.textTheme.titleLarge,
             fontWeight: FontWeight.w800,
           ),
-          displayMedium: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.displayMedium,
-            fontWeight: FontWeight.w800,
-          ),
-          displayLarge: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.displayLarge,
+          titleMedium: GoogleFonts.mPlusRounded1c(
+            textStyle: baseTheme.textTheme.titleMedium,
             fontWeight: FontWeight.w800,
           ),
         ),

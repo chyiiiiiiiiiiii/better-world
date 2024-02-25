@@ -6,6 +6,7 @@ import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/repositories/game_repository.dart';
 import 'package:envawareness/repositories/store_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'store_controller.g.dart';
@@ -19,46 +20,47 @@ class StoreController extends _$StoreController {
   }
 
   Future<void> purchase({required Product product}) async {
-    final availableScore =
-        ref.read(playControllerProvider).requireValue.playInfo.availableScore;
-    if (availableScore < product.price) {
-      ref
-          .read(showMessageProvider.notifier)
-          .show('No available score for purchase.');
+    try {
+      final availableScore =
+          ref.read(playControllerProvider).requireValue.playInfo.availableScore;
+      if (availableScore < product.price) {
+        ref
+            .read(showMessageProvider.notifier)
+            .show('No available score for purchase.');
 
-      return;
+        return;
+      }
+
+      final purchaseHistory = PurchaseHistory(
+        userId: _userId,
+        productId: product.id,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        endAt: DateTime.now()
+            .add(Duration(seconds: product.validTimeSeconds))
+            .millisecondsSinceEpoch,
+      );
+
+      await ref.read(storeRepositoryProvider).purchase(
+            purchaseHistory: purchaseHistory,
+          );
+
+      await ref
+          .read(playControllerProvider.notifier)
+          .addValidPurchase(purchaseHistory);
+
+      final playInfo = ref.read(playControllerProvider).requireValue.playInfo;
+      final newPlayInfo = playInfo.copyWith(
+        usedScore: playInfo.usedScore + product.price,
+      );
+
+      await ref
+          .read(playControllerProvider.notifier)
+          .updatePlayInfo(newPlayInfo);
+      await ref
+          .read(gameRepositoryProvider)
+          .updatePlayInfo(playInfo: newPlayInfo);
+    } catch (error) {
+      debugPrint(error.toString());
     }
-
-    final purchaseHistory = PurchaseHistory(
-      userId: _userId,
-      productId: product.id,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      endAt: DateTime.now()
-          .add(Duration(seconds: product.validTimeSeconds))
-          .millisecondsSinceEpoch,
-    );
-
-    await ref.read(storeRepositoryProvider).purchase(
-          purchaseHistory: purchaseHistory,
-        );
-
-    await ref
-        .read(playControllerProvider.notifier)
-        .addValidPurchase(purchaseHistory);
-
-    await _updatePlayInfo(product: product);
-  }
-
-  Future<void> _updatePlayInfo({required Product product}) async {
-    final playInfo = ref.read(playControllerProvider).requireValue.playInfo;
-    final newPerClickScore = playInfo.perClickScore + product.addScore;
-    final newPlayInfo = playInfo.copyWith(
-      perClickScore: newPerClickScore,
-      usedScore: playInfo.usedScore + product.price,
-    );
-
-    await ref
-        .read(gameRepositoryProvider)
-        .updatePlayInfo(playInfo: newPlayInfo);
   }
 }

@@ -5,11 +5,14 @@ import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/features/play/play_view.dart';
 import 'package:envawareness/features/store/store_view.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
+import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
+import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/spacings.dart';
 import 'package:envawareness/zdogs/dash_zdog.dart';
 import 'package:envawareness/zdogs/earth_zdog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -78,11 +81,6 @@ class GamePage extends ConsumerWidget {
     });
 
     final isEarthBlock = ref.watch(isEarthBlockProvider);
-    final validPurchases = ref.watch(
-      playControllerProvider.select(
-        (value) => value.value?.validPurchases ?? [],
-      ),
-    );
 
     final editMode = ref.watch(editModeProvider);
 
@@ -91,6 +89,8 @@ class GamePage extends ConsumerWidget {
       child: Center(
         child: ref.watch(playControllerProvider).when(
           data: (gameState) {
+            final validPurchaseProducts = gameState.getValidPurchaseProducts();
+
             return Stack(
               alignment: Alignment.center,
               children: [
@@ -108,6 +108,32 @@ class GamePage extends ConsumerWidget {
                 const Positioned(
                   bottom: Spacings.px8,
                   child: MenuWidget(),
+                ),
+                Positioned(
+                  left: Spacings.px8,
+                  bottom: Spacings.px84,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: validPurchaseProducts
+                        .map(
+                          (e) => Column(
+                            children: [
+                              Text(
+                                e.name,
+                                style: context.textTheme.titleMedium,
+                              )
+                                  .animate(
+                                    onPlay: (controller) => controller.repeat(
+                                      reverse: true,
+                                    ), // loop
+                                  )
+                                  .fade(duration: Durations.extralong3),
+                              Gaps.h8,
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ],
             );
