@@ -1,3 +1,4 @@
+import 'package:envawareness/pages/endangered_specise_cards_page.dart';
 import 'package:envawareness/pages/game_page.dart';
 import 'package:envawareness/pages/recycle_game_page.dart';
 import 'package:envawareness/pages/sign_in_page.dart';
@@ -48,7 +49,7 @@ GoRouter appRouter(AppRouterRef ref) {
         path: GamePage.routePath,
         name: 'game',
         builder: (context, state) {
-          return  GamePage();
+          return const GamePage();
         },
       ),
       GoRoute(
@@ -56,6 +57,13 @@ GoRouter appRouter(AppRouterRef ref) {
         name: 'recycle-game',
         builder: (context, state) {
           return const RecycleGamePage();
+        },
+      ),
+      GoRoute(
+        path: EndangeredSpeciseCardsPage.routePath,
+        name: 'endangered-species-cards',
+        builder: (context, state) {
+          return const EndangeredSpeciseCardsPage();
         },
       ),
     ],
