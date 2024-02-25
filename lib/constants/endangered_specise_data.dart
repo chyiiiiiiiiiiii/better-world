@@ -140,10 +140,6 @@ final endangeredSpecies = [
     'level': 'CR',
   },
   {
-    'name': '馬來亞虎',
-    'level': 'CR',
-  },
-  {
     'name': '蘇門答臘虎',
     'level': 'CR',
   },
@@ -176,10 +172,6 @@ final endangeredSpecies = [
     'level': 'CR',
   },
   {
-    'name': '西部低地大猩猩',
-    'level': 'CR',
-  },
-  {
     'name': '克羅斯河大猩猩',
     'level': 'CR',
   },
@@ -208,19 +200,7 @@ final endangeredSpecies = [
     'level': 'EN',
   },
   {
-    'name': '婆羅洲象',
-    'level': 'EN',
-  },
-  {
-    'name': '倭黑猩猩',
-    'level': 'EN',
-  },
-  {
     'name': '黑猩猩',
-    'level': 'EN',
-  },
-  {
-    'name': '東部低地大猩猩',
     'level': 'EN',
   },
   {

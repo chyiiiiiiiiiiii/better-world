@@ -1,13 +1,10 @@
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envawareness/controllers/auth_controller.dart';
-import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/gaps.dart';
-import 'package:envawareness/utils/spacings.dart';
-import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +18,7 @@ class PlayView extends ConsumerWidget {
       authControllerProvider.select((state) => state),
     );
     final username = user?.displayName ?? '';
-    final avatarImageUrl = user?.photoURL ?? '';
+    final userPhotoURL = user?.photoURL ?? '';
 
     final gameState = ref.watch(playControllerProvider).requireValue;
     final levelInfo = gameState.levelInfo;
@@ -32,60 +29,65 @@ class PlayView extends ConsumerWidget {
 
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Spacings.px20),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Column(
+            Row(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Hi, $username',
-                        style: context.textTheme.headlineMedium,
+                CachedNetworkImage(
+                  imageUrl: userPhotoURL,
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 2,
                       ),
-                    ),
-                    AppTap(
-                      onTap: () => showChooseDialog(
-                        context,
-                        message: 'Want to sign out?',
-                        onConfirm: () {
-                          ref.read(authControllerProvider.notifier).signOut();
-                        },
-                      ),
-                      child: ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: avatarImageUrl,
-                          width: context.width / 7,
-                          height: context.width / 7,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
+                          spreadRadius: 1,
+                          offset: const Offset(0, 2),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                    child: CircleAvatar(
+                      backgroundImage: imageProvider,
+                      radius: 18,
+                    ),
+                  ),
                 ),
-                Gaps.h20,
+                Gaps.w12,
+                Text(
+                  'Hi, $username',
+                  style: context.textTheme.titleMedium,
+                ),
+                Gaps.w24,
                 Row(
                   children: [
                     Text(
                       'Level: ${levelInfo.level}',
-                      style: context.textTheme.titleLarge,
+                      style: context.textTheme.titleMedium,
                     ),
                     const SizedBox(width: 20),
                     Text(
                       'Pass Score: ${levelInfo.passScore}',
-                      style: context.textTheme.titleLarge,
+                      style: context.textTheme.titleMedium,
                     ),
                   ],
                 ),
               ],
             ),
-            Gaps.h20,
+            Gaps.h8,
+            const Divider(),
+            Gaps.h8,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'Re',
-                  style: context.textTheme.headlineMedium,
+                  style: context.textTheme.headlineSmall,
                   textAlign: TextAlign.center,
                 ),
                 Gaps.w8,

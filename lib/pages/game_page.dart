@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/menu/menu_widget.dart';
 import 'package:envawareness/features/particle/particle.dart';
@@ -12,7 +13,6 @@ import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/spacings.dart';
-import 'package:envawareness/zdogs/dash_zdog.dart';
 import 'package:envawareness/zdogs/earth_zdog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,6 +46,8 @@ class GamePage extends ConsumerWidget {
 
     final isEarthBlock = ref.watch(isEarthBlockProvider);
 
+    final editMode = ref.watch(editModeProvider);
+
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Center(
@@ -63,15 +65,17 @@ class GamePage extends ConsumerWidget {
                 alignment: Alignment.center,
                 children: [
                   const ParticleArea(),
-                  const EarthZdog(),
+                  const Positioned.fill(top: 100, child: EarthZdog()),
                   if (!isEarthBlock) const PlayView(),
-                  const DashZdog(),
                   if (isEarthBlock)
                     const Positioned.fill(
                       top: 100,
                       child: StoreView(),
                     ),
-                  // const TrashMonster(),
+                  const Positioned(
+                    bottom: Spacings.px8,
+                    child: MenuWidget(),
+                  ),
                   const Positioned(
                     bottom: Spacings.px8,
                     child: MenuWidget(),

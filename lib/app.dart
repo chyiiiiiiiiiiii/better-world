@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/router/app_router.dart';
 import 'package:envawareness/widgets/connectivity_detector.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +14,8 @@ class App extends ConsumerStatefulWidget {
 }
 
 class _AppState extends ConsumerState<App> {
-  bool _isDarkTheme = false;
-
   void _toggleTheme() {
-    setState(() {
-      _isDarkTheme = !_isDarkTheme;
-    });
+    ref.read(darkModeProvider.notifier).state = !ref.read(darkModeProvider);
   }
 
   // This widget is the root of your application.
@@ -31,7 +26,7 @@ class _AppState extends ConsumerState<App> {
     );
     return baseTheme.copyWith(
       scaffoldBackgroundColor: brightness == Brightness.light
-          ? const Color.fromARGB(255, 229, 207, 171)
+          ? const Color(0xffF9EFDC)
           : const Color(0xff1a1a1a),
       textTheme: GoogleFonts.mPlusRounded1cTextTheme(
         baseTheme.textTheme.copyWith(
@@ -75,6 +70,7 @@ class _AppState extends ConsumerState<App> {
   @override
   Widget build(BuildContext context) {
     final appRouter = ref.watch(appRouterProvider);
+    final darMode = ref.watch(darkModeProvider);
 
     return MaterialApp.router(
       routerConfig: appRouter,
@@ -82,7 +78,7 @@ class _AppState extends ConsumerState<App> {
       title: 'Envawareness',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: _isDarkTheme
+      theme: darMode
           ? _buildTheme(Brightness.dark)
           : _buildTheme(Brightness.light),
       builder: (
