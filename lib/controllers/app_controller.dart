@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final showDashProvider = StateProvider<bool>((ref) {
+final darkModeProvider = StateProvider<bool>((ref) {
   return false;
 });
