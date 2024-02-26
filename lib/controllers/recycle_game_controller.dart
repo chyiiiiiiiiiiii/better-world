@@ -16,7 +16,7 @@ class RecycleGameController extends _$RecycleGameController {
         .updateClickCount(needReset: true);
     await ref
         .read(playControllerProvider.notifier)
-        .updateMyScore(extraScore: score);
+        .updateMyScore(extraScore: score * 100);
   }
 
   void onSwipe({

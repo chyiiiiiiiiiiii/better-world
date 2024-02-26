@@ -5,8 +5,8 @@ import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 
-class EndangeredSpeciseCardsPage extends StatelessWidget {
-  const EndangeredSpeciseCardsPage({super.key});
+class EndangeredSpeciesCardsPage extends StatelessWidget {
+  const EndangeredSpeciesCardsPage({super.key});
 
   static const routePath = '/endangered-species-cards';
 
@@ -17,7 +17,7 @@ class EndangeredSpeciseCardsPage extends StatelessWidget {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return SpeciseCard(
+        return SpeciesCard(
           info: info,
         );
       },
@@ -61,7 +61,6 @@ class EndangeredSpeciseCardsPage extends StatelessWidget {
                               const Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
-                          memCacheHeight: 200,
                         ),
                       ),
                     ),
@@ -82,8 +81,8 @@ class EndangeredSpeciseCardsPage extends StatelessWidget {
   }
 }
 
-class SpeciseCard extends StatelessWidget {
-  const SpeciseCard({
+class SpeciesCard extends StatelessWidget {
+  const SpeciesCard({
     required this.info,
     super.key,
   });

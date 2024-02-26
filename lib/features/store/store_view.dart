@@ -63,7 +63,7 @@ class StoreView extends ConsumerWidget {
                       crossAxisCount: 3,
                       mainAxisSpacing: Spacings.px16,
                       crossAxisSpacing: Spacings.px32,
-                      childAspectRatio: 0.8,
+                      childAspectRatio: 0.6,
                     ),
                     itemCount: products.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -144,7 +144,21 @@ class _Item extends ConsumerWidget {
                 begin: Offset.zero,
                 end: const Offset(1, 1),
               ),
-          Text('\$${product.price}').animate().fade(
+          Text(
+            '+${product.addScore}/${product.validTimeSeconds}(s)',
+            style: context.textTheme.titleMedium,
+          ).animate().fade(
+                delay: const Duration(
+                  milliseconds: 1000,
+                ),
+                duration: Duration(
+                  milliseconds: 150 * index,
+                ),
+              ),
+          Text(
+            '\$${product.price}',
+            style: context.textTheme.titleMedium,
+          ).animate().fade(
                 delay: const Duration(
                   milliseconds: 1000,
                 ),

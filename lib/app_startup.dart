@@ -1,4 +1,3 @@
-import 'package:envawareness/firebase/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +10,7 @@ part 'app_startup.g.dart';
 Future<void> appStartup(AppStartupRef ref) async {
   await Future.wait(
     [
-      Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+      Firebase.initializeApp(),
     ],
   );
 

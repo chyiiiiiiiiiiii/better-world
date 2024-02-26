@@ -1,6 +1,7 @@
 import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/features/play/game_level_widgets.dart';
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/radient.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/foundation.dart';
@@ -114,7 +115,7 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                         changingEditMode = false;
                       }
 
-                      final dynamicRotate = kIsWeb
+                      final dynamicRotate = (kIsWeb || true)
                           ? zDragController.rotate
                           : ZVector.only(
                               y: (-(_rotationX - 130) * 0.7)
@@ -245,7 +246,7 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
   }
 }
 
-class SunZdog extends StatelessWidget {
+class SunZdog extends ConsumerWidget {
   const SunZdog({
     this.translate = ZVector.zero,
     this.rotate = ZVector.zero,
@@ -255,10 +256,19 @@ class SunZdog extends StatelessWidget {
   final ZVector translate;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final validPurchaseProducts = ref
+        .watch(
+          playControllerProvider.select(
+            (value) => value.requireValue.getValidPurchaseProducts(),
+          ),
+        )
+        .map((e) => e.id);
+    final solarPower = validPurchaseProducts.contains('2');
+
     return MirrorAnimationBuilder<double>(
-      tween: Tween(begin: 0, end: 20),
-      duration: const Duration(seconds: 5),
+      tween: Tween(begin: 0, end: solarPower ? 40 : 5),
+      duration: Duration(seconds: solarPower ? 1 : 5),
       curve: Curves.easeInOut,
       builder: (context, value, _) {
         return ZPositioned(
@@ -269,25 +279,17 @@ class SunZdog extends StatelessWidget {
               ZEllipse(
                 width: 120,
                 height: 120,
-                stroke: value,
+                stroke: value + (solarPower ? 60 : 0),
                 fill: true,
                 color: const Color.fromARGB(255, 255, 226, 154),
               ),
               ZEllipse(
                 width: 100,
                 height: 100,
-                stroke: value,
+                stroke: value + (solarPower ? 30 : 0),
                 fill: true,
                 color: const Color.fromARGB(255, 255, 214, 110),
               ),
-              // ZShape(
-              //   stroke: 120 + value,
-              //   color: const Color.fromARGB(255, 255, 211, 100),
-              // ),
-              // ZShape(
-              //   stroke: 100 + value / 2,
-              //   color: const Color.fromARGB(255, 255, 202, 69),
-              // ),
               ZShape(
                 stroke: 80,
                 color: const Color.fromARGB(255, 249, 183, 18),
@@ -408,7 +410,7 @@ class CloudZdog extends StatelessWidget {
   }
 }
 
-class SolarPanel extends StatelessWidget {
+class SolarPanel extends ConsumerWidget {
   const SolarPanel({
     this.translate = ZVector.zero,
     this.rotate = ZVector.zero,
@@ -422,7 +424,7 @@ class SolarPanel extends StatelessWidget {
   final double width;
   final double height;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ZPositioned(
       rotate: rotate,
       translate: translate,
@@ -523,7 +525,7 @@ class SolarPanel extends StatelessWidget {
   }
 }
 
-class WindTurbinesZdog extends StatelessWidget {
+class WindTurbinesZdog extends ConsumerWidget {
   const WindTurbinesZdog({
     required this.translate,
     this.rotate = ZVector.zero,
@@ -532,10 +534,18 @@ class WindTurbinesZdog extends StatelessWidget {
   final ZVector rotate;
   final ZVector translate;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final validPurchaseProducts = ref
+        .watch(
+          playControllerProvider.select(
+            (value) => value.requireValue.getValidPurchaseProducts(),
+          ),
+        )
+        .map((e) => e.id);
+    final windPower = validPurchaseProducts.contains('3');
     return LoopAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 360),
-      duration: const Duration(seconds: 5),
+      duration: Duration(milliseconds: (windPower ? 500 : 5000)),
       builder: (context, value, __) {
         return ZPositioned(
           rotate: rotate,

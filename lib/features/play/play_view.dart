@@ -107,7 +107,7 @@ class PlayView extends ConsumerWidget {
                     Gaps.w4,
                     AppTap(
                       onTap: () {
-                        context.push(EndangeredSpeciseCardsPage.routePath);
+                        context.push(EndangeredSpeciesCardsPage.routePath);
                       },
                       child: const Padding(
                         padding: EdgeInsets.all(8),

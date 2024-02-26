@@ -1,4 +1,4 @@
-package challenge.global.envawareness
+package challenge.global.betterworld
 
 import io.flutter.embedding.android.FlutterActivity
 

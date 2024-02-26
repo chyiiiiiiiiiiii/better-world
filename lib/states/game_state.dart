@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:envawareness/data/level_info.dart';
 import 'package:envawareness/data/play_info.dart';
 import 'package:envawareness/data/product.dart';
@@ -30,7 +31,7 @@ extension GameStateExtension on GameState {
     final validPurchaseProducts = <Product>[];
 
     for (final validPurchase in validPurchases) {
-      final product = products.firstWhere(
+      final product = products.firstWhereOrNull(
         (element) {
           final isSame = element.id == validPurchase.productId;
           final isExpired =
@@ -39,6 +40,10 @@ extension GameStateExtension on GameState {
           return isSame && !isExpired;
         },
       );
+
+      if (product == null) {
+        continue;
+      }
 
       validPurchaseProducts.add(product);
     }

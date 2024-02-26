@@ -19,14 +19,13 @@ class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
   int currentCardIndex = 0;
 
   String scoreTitle(int score) {
-    debugPrint('=======score : $score=========');
-    if (score >= 10) {
+    if (score >= 1000) {
       return '環保小天使';
-    } else if (score >= 5) {
+    } else if (score >= 500) {
       return '環保高手';
-    } else if (score >= 3) {
+    } else if (score >= 300) {
       return '環保達人';
-    } else if (score >= 1) {
+    } else if (score >= 100) {
       return '環保新手';
     } else {
       return '環保小白';
@@ -119,7 +118,7 @@ class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
                               child: Container(
                                 width: double.maxFinite,
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: context.colorScheme.background,
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(

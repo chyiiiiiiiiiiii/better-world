@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>995024296435-uvi0bgsvvjpsmovclinbt690ka9crg8m.apps.googleusercontent.com</string>
+	<string>995024296435-ncnbti6abvk4tfkav0jjifceet01m6us.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.995024296435-uvi0bgsvvjpsmovclinbt690ka9crg8m</string>
+	<string>com.googleusercontent.apps.995024296435-ncnbti6abvk4tfkav0jjifceet01m6us</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>995024296435-53ifi6hh0ltdrgn4g0h3k6n18j2lmbm0.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyB8X-9qzjx0VUZ5XKr6cpc-TyxpDtlB-Cs</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>challenge.global.envawareness.RunnerTests</string>
+	<string>challenge.global.betterworld.RunnerTests</string>
 	<key>PROJECT_ID</key>
 	<string>envawareness-game</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:995024296435:ios:1b21761d232ef8d306da86</string>
+	<string>1:995024296435:ios:f926356960792b6d06da86</string>
 	<key>DATABASE_URL</key>
 	<string>https://envawareness-game-default-rtdb.firebaseio.com</string>
 </dict>

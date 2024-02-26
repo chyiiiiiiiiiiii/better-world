@@ -2,7 +2,7 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_classes_with_only_static_members
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show TargetPlatform, defaultTargetPlatform, kIsWeb;
+    show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -46,10 +46,10 @@ class DefaultFirebaseOptions {
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyCefoHQFuLV3hi5Iiy994K1tVT6B9Mnv2E',
     appId: '1:995024296435:web:e04a3488d207470e06da86',
-    databaseURL: 'https://envawareness-game-default-rtdb.firebaseio.com',
     messagingSenderId: '995024296435',
     projectId: 'envawareness-game',
     authDomain: 'envawareness-game.firebaseapp.com',
+    databaseURL: 'https://envawareness-game-default-rtdb.firebaseio.com',
     storageBucket: 'envawareness-game.appspot.com',
   );
 
@@ -63,19 +63,25 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyB8X-9qzjx0VUZ5XKr6cpc-TyxpDtlB-Cs',
-    appId: '1:995024296435:ios:059f5db47b8e8ac406da86',
+    appId: '1:995024296435:ios:0c576a60fb41457906da86',
     messagingSenderId: '995024296435',
     projectId: 'envawareness-game',
+    databaseURL: 'https://envawareness-game-default-rtdb.firebaseio.com',
     storageBucket: 'envawareness-game.appspot.com',
-    iosBundleId: 'challenge.global.envawareness',
+    androidClientId: '995024296435-53ifi6hh0ltdrgn4g0h3k6n18j2lmbm0.apps.googleusercontent.com',
+    iosClientId: '995024296435-qpk1rnqmq75hl4ketem3i9hec6r5ap6h.apps.googleusercontent.com',
+    iosBundleId: 'challenge.global.betterworld',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyB8X-9qzjx0VUZ5XKr6cpc-TyxpDtlB-Cs',
-    appId: '1:995024296435:ios:1b21761d232ef8d306da86',
+    appId: '1:995024296435:ios:f926356960792b6d06da86',
     messagingSenderId: '995024296435',
     projectId: 'envawareness-game',
+    databaseURL: 'https://envawareness-game-default-rtdb.firebaseio.com',
     storageBucket: 'envawareness-game.appspot.com',
-    iosBundleId: 'challenge.global.envawareness.RunnerTests',
+    androidClientId: '995024296435-53ifi6hh0ltdrgn4g0h3k6n18j2lmbm0.apps.googleusercontent.com',
+    iosClientId: '995024296435-ncnbti6abvk4tfkav0jjifceet01m6us.apps.googleusercontent.com',
+    iosBundleId: 'challenge.global.betterworld.RunnerTests',
   );
 }
