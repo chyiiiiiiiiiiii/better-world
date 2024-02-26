@@ -2,6 +2,7 @@ import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/features/play/game_level_widgets.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/utils/radient.dart';
+import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -80,6 +81,7 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
     final leaderBoardControl =
         ref.watch(leaderBoardAnimationControllerProvider);
     final editMode = ref.watch(editModeProvider);
+
     ref.listen(editModeProvider, (_, editMode) {
       changingEditMode = true;
     });
@@ -87,7 +89,7 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
     final gameState = ref.watch(playControllerProvider).requireValue;
     final levelInfo = gameState.levelInfo;
 
-    return GestureDetector(
+    return AppTap(
       onTap: () {
         ref.read(playControllerProvider.notifier).onEarthTap();
         _toggleDirection();
@@ -105,135 +107,132 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
             builder: (context, value, __) {
               return Stack(
                 children: [
-                  Transform.scale(
-                    scale: value.get('zoom'),
-                    child: ZDragDetector(
-                      builder: (context, zDragController) {
-                        if (changingEditMode) {
-                          zDragController.value = ZVector.zero;
-                          changingEditMode = false;
-                        }
+                  ZDragDetector(
+                    builder: (context, zDragController) {
+                      if (changingEditMode) {
+                        zDragController.value = ZVector.zero;
+                        changingEditMode = false;
+                      }
 
-                        final dynamicRotate = kIsWeb
-                            ? zDragController.rotate
-                            : ZVector.only(
-                                y: (-(_rotationX - 130) * 0.7)
-                                    .clamp(
-                                      -30,
-                                      30,
-                                    )
-                                    .toRadius(),
-                                x: ((_rotationY + 20) * 0.7)
-                                    .clamp(-30, 30)
-                                    .toRadius(),
-                              );
+                      final dynamicRotate = kIsWeb
+                          ? zDragController.rotate
+                          : ZVector.only(
+                              y: (-(_rotationX - 130) * 0.7)
+                                  .clamp(
+                                    -30,
+                                    30,
+                                  )
+                                  .toRadius(),
+                              x: ((_rotationY + 20) * 0.7)
+                                  .clamp(-30, 30)
+                                  .toRadius(),
+                            );
 
-                        final rotateValue = editMode ? dynamicRotate : rotate;
+                      final rotateValue = editMode ? dynamicRotate : rotate;
 
-                        return ZIllustration(
-                          zoom: (earthFlipMovie.get('zoom') as double) + 0.3,
-                          children: [
-                            ZPositioned(
-                              rotate: rotateValue,
-                              translate: ZVector.only(
-                                y: earthFlipMovie.get('translate'),
+                      return ZIllustration(
+                        zoom: (earthFlipMovie.get('zoom') as double) + 0.3,
+                        children: [
+                          ZPositioned(
+                            rotate: rotateValue,
+                            translate: ZVector.only(
+                              y: earthFlipMovie.get('translate'),
+                            ),
+                            child: ZHemisphere(
+                              diameter: 120,
+                              stroke: 80,
+                              color: const Color.fromARGB(
+                                255,
+                                39,
+                                139,
+                                233,
                               ),
-                              child: ZHemisphere(
-                                diameter: 120,
-                                stroke: 80,
-                                color: const Color.fromARGB(
-                                  255,
-                                  39,
-                                  139,
-                                  233,
+                              backfaceColor: const Color(0xffEEAA00),
+                            ),
+                          ),
+                          ZPositioned(
+                            rotate: rotateValue,
+                            translate: ZVector.only(
+                              y: earthFlipMovie.get('translate'),
+                            ),
+                            child: ZGroup(
+                              children: [
+                                ...getLevelWidget(levelInfo.level),
+                                PlanteZdog(
+                                  paths: [
+                                    ZMove.only(
+                                      x: 50,
+                                      y: -10,
+                                      z: 90,
+                                    ),
+                                    ZLine.only(
+                                      x: 90,
+                                      y: -5,
+                                      z: 100 - 40,
+                                    ),
+                                    ZLine.only(
+                                      x: 80,
+                                      y: 50,
+                                      z: 100 - 45,
+                                    ),
+                                    ZLine.only(
+                                      x: 40,
+                                      y: 40,
+                                      z: 90,
+                                    ),
+                                  ],
                                 ),
-                                backfaceColor: const Color(0xffEEAA00),
-                              ),
+                                PlanteZdog(
+                                  paths: [
+                                    ZMove.only(
+                                      x: -50,
+                                      y: -70,
+                                      z: 10,
+                                    ),
+                                    ZLine.only(
+                                      x: -90,
+                                      y: -20,
+                                      z: 10,
+                                    ),
+                                    ZLine.only(
+                                      x: -40,
+                                      z: 100 - 30,
+                                    ),
+                                    ZLine.only(
+                                      x: -10,
+                                      y: -20,
+                                      z: 100,
+                                    ),
+                                  ],
+                                ),
+                                PlanteZdog(
+                                  paths: [
+                                    ZMove.only(
+                                      x: -50,
+                                      y: 50,
+                                      z: 10,
+                                    ),
+                                    ZLine.only(
+                                      x: -60,
+                                      y: 60,
+                                      z: 10,
+                                    ),
+                                    ZLine.only(
+                                      x: -40,
+                                      y: 80,
+                                      z: 20,
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                            ZPositioned(
-                              rotate: rotateValue,
-                              translate: ZVector.only(
-                                y: earthFlipMovie.get('translate'),
-                              ),
-                              child: ZGroup(
-                                children: [
-                                  ...getLevelWidget(levelInfo.level),
-                                  PlanteZdog(
-                                    paths: [
-                                      ZMove.only(
-                                        x: 50,
-                                        y: -10,
-                                        z: 90,
-                                      ),
-                                      ZLine.only(
-                                        x: 90,
-                                        y: -5,
-                                        z: 100 - 40,
-                                      ),
-                                      ZLine.only(
-                                        x: 80,
-                                        y: 50,
-                                        z: 100 - 45,
-                                      ),
-                                      ZLine.only(
-                                        x: 40,
-                                        y: 40,
-                                        z: 90,
-                                      ),
-                                    ],
-                                  ),
-                                  PlanteZdog(
-                                    paths: [
-                                      ZMove.only(
-                                        x: -50,
-                                        y: -70,
-                                        z: 10,
-                                      ),
-                                      ZLine.only(
-                                        x: -90,
-                                        y: -20,
-                                        z: 10,
-                                      ),
-                                      ZLine.only(
-                                        x: -40,
-                                        z: 100 - 30,
-                                      ),
-                                      ZLine.only(
-                                        x: -10,
-                                        y: -20,
-                                        z: 100,
-                                      ),
-                                    ],
-                                  ),
-                                  PlanteZdog(
-                                    paths: [
-                                      ZMove.only(
-                                        x: -50,
-                                        y: 50,
-                                        z: 10,
-                                      ),
-                                      ZLine.only(
-                                        x: -60,
-                                        y: 60,
-                                        z: 10,
-                                      ),
-                                      ZLine.only(
-                                        x: -40,
-                                        y: 80,
-                                        z: 20,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            CloudZdog(
-                              rotate: rotateValue,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
+                          ),
+                          CloudZdog(
+                            rotate: rotateValue,
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               );

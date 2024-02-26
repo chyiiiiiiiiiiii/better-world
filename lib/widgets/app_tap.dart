@@ -32,7 +32,7 @@ class _AppTapState extends State<AppTap> {
             isPressing = true;
           });
 
-          HapticFeedback.selectionClick();
+          HapticFeedback.mediumImpact();
         },
         onTapUp: (details) {
           setState(() {

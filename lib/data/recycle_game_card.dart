@@ -10,7 +10,7 @@ class RecycleGameCard with _$RecycleGameCard {
     @Default('') @JsonKey(name: 'name_en') String nameEn,
     @Default('') @JsonKey(name: 'name_jp') String nameJp,
     @Default(0) int value,
-    @Default('') String image,
+    @Default('') @JsonKey(name: 'image_url') String imageUrl,
   }) = _RecycleGameCard;
 
   factory RecycleGameCard.fromJson(Map<String, dynamic> json) =>
