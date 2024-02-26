@@ -135,6 +135,7 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                         children: [
                           ZPositioned(
                             rotate: rotateValue,
+                            scale: ZVector.all(value.get('zoom')),
                             translate: ZVector.only(
                               y: earthFlipMovie.get('translate'),
                             ),

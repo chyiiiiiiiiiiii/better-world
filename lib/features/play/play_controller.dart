@@ -271,14 +271,13 @@ class PlayController extends _$PlayController {
     if (blockEarth) {
       return;
     }
-
-    await _audioPlayer?.play(AssetSource('sounds/click.wav'));
+    final random = DateTime.now().millisecondsSinceEpoch % 2;
+    await _audioPlayer?.play(AssetSource('sounds/click_$random.mp3'));
 
     ref.read(confettiControllerProvider).stop();
     ref.read(confettiControllerProvider).play();
 
     await updateClickCount();
-
     await updateMyScore();
   }
 
