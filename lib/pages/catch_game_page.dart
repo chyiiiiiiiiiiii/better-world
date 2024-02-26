@@ -10,10 +10,16 @@ class TrashCan {
 }
 
 class Ball {
-  Ball({this.positionX = 0.0, this.positionY = 0.0, this.radius = 10.0});
+  Ball({
+    this.positionX = 0.0,
+    this.positionY = 0.0,
+    this.radius = 10.0,
+    this.speed = 3.0,
+  });
   double positionX;
   double positionY;
   double radius;
+  double speed;
 }
 
 class CatchGamePage extends ConsumerStatefulWidget {
@@ -53,7 +59,6 @@ class _GameWidgetState extends ConsumerState<GameWidget> {
       // 約每16毫秒更新一次，相當於60FPS
       setState(() {
         final screenHeight = MediaQuery.of(context).size.height;
-        debugPrint('======= : ${_gameState.balls.length}=========');
         updateBallPositions(screenHeight);
       });
     });
@@ -66,14 +71,12 @@ class _GameWidgetState extends ConsumerState<GameWidget> {
     super.didChangeDependencies();
   }
 
-  Timer? _moveTimer;
-
   void updateBallPositions(double screenHeight) {
     final ballsToRemove = <Ball>[];
 
     for (final ball in _gameState.balls) {
       // 更新球的垂直位置
-      ball.positionY += 3; // 球下落的速度，可以根據需要調整
+      ball.positionY += ball.speed; // 球下落的速度，可以根據需要調整
 
       // 確定球是否在垃圾桶的水平範圍內
       final withinHorizontalRange =
@@ -83,7 +86,7 @@ class _GameWidgetState extends ConsumerState<GameWidget> {
 
       // 檢查球是否碰到垃圾桶的頂部
       final hitTrashCan =
-          ball.positionY + ball.radius >= screenHeight - 150; // 假設垃圾桶的高度是固定的50
+          ball.positionY + ball.radius >= screenHeight - 120; // 假設垃圾桶的高度是固定的50
 
       if (withinHorizontalRange && hitTrashCan) {
         // 碰撞發生，增加分數並標記球移除
@@ -101,54 +104,21 @@ class _GameWidgetState extends ConsumerState<GameWidget> {
     }
   }
 
-//   void _startMovingLeft() {
-//     _moveTimer?.cancel(); // Cancel any existing timer
-//     _moveTimer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
-//       setState(() {
-//         _gameState.moveTrashCan(-2); // Adjust the value to control speed
-//       });
-//     });
-//   }
-//
-//   void _startMovingRight() {
-//     _moveTimer?.cancel(); // Cancel any existing timer
-//     _moveTimer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
-//       setState(() {
-//         _gameState.moveTrashCan(2); // Adjust the value to control speed
-//       });
-//     });
-//   }
-//
-//   void _stopMoving() {
-//     _moveTimer?.cancel();
-//   }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: GestureDetector(
-            onHorizontalDragUpdate: (details) {
-              setState(() {
-                _gameState.moveTrashCan(details.delta.dx);
-              });
-            },
-            child: CustomPaint(
-              size: Size.infinite,
-              painter: GamePainter(
-                trashCan: _gameState.trashCan,
-                balls: _gameState.balls,
-              ),
-            ),
-          ),
+    return GestureDetector(
+      onHorizontalDragUpdate: (details) {
+        setState(() {
+          _gameState.moveTrashCan(details.delta.dx);
+        });
+      },
+      child: CustomPaint(
+        size: Size.infinite,
+        painter: GamePainter(
+          trashCan: _gameState.trashCan,
+          balls: _gameState.balls,
         ),
-        Text(
-          '${_gameState.balls}',
-        ),
-
-        // Score display and other UI elements
-      ],
+      ),
     );
   }
 }
@@ -158,20 +128,45 @@ class GamePainter extends CustomPainter {
   final TrashCan trashCan;
   final List<Ball> balls;
 
+  void paintTrashCan(Canvas canvas, Size size, TrashCan trashCan) {
+    final paint = Paint()
+      ..color = Colors.grey
+      ..style = PaintingStyle.stroke // 设置画笔为描边模式
+      ..strokeWidth = 4; // 描边的宽度
+
+    // 计算垃圾桶的基本参数
+    const trashCanHeight = 50.0; // 垃圾桶的高度
+    final trashCanTop = size.height - trashCanHeight; // 垃圾桶顶部的位置
+    const radius = Radius.circular(20); // 圆角的半径
+
+    // 建立一个Path来绘制带圆角的U字型，使用级联操作
+    final path = Path()
+      ..moveTo(trashCan.positionX, trashCanTop) // 移动到垃圾桶左上角的开始点
+      ..lineTo(trashCan.positionX, size.height - radius.y) // 绘制左边直线到圆角开始的地方
+      ..arcToPoint(
+        Offset(trashCan.positionX + radius.x, size.height),
+        radius: radius,
+        clockwise: false,
+      ) // 添加左下角的圆角
+      ..lineTo(
+        trashCan.positionX + trashCan.width - radius.x,
+        size.height,
+      ) // 绘制底部线，留出右下角圆角的空间
+      ..arcToPoint(
+        Offset(trashCan.positionX + trashCan.width, size.height - radius.y),
+        radius: radius,
+        clockwise: false,
+      ) // 添加右下角的圆角
+      ..lineTo(trashCan.positionX + trashCan.width, trashCanTop); // 绘制右边直线
+
+    // 绘制Path
+    canvas.drawPath(path, paint);
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     // Paint trash can
-    final trashCanPaint = Paint()..color = Colors.black;
-    canvas.drawRect(
-      Rect.fromLTWH(
-        trashCan.positionX,
-        size.height - 50, // Assuming a fixed Y position for simplicity
-        trashCan.width,
-        30, // Fixed height for the trash can
-      ),
-      trashCanPaint,
-    );
-
+    paintTrashCan(canvas, size, trashCan);
     // Paint balls
     final ballPaint = Paint()..color = Colors.red;
     for (final ball in balls) {
@@ -195,7 +190,7 @@ class GameState {
   final TrashCan trashCan = TrashCan();
   final List<Ball> balls = [
     Ball(positionX: 100, positionY: 100),
-    Ball(positionX: 200, positionY: 100),
+    Ball(positionX: 200, positionY: 100, speed: 2.4),
     Ball(positionX: 300, positionY: 100),
   ];
   int score = 0;
