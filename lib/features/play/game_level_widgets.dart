@@ -29,6 +29,7 @@ List<Widget?> levelWidgets = <Widget?>[
     ),
   ),
   // level 3
+
   // TriangleTreeZdog(
   //   translate: const ZVector.only(
   //     y: -105,
@@ -49,22 +50,12 @@ List<Widget?> levelWidgets = <Widget?>[
       y: 10.toRadius(),
     ),
   ),
-  // CircleTreeZdog(
-  //   translate: const ZVector.only(
-  //     y: -105,
-  //     x: 10,
-  //     z: 20,
-  //   ),
-  //   rotate: ZVector.only(
-  //     x: 90.toRadius(),
-  //   ),
-  // ),
   // level 5
   SolarPanel(
     translate: const ZVector.only(
       y: -60,
       x: -55,
-      z: 90,
+      z: 60,
     ),
     rotate: ZVector.only(
       x: 30.toRadius(),
@@ -119,6 +110,40 @@ List<Widget?> levelWidgets = <Widget?>[
         z: 20,
       ),
     ],
+  ),
+  // level 9
+  WindTurbinesZdog(
+    translate: const ZVector.only(
+      y: 30,
+      x: 60,
+      z: 80,
+    ),
+    rotate: ZVector.only(
+      x: 0.toRadius(),
+      z: 90.toRadius(),
+      y: -50.toRadius(),
+    ),
+  ),
+  // level 10
+  TriangleTreeZdog(
+    translate: const ZVector.only(
+      y: 15,
+      x: 90,
+      z: 100,
+    ),
+    rotate: ZVector.only(
+      y: -55.toRadius(),
+    ),
+  ),
+  // level 11
+  CircleTreeZdog(
+    translate: const ZVector.only(
+      x: 70,
+      z: 100,
+    ),
+    rotate: ZVector.only(
+      y: -30.toRadius(),
+    ),
   ),
 ];
 
