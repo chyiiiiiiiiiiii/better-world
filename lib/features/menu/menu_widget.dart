@@ -1,10 +1,7 @@
-import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
-import 'package:envawareness/pages/endangered_specise_cards_page.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class MenuWidget extends ConsumerWidget {
   const MenuWidget({
@@ -14,7 +11,6 @@ class MenuWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isEarthBlocked = ref.watch(isEarthBlockProvider);
-    final isEditMode = ref.watch(editModeProvider);
     return Row(
       children: [
         IconButton(
@@ -43,18 +39,6 @@ class MenuWidget extends ConsumerWidget {
                 .updateLevelInfo(level: 1);
             ref.read(playControllerProvider.notifier).updateScoresPerSecond();
           },
-        ),
-        DefaultButton(
-          onPressed: () {
-            ref.read(editModeProvider.notifier).toggle();
-          },
-          text: 'EditMode ${isEditMode ? 'OFF' : 'ON'}',
-        ),
-        DefaultButton(
-          onPressed: () {
-            context.push(EndangeredSpeciseCardsPage.routePath);
-          },
-          text: 'cardpage',
         ),
         DefaultButton(
           onPressed: () {

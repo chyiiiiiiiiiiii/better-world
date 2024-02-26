@@ -19,6 +19,7 @@ class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
   int currentCardIndex = 0;
 
   String scoreTitle(int score) {
+    debugPrint('=======score : $score=========');
     if (score >= 10) {
       return '環保小天使';
     } else if (score >= 5) {

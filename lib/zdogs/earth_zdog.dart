@@ -117,8 +117,15 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                         final dynamicRotate = kIsWeb
                             ? zDragController.rotate
                             : ZVector.only(
-                                y: -(_rotationX - 120).toRadius(),
-                                x: (_rotationY + 58).toRadius(),
+                                y: (-(_rotationX - 130) * 0.7)
+                                    .clamp(
+                                      -30,
+                                      30,
+                                    )
+                                    .toRadius(),
+                                x: ((_rotationY + 20) * 0.7)
+                                    .clamp(-30, 30)
+                                    .toRadius(),
                               );
 
                         final rotateValue = editMode ? dynamicRotate : rotate;
