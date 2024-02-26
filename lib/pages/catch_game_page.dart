@@ -131,35 +131,32 @@ class GamePainter extends CustomPainter {
   void paintTrashCan(Canvas canvas, Size size, TrashCan trashCan) {
     final paint = Paint()
       ..color = Colors.grey
-      ..style = PaintingStyle.stroke // 设置画笔为描边模式
-      ..strokeWidth = 4; // 描边的宽度
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4;
 
-    // 计算垃圾桶的基本参数
-    const trashCanHeight = 50.0; // 垃圾桶的高度
-    final trashCanTop = size.height - trashCanHeight; // 垃圾桶顶部的位置
-    const radius = Radius.circular(20); // 圆角的半径
+    const trashCanHeight = 50.0;
+    final trashCanTop = size.height - trashCanHeight;
+    const radius = Radius.circular(20);
 
-    // 建立一个Path来绘制带圆角的U字型，使用级联操作
     final path = Path()
-      ..moveTo(trashCan.positionX, trashCanTop) // 移动到垃圾桶左上角的开始点
-      ..lineTo(trashCan.positionX, size.height - radius.y) // 绘制左边直线到圆角开始的地方
+      ..moveTo(trashCan.positionX, trashCanTop)
+      ..lineTo(trashCan.positionX, size.height - radius.y)
       ..arcToPoint(
         Offset(trashCan.positionX + radius.x, size.height),
         radius: radius,
         clockwise: false,
-      ) // 添加左下角的圆角
+      )
       ..lineTo(
         trashCan.positionX + trashCan.width - radius.x,
         size.height,
-      ) // 绘制底部线，留出右下角圆角的空间
+      )
       ..arcToPoint(
         Offset(trashCan.positionX + trashCan.width, size.height - radius.y),
         radius: radius,
         clockwise: false,
-      ) // 添加右下角的圆角
-      ..lineTo(trashCan.positionX + trashCan.width, trashCanTop); // 绘制右边直线
+      )
+      ..lineTo(trashCan.positionX + trashCan.width, trashCanTop);
 
-    // 绘制Path
     canvas.drawPath(path, paint);
   }
 
