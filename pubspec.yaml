@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
   intl: any
 
+  flutter_gemini: ^2.0.3
+  image_picker: ^1.0.7
   firebase_core: ^2.25.4
   firebase_auth: ^4.17.4
   cloud_firestore: ^4.15.5

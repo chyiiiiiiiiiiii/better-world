@@ -1,4 +1,5 @@
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/pages/can_recycle_page.dart';
 import 'package:envawareness/pages/catch_game_page.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:flutter/material.dart';
@@ -44,9 +45,15 @@ class MenuWidget extends ConsumerWidget {
         ),
         DefaultButton(
           onPressed: () {
+            context.push(CanRecyclePage.routePath);
+          },
+          text: 'Can it ?',
+        ),
+        DefaultButton(
+          onPressed: () {
             context.push(CatchGamePage.routePath);
           },
-          text: 'push',
+          text: 'Catch',
         ),
         DefaultButton(
           onPressed: () {
