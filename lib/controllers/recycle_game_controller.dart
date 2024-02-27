@@ -14,7 +14,7 @@ class RecycleGameController extends _$RecycleGameController {
   @override
   RecycleGameState build() {
     final playLevel =
-        ref.watch(playControllerProvider).requireValue.playInfo.currentLevel;
+        ref.read(playControllerProvider).requireValue.playInfo.currentLevel;
     final addScore = switch (playLevel) {
       > 150 => 4000,
       > 100 => 2000,

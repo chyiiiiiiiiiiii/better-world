@@ -53,9 +53,11 @@ class GameWidget extends ConsumerStatefulWidget {
 class _GameWidgetState extends ConsumerState<GameWidget> {
   late GameState _gameState;
 
+  Timer? refreshTimer;
+
   @override
   void initState() {
-    Timer.periodic(const Duration(milliseconds: 16), (timer) {
+    refreshTimer = Timer.periodic(const Duration(milliseconds: 16), (timer) {
       // 約每16毫秒更新一次，相當於60FPS
       setState(() {
         final screenHeight = MediaQuery.of(context).size.height;
@@ -102,6 +104,14 @@ class _GameWidgetState extends ConsumerState<GameWidget> {
         ball.positionY = 0; // 例如，重置到屏幕頂部
       }
     }
+  }
+
+  @override
+  void dispose() {
+    refreshTimer?.cancel();
+    refreshTimer = null;
+
+    super.dispose();
   }
 
   @override
