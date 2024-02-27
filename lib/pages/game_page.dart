@@ -46,7 +46,7 @@ class GamePage extends ConsumerWidget {
     final isEarthBlock = ref.watch(isEarthBlockProvider);
 
     return Material(
-      color: Theme.of(context).scaffoldBackgroundColor,
+      color: context.colorScheme.background,
       child: Center(
         child: Padding(
           padding: EdgeInsets.only(
@@ -62,11 +62,15 @@ class GamePage extends ConsumerWidget {
                 alignment: Alignment.center,
                 children: [
                   const ParticleArea(),
-                  const Positioned.fill(top: 100, child: EarthZdog()),
-                  if (!isEarthBlock) const PlayView(),
-                  if (isEarthBlock)
+                  const Positioned.fill(
+                    top: 100,
+                    child: EarthZdog(),
+                  ),
+                  if (!isEarthBlock)
+                    const PlayView()
+                  else
                     const Positioned.fill(
-                      top: 100,
+                      top: 120,
                       child: StoreView(),
                     ),
                   const Positioned(

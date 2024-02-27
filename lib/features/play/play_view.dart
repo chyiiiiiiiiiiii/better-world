@@ -168,7 +168,7 @@ class PlayView extends ConsumerWidget {
             ),
             AnimatedFlipCounter(
               duration: const Duration(milliseconds: 500),
-              value: playInfo.currentScore ?? 0,
+              value: playInfo.currentScore,
               textStyle: context.textTheme.displayLarge,
             ),
             Text(
@@ -179,8 +179,8 @@ class PlayView extends ConsumerWidget {
                   ?.copyWith(fontSize: 14),
             ),
           ],
-        ).animate().fade(),
+        ),
       ),
-    );
+    ).animate().fadeIn(duration: Durations.extralong4);
   }
 }

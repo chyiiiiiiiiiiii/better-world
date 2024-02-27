@@ -4,7 +4,7 @@ List<EndangeredSpeciesInfo> get endangeredSpecies {
   return endangeredSpeciesJson.map(EndangeredSpeciesInfo.fromJson).toList();
 }
 
-final endangeredSpeciesJson = [
+const endangeredSpeciesJson = [
   {
     'name': '巴巴里獅',
     'image':

@@ -6,26 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class RecycleGamePage extends ConsumerStatefulWidget {
+class RecycleGamePage extends ConsumerWidget {
   const RecycleGamePage({super.key});
   static const routePath = '/recycle-game-page';
 
-  @override
-  ConsumerState<RecycleGamePage> createState() => _RecycleGamePageState();
-}
-
-class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
-  double position = 0;
-  int currentCardIndex = 0;
-
-  String scoreTitle(int score) {
-    if (score >= 1000) {
+  String _getScoreTitle(int passCount) {
+    if (passCount >= 10) {
       return '環保小天使';
-    } else if (score >= 500) {
+    } else if (passCount >= 5) {
       return '環保高手';
-    } else if (score >= 300) {
+    } else if (passCount >= 3) {
       return '環保達人';
-    } else if (score >= 100) {
+    } else if (passCount >= 1) {
       return '環保新手';
     } else {
       return '環保小白';
@@ -33,9 +25,13 @@ class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final gameCards = ref.watch(recycleGameCardsProvider);
-    final gameScore = ref.watch(recycleGameScoreProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(recycleGameControllerProvider);
+    final gameCards = state.cards;
+    final passCount = state.passCount;
+    final totalCount = state.totalCount;
+    final currentCardIndex = state.currentCardIndex;
+    final cardPosition = state.cardPosition;
 
     return PopScope(
       canPop: false,
@@ -51,7 +47,9 @@ class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Transform.scale(
-                        scale: position < 0 ? (position.abs() * 0.003 + 1) : 1,
+                        scale: cardPosition < 0
+                            ? (cardPosition.abs() * 0.003 + 1)
+                            : 1,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -67,7 +65,8 @@ class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
                         ),
                       ),
                       Transform.scale(
-                        scale: position > 0 ? (position * 0.003 + 1) : 1,
+                        scale:
+                            cardPosition > 0 ? (cardPosition * 0.003 + 1) : 1,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -96,20 +95,22 @@ class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
                         padding: const EdgeInsets.all(32),
                         child: AppinioSwiper(
                           cardCount: gameCards.length,
-                          onCardPositionChanged: (currentPosition) {
-                            position = currentPosition.offset.dx;
-                            setState(() {});
-                          },
+                          onCardPositionChanged: (currentPosition) => ref
+                              .read(recycleGameControllerProvider.notifier)
+                              .updateCardPosition(cardPosition),
                           onSwipeEnd: (preIndex, targetIndex, swipe) {
-                            position = 0;
                             ref
                                 .read(recycleGameControllerProvider.notifier)
                                 .onSwipe(
                                   direction: swipe.direction,
                                   card: gameCards[preIndex],
                                 );
-                            currentCardIndex = preIndex;
-                            setState(() {});
+                            ref
+                                .read(recycleGameControllerProvider.notifier)
+                                .updateCardPosition(0);
+                            ref
+                                .read(recycleGameControllerProvider.notifier)
+                                .updateCardIndex(preIndex);
                           },
                           cardBuilder: (context, index) {
                             final data = gameCards[index];
@@ -179,14 +180,14 @@ class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
                               style: Theme.of(context).textTheme.headlineLarge,
                             ),
                             Text(
-                              gameScore.toString(),
+                              totalCount.toString(),
                               style: context.textTheme.displayLarge,
                             ),
                             const SizedBox(
                               height: 40,
                             ),
                             Text(
-                              '你是${scoreTitle(gameScore)} ！',
+                              '你是${_getScoreTitle(passCount)} ！',
                               style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             const SizedBox(
@@ -194,7 +195,7 @@ class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
                             ),
                             DefaultButton(
                               onPressed: () async {
-                                if (mounted) {
+                                if (context.mounted) {
                                   context.pop();
                                 }
 
@@ -202,7 +203,7 @@ class _RecycleGamePageState extends ConsumerState<RecycleGamePage> {
                                     .read(
                                       recycleGameControllerProvider.notifier,
                                     )
-                                    .getPrize(gameScore);
+                                    .getPrize(totalCount);
                               },
                               text: 'Get Reward',
                             ),

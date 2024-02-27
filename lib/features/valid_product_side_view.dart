@@ -20,16 +20,25 @@ class ValidProductSideView extends StatelessWidget {
           .map(
             (e) => Column(
               children: [
-                Text(
-                  e.name,
-                  style: context.textTheme.titleMedium,
-                )
-                    .animate(
-                      onPlay: (controller) => controller.repeat(
-                        reverse: true,
-                      ), // loop
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/product_1.png',
+                      width: 24,
+                    ),
+                    Gaps.w8,
+                    Text(
+                      e.name,
+                      style: context.textTheme.titleMedium,
                     )
-                    .fade(duration: Durations.extralong3),
+                        .animate(
+                          onPlay: (controller) => controller.repeat(
+                            reverse: true,
+                          ), // loop
+                        )
+                        .fade(duration: Durations.extralong3),
+                  ],
+                ),
                 Gaps.h8,
               ],
             ),

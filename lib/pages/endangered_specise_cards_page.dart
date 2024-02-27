@@ -1,33 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envawareness/constants/endangered_specise_data.dart';
 import 'package:envawareness/data/endangered_species_info.dart';
+import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 
-class EndangeredSpeciesCardsPage extends StatelessWidget {
+class EndangeredSpeciesCardsPage extends ConsumerWidget {
   const EndangeredSpeciesCardsPage({super.key});
 
   static const routePath = '/endangered-species-cards';
 
-  Future<void> _showDialog(
-    BuildContext context,
-    EndangeredSpeciesInfo info,
-  ) async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return SpeciesCard(
-          info: info,
-        );
-      },
-    );
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final playInfo = ref.watch(playControllerProvider).requireValue.playInfo;
+    final ownedCardCount = playInfo.ownedAnimalCardIndexes.length;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: context.colorScheme.background,
       appBar: AppBar(
         title: const Text('Endangered Species'),
       ),
@@ -40,11 +32,14 @@ class EndangeredSpeciesCardsPage extends StatelessWidget {
           children: List.generate(
             endangeredSpecies.length,
             (index) {
+              final isOwned = playInfo.ownedAnimalCardIndexes.contains(index);
+
               return AppTap(
                 onTap: () {
-                  _showDialog(
+                  showSpeciesCardDialog(
                     context,
-                    endangeredSpecies[index],
+                    isOwned: isOwned,
+                    info: endangeredSpecies[index],
                   );
                 },
                 child: Column(
@@ -57,8 +52,11 @@ class EndangeredSpeciesCardsPage extends StatelessWidget {
                         child: CachedNetworkImage(
                           fit: BoxFit.cover,
                           imageUrl: endangeredSpecies[index].image,
-                          placeholder: (context, url) =>
-                              const Center(child: CircularProgressIndicator()),
+                          color: isOwned ? null : Colors.black.withOpacity(1),
+                          colorBlendMode: BlendMode.color,
+                          // placeholder: (context, url) => const Center(
+                          //   child: CircularProgressIndicator(),
+                          // ),
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
                         ),
@@ -81,11 +79,29 @@ class EndangeredSpeciesCardsPage extends StatelessWidget {
   }
 }
 
+Future<void> showSpeciesCardDialog(
+  BuildContext context, {
+  required EndangeredSpeciesInfo info,
+  bool isOwned = true,
+}) async {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return SpeciesCard(
+        isOwned: isOwned,
+        info: info,
+      );
+    },
+  );
+}
+
 class SpeciesCard extends StatelessWidget {
   const SpeciesCard({
+    required this.isOwned,
     required this.info,
     super.key,
   });
+  final bool isOwned;
   final EndangeredSpeciesInfo info;
 
   @override
@@ -95,8 +111,8 @@ class SpeciesCard extends StatelessWidget {
         Navigator.of(context).pop();
       },
       behavior: HitTestBehavior.translucent,
-      child: Container(
-        margin: const EdgeInsets.all(20),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
         child: Tilt(
           lightConfig: const LightConfig(disable: true),
           shadowConfig: const ShadowConfig(disable: true),
@@ -172,9 +188,11 @@ class SpeciesCard extends StatelessWidget {
                           child: CachedNetworkImage(
                             fit: BoxFit.cover,
                             imageUrl: info.image,
-                            placeholder: (context, url) => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
+                            color: isOwned ? null : Colors.black.withOpacity(1),
+                            colorBlendMode: BlendMode.color,
+                            // placeholder: (context, url) => const Center(
+                            //   child: CircularProgressIndicator(),
+                            // ),
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                             memCacheHeight: 200,

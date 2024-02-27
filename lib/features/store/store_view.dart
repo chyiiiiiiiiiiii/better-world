@@ -2,6 +2,7 @@ import 'package:envawareness/data/play_info.dart';
 import 'package:envawareness/data/product.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/features/store/store_controller.dart';
+import 'package:envawareness/pages/endangered_specise_cards_page.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
@@ -11,7 +12,6 @@ import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:simple_animations/animation_builder/play_animation_builder.dart';
 
 class StoreView extends ConsumerWidget {
   const StoreView({
@@ -33,54 +33,92 @@ class StoreView extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.all(Spacings.px20),
-      child: PlayAnimationBuilder<double>(
-        tween: Tween(begin: 0, end: 1),
-        delay: const Duration(milliseconds: 500),
-        duration: const Duration(milliseconds: 500),
-        builder: (context, opacity, _) {
-          return Opacity(
-            opacity: opacity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'STORE',
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
-                Gaps.h84,
-                Text(
-                  'Available scores: $availableScore',
-                  style: context.textTheme.titleLarge,
-                  textAlign: TextAlign.center,
-                ),
-                Gaps.h12,
-                Expanded(
-                  child: GridView.builder(
-                    padding: const EdgeInsets.all(Spacings.px12),
-                    physics: const ClampingScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: Spacings.px16,
-                      crossAxisSpacing: Spacings.px32,
-                      childAspectRatio: 0.6,
-                    ),
-                    itemCount: products.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final product = products.elementAt(index);
-
-                      return _Item(
-                        index: index,
-                        product: product,
-                      );
-                    },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'STORE',
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
+          Gaps.h84,
+          Text(
+            'Available scores: $availableScore',
+            style: context.textTheme.titleLarge,
+            textAlign: TextAlign.center,
+          ),
+          Gaps.h12,
+          Row(
+            children: products.indexed.map(
+              (e) {
+                return Expanded(
+                  child: _Item(
+                    index: e.$1,
+                    product: e.$2,
                   ),
-                ),
-              ],
+                );
+              },
+            ).toList(),
+          ),
+          Gaps.h12,
+          const _AnimalCard(),
+        ],
+      ).animate().fade(
+            delay: const Duration(
+              milliseconds: 1000,
             ),
-          );
-        },
-      ),
+          ),
+    );
+  }
+}
+
+class _AnimalCard extends ConsumerWidget {
+  const _AnimalCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final animalCardPrice =
+        ref.watch(playControllerProvider).requireValue.playInfo.animalCardPrice;
+
+    return AppTap(
+      onTap: () async {
+        final data = await ref
+            .read(storeControllerProvider.notifier)
+            .purchaseAnimalCard();
+        if (data == null) {
+          return;
+        }
+
+        if (!context.mounted) {
+          return;
+        }
+
+        await showSpeciesCardDialog(context, info: data);
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            'assets/images/animals.png',
+            colorBlendMode: BlendMode.modulate,
+            width: context.width / 3,
+            height: context.width / 3,
+          ),
+          Text(
+            'Gotcha\n\$$animalCardPrice',
+            style: context.textTheme.titleMedium,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ).animate().scale(
+            delay: const Duration(
+              milliseconds: 1500,
+            ),
+            duration: const Duration(
+              milliseconds: 150,
+            ),
+          ),
     );
   }
 }
@@ -147,25 +185,11 @@ class _Item extends ConsumerWidget {
           Text(
             '+${product.addScore}/${product.validTimeSeconds}(s)',
             style: context.textTheme.titleMedium,
-          ).animate().fade(
-                delay: const Duration(
-                  milliseconds: 1000,
-                ),
-                duration: Duration(
-                  milliseconds: 150 * index,
-                ),
-              ),
+          ),
           Text(
             '\$${product.price}',
             style: context.textTheme.titleMedium,
-          ).animate().fade(
-                delay: const Duration(
-                  milliseconds: 1000,
-                ),
-                duration: Duration(
-                  milliseconds: 150 * index,
-                ),
-              ),
+          ),
         ],
       ),
     );
