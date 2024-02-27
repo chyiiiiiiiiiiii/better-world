@@ -74,13 +74,6 @@ GoRouter appRouter(AppRouterRef ref) {
           return const CatchGamePage();
         },
       ),
-      GoRoute(
-        path: CatchGamePage.routePath,
-        name: 'catch-game',
-        builder: (context, state) {
-          return const CatchGamePage();
-        },
-      ),
     ],
   );
 }
