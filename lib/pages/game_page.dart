@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/menu/menu_widget.dart';
 import 'package:envawareness/features/particle/particle.dart';
@@ -44,10 +45,27 @@ class GamePage extends ConsumerWidget {
     });
 
     final isEarthBlock = ref.watch(isEarthBlockProvider);
-
+    final isDarkMode = ref.watch(darkModeProvider);
     return Material(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Center(
+      color: context.theme.scaffoldBackgroundColor,
+      child: Container(
+        decoration: BoxDecoration(
+          image: isDarkMode
+              ? const DecorationImage(
+                  opacity: 0.3,
+                  image: AssetImage('assets/images/bg.gif'),
+                  fit: BoxFit.cover,
+                )
+              : null,
+          gradient: RadialGradient(
+            colors: [
+              const Color.fromARGB(202, 248, 205, 126),
+              context.theme.scaffoldBackgroundColor,
+              context.theme.scaffoldBackgroundColor,
+            ],
+            stops: const [0.0, 0.85, 1.0],
+          ),
+        ),
         child: Padding(
           padding: EdgeInsets.only(
             top: Platform.isAndroid ? context.paddingTop / 2 : 0,
@@ -62,7 +80,7 @@ class GamePage extends ConsumerWidget {
                 alignment: Alignment.center,
                 children: [
                   const ParticleArea(),
-                  const Positioned.fill(top: 100, child: EarthZdog()),
+                  const Positioned.fill(top: 50, child: EarthZdog()),
                   if (!isEarthBlock) const PlayView(),
                   if (isEarthBlock)
                     const Positioned.fill(
@@ -92,7 +110,7 @@ class GamePage extends ConsumerWidget {
               );
             },
             loading: () {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             },
             error: (error, stackTrace) {
               return Text(
