@@ -1,3 +1,4 @@
+import 'package:envawareness/pages/can_recycle_page.dart';
 import 'package:envawareness/pages/catch_game_page.dart';
 import 'package:envawareness/pages/endangered_specise_cards_page.dart';
 import 'package:envawareness/pages/game_page.dart';
@@ -72,6 +73,13 @@ GoRouter appRouter(AppRouterRef ref) {
         name: 'catch-game',
         builder: (context, state) {
           return const CatchGamePage();
+        },
+      ),
+      GoRoute(
+        path: CanRecyclePage.routePath,
+        name: 'can-recycle',
+        builder: (context, state) {
+          return const CanRecyclePage();
         },
       ),
     ],

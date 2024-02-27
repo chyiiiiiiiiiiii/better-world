@@ -136,6 +136,19 @@ List<Widget?> levelWidgets = <Widget?>[
     ),
   ),
   // level 11
+  PyramidZdog(
+    translate: const ZVector.only(
+      x: -35,
+      y: -25,
+      z: 100,
+    ),
+    rotate: ZVector.only(
+      x: 290.toRadius(),
+      z: -20.toRadius(),
+    ),
+    size: 12,
+  ),
+  // level 12
   CircleTreeZdog(
     translate: const ZVector.only(
       x: 70,
