@@ -29,7 +29,7 @@ class RecycleGamePage extends ConsumerWidget {
     final state = ref.watch(recycleGameControllerProvider);
     final gameCards = state.cards;
     final passCount = state.passCount;
-    final totalCount = state.totalCount;
+    final totalScore = state.totalScore;
     final currentCardIndex = state.currentCardIndex;
     final cardPosition = state.cardPosition;
 
@@ -180,7 +180,7 @@ class RecycleGamePage extends ConsumerWidget {
                               style: Theme.of(context).textTheme.headlineLarge,
                             ),
                             Text(
-                              totalCount.toString(),
+                              totalScore.toString(),
                               style: context.textTheme.displayLarge,
                             ),
                             const SizedBox(
@@ -203,7 +203,7 @@ class RecycleGamePage extends ConsumerWidget {
                                     .read(
                                       recycleGameControllerProvider.notifier,
                                     )
-                                    .getPrize(totalCount);
+                                    .getPrize(totalScore);
                               },
                               text: 'Get Reward',
                             ),

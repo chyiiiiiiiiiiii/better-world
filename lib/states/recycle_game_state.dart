@@ -12,7 +12,7 @@ class RecycleGameState with _$RecycleGameState {
     @Default(0) int totalScore,
     @Default(0) int currentCardIndex,
     @Default(0) int cardPosition,
-    @Default(50) int addScore,
+    @Default(0) int addScore,
     @Default([]) List<RecycleGameCard> cards,
   }) = _RecycleGameState;
 

@@ -70,11 +70,11 @@ class RecycleGameController extends _$RecycleGameController {
 
   void pass() {
     final passCount = state.passCount + 1;
-    final totalCount = state.totalCount + state.addScore;
+    final totalScore = state.totalScore + state.addScore;
 
     state = state.copyWith(
       passCount: passCount,
-      totalCount: totalCount,
+      totalScore: totalScore,
     );
   }
 }
