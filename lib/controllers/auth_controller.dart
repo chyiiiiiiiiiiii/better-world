@@ -1,9 +1,11 @@
 import 'package:envawareness/pages/game_page.dart';
 import 'package:envawareness/pages/sign_in_page.dart';
+import 'package:envawareness/pages/welcome_page.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/router/app_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'auth_controller.g.dart';
 
@@ -22,6 +24,12 @@ class AuthController extends _$AuthController {
       await authRepository.signInFirebase(authentication: googleAuth);
 
       state = authRepository.currentUser;
+
+      final prefs = await SharedPreferences.getInstance();
+      if (prefs.getBool('firstTimeEnter') ?? true) {
+        ref.read(appRouterProvider).go(WelcomePage.routePath);
+        return;
+      }
 
       ref.read(appRouterProvider).go(GamePage.routePath);
     } catch (error) {}

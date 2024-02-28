@@ -13,7 +13,7 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 400), () async {
       final prefs = await SharedPreferences.getInstance();
-      if (prefs.getBool('firstTimeEnter') ?? false) {
+      if (prefs.getBool('firstTimeEnter') ?? true) {
         context.pushReplacement(WelcomePage.routePath);
         return;
       }
