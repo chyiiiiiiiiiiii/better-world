@@ -32,8 +32,8 @@ extension PlayInfoExtension on PlayInfo {
   int get availableScore => totalScore - usedScore;
 
   List<EndangeredSpeciesInfo> get ownedAnimalCardsData => ownedAnimalCardIndexes
-      .map((index) => endangeredSpecies.elementAt(index))
+      .map((index) => endangeredSpeciesList.elementAt(index))
       .toList();
 
-  int get animalCardPrice => (1 + animalCardDrawCount) * 300;
+  int get animalCardPrice => (1 + animalCardDrawCount) * 350;
 }

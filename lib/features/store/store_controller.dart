@@ -30,9 +30,7 @@ class StoreController extends _$StoreController {
           ref.read(playControllerProvider).requireValue.playInfo.availableScore;
       if (availableScore < product.price) {
         final l10n = await getL10n();
-        ref
-            .read(showMessageProvider.notifier)
-            .show(l10n.noAvailableScore);
+        ref.read(showMessageProvider.notifier).show(l10n.noAvailableScore);
 
         return;
       }
@@ -72,7 +70,7 @@ class StoreController extends _$StoreController {
 
   Future<EndangeredSpeciesInfo?> purchaseAnimalCard() async {
     try {
-        final l10n = await getL10n();
+      final l10n = await getL10n();
 
       final availableScore =
           ref.read(playControllerProvider).requireValue.playInfo.availableScore;
@@ -83,17 +81,15 @@ class StoreController extends _$StoreController {
           .animalCardPrice;
 
       if (availableScore < animalCardPrice) {
-        ref
-            .read(showMessageProvider.notifier)
-            .show(l10n.noAvailableScore);
+        ref.read(showMessageProvider.notifier).show(l10n.noAvailableScore);
 
         return null;
       }
 
-      final products = endangeredSpecies;
+      final products = endangeredSpeciesList;
       final animalCardIndex = Random().nextInt(products.length);
       final endangeredSpeciesInfo = products.elementAt(animalCardIndex);
-      final animalName = endangeredSpeciesInfo.name;
+      final animalName = endangeredSpeciesInfo.translatedName;
 
       final purchaseHistory = PurchaseHistory(
         userId: _userId,

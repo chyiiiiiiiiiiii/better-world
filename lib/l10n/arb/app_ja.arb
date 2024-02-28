@@ -23,7 +23,7 @@
 	"recyclableGameGetReward": "報酬を獲得",
 	"endangeredSpecies": "絶滅危惧種",
 	"endangeredLevel": "絶滅の危機レベル",
-	"passCongratulationMessage": "レベル {currentLevel} の合格おめでとうございます、地球を救うために引き続き頑張りましょう！(スコア {addScore}/秒を追加)",
+	"passCongratulationMessage": "レベル {currentLevel} の合格おめでとうございます、地球を救うために引き続き頑張りましょう！\n(スコア {addScore}/秒を追加)",
 	"allPassCongratulationMessage": "地球を救うことに成功しました、本当に英雄です！",
 	"noAvailableScore": "購入可能なスコアがありません。",
 	"speciesAlreadyGot": "すでに '{animalName}' を獲得しています。",

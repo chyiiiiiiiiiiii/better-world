@@ -1,5 +1,6 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:envawareness/controllers/recycle_game_controller.dart';
+import 'package:envawareness/data/recycle_game_card.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
@@ -85,7 +86,9 @@ class RecycleGamePage extends ConsumerWidget {
                           cardCount: gameCards.length,
                           onCardPositionChanged: (currentPosition) => ref
                               .read(recycleGameControllerProvider.notifier)
-                              .updateCardPosition(cardPosition),
+                              .updateCardPosition(
+                                currentPosition.offset.dx.toInt(),
+                              ),
                           onSwipeEnd: (preIndex, targetIndex, swipe) {
                             ref
                                 .read(recycleGameControllerProvider.notifier)
@@ -127,24 +130,21 @@ class RecycleGamePage extends ConsumerWidget {
                                     Expanded(
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(12),
-                                        child: Image.asset(
-                                          data.imageUrl,
-                                          width: double.maxFinite,
-                                          height: double.maxFinite,
-                                          fit: BoxFit.cover,
+                                        child: LayoutBuilder(
+                                          builder: (context, constraints) {
+                                            return Image.asset(
+                                              data.imageUrl,
+                                              fit: BoxFit.cover,
+                                              cacheHeight:
+                                                  constraints.maxHeight.toInt(),
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),
                                     const SizedBox(height: 20),
                                     Text(
-                                      data.name,
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      data.value.toString(),
+                                      data.translatedName,
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
