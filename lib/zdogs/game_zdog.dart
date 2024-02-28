@@ -11,13 +11,13 @@ import 'package:sensors_plus/sensors_plus.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:zflutter/zflutter.dart';
 
-class EarthZdog extends ConsumerStatefulWidget {
-  const EarthZdog({super.key});
+class GameZdog extends ConsumerStatefulWidget {
+  const GameZdog({super.key});
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _EarthZDogState();
 }
 
-class _EarthZDogState extends ConsumerState<EarthZdog> {
+class _EarthZDogState extends ConsumerState<GameZdog> {
   Control control = Control.stop; // define variable
 
   final earthClickTween = MovieTween()
@@ -115,7 +115,7 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                         changingEditMode = false;
                       }
 
-                      final dynamicRotate = (kIsWeb || true)
+                      final dynamicRotate = (kIsWeb || kDebugMode)
                           ? zDragController.rotate
                           : ZVector.only(
                               y: (-(_rotationX - 130) * 0.7)
@@ -140,17 +140,7 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                             translate: ZVector.only(
                               y: earthFlipMovie.get('translate'),
                             ),
-                            child: ZHemisphere(
-                              diameter: 120,
-                              stroke: 80,
-                              color: const Color.fromARGB(
-                                255,
-                                39,
-                                139,
-                                233,
-                              ),
-                              backfaceColor: const Color(0xffEEAA00),
-                            ),
+                            child: EarthZdog(rotateValue: rotateValue),
                           ),
                           ZPositioned(
                             rotate: rotateValue,
@@ -160,77 +150,8 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
                             child: ZGroup(
                               children: [
                                 ...getLevelWidget(levelInfo.level),
-                                PlanteZdog(
-                                  paths: [
-                                    ZMove.only(
-                                      x: 50,
-                                      y: -10,
-                                      z: 90,
-                                    ),
-                                    ZLine.only(
-                                      x: 90,
-                                      y: -5,
-                                      z: 100 - 40,
-                                    ),
-                                    ZLine.only(
-                                      x: 80,
-                                      y: 50,
-                                      z: 100 - 45,
-                                    ),
-                                    ZLine.only(
-                                      x: 40,
-                                      y: 40,
-                                      z: 90,
-                                    ),
-                                  ],
-                                ),
-                                PlanteZdog(
-                                  paths: [
-                                    ZMove.only(
-                                      x: -50,
-                                      y: -70,
-                                      z: 10,
-                                    ),
-                                    ZLine.only(
-                                      x: -90,
-                                      y: -20,
-                                      z: 10,
-                                    ),
-                                    ZLine.only(
-                                      x: -40,
-                                      z: 100 - 30,
-                                    ),
-                                    ZLine.only(
-                                      x: -10,
-                                      y: -20,
-                                      z: 100,
-                                    ),
-                                  ],
-                                ),
-                                PlanteZdog(
-                                  paths: [
-                                    ZMove.only(
-                                      x: -50,
-                                      y: 50,
-                                      z: 10,
-                                    ),
-                                    ZLine.only(
-                                      x: -60,
-                                      y: 60,
-                                      z: 10,
-                                    ),
-                                    ZLine.only(
-                                      x: -40,
-                                      y: 80,
-                                      z: 20,
-                                    ),
-                                  ],
-                                ),
                               ],
                             ),
-                          ),
-                          CloudZdog(
-                            rotate: rotateValue,
                           ),
                         ],
                       );
@@ -242,6 +163,103 @@ class _EarthZDogState extends ConsumerState<EarthZdog> {
           );
         },
       ),
+    );
+  }
+}
+
+class EarthZdog extends StatelessWidget {
+  const EarthZdog({
+    required this.rotateValue,
+    super.key,
+  });
+
+  final ZVector rotateValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return ZGroup(
+      children: [
+        ZHemisphere(
+          diameter: 120,
+          stroke: 80,
+          color: const Color.fromARGB(
+            255,
+            39,
+            139,
+            233,
+          ),
+          backfaceColor: const Color(0xffEEAA00),
+        ),
+        PlanteZdog(
+          paths: [
+            ZMove.only(
+              x: 50,
+              y: -10,
+              z: 90,
+            ),
+            ZLine.only(
+              x: 90,
+              y: -5,
+              z: 100 - 40,
+            ),
+            ZLine.only(
+              x: 80,
+              y: 50,
+              z: 100 - 45,
+            ),
+            ZLine.only(
+              x: 40,
+              y: 40,
+              z: 90,
+            ),
+          ],
+        ),
+        PlanteZdog(
+          paths: [
+            ZMove.only(
+              x: -50,
+              y: -70,
+              z: 10,
+            ),
+            ZLine.only(
+              x: -90,
+              y: -20,
+              z: 10,
+            ),
+            ZLine.only(
+              x: -40,
+              z: 100 - 30,
+            ),
+            ZLine.only(
+              x: -10,
+              y: -20,
+              z: 100,
+            ),
+          ],
+        ),
+        PlanteZdog(
+          paths: [
+            ZMove.only(
+              x: -50,
+              y: 50,
+              z: 10,
+            ),
+            ZLine.only(
+              x: -60,
+              y: 60,
+              z: 10,
+            ),
+            ZLine.only(
+              x: -40,
+              y: 80,
+              z: 20,
+            ),
+          ],
+        ),
+        CloudZdog(
+          rotate: rotateValue,
+        ),
+      ],
     );
   }
 }

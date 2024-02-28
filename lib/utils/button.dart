@@ -7,10 +7,12 @@ class DefaultButton extends StatelessWidget {
   const DefaultButton({
     required this.onPressed,
     required this.text,
+    this.textStyle,
     super.key,
   });
   final VoidCallback onPressed;
   final String text;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +20,14 @@ class DefaultButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 121, 224, 119),
+          color: context.theme.primaryColor,
           borderRadius: BorderRadius.circular(Spacings.px64),
         ),
         padding: const EdgeInsets.all(Spacings.px8),
         child: Text(
           text,
-          style: context.textTheme.titleLarge?.copyWith(color: Colors.white),
+          style: textStyle ??
+              context.textTheme.titleLarge?.copyWith(color: Colors.white),
         ),
       ),
     );

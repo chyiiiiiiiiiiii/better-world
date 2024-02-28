@@ -13,7 +13,7 @@ import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/spacings.dart';
-import 'package:envawareness/zdogs/earth_zdog.dart';
+import 'package:envawareness/zdogs/game_zdog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -75,7 +75,7 @@ class GamePage extends ConsumerWidget {
                   const ParticleArea(),
                   const Positioned.fill(
                     top: 50,
-                    child: EarthZdog(),
+                    child: GameZdog(),
                   ),
                   if (!isEarthBlock)
                     const PlayView()

@@ -5,6 +5,7 @@ import 'package:envawareness/pages/game_page.dart';
 import 'package:envawareness/pages/recycle_game_page.dart';
 import 'package:envawareness/pages/sign_in_page.dart';
 import 'package:envawareness/pages/splash_page.dart';
+import 'package:envawareness/pages/welcome_page.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/router/router_refresh_stream.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,13 @@ GoRouter appRouter(AppRouterRef ref) {
         name: 'splash',
         builder: (context, state) {
           return const SplashPage();
+        },
+      ),
+      GoRoute(
+        path: WelcomePage.routePath,
+        name: 'welcome',
+        builder: (context, state) {
+          return const WelcomePage();
         },
       ),
       GoRoute(
