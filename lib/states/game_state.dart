@@ -17,6 +17,7 @@ class GameState with _$GameState {
     required List<PurchaseHistory> validPurchases,
     required int levelTotalCount,
     required double finishProgress,
+    required List<PlayInfo> leaderBoardPlayers,
     @Default(0) int clickCount,
   }) = _GameState;
 

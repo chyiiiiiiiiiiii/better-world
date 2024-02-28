@@ -23,7 +23,6 @@ class EndangeredSpeciesCardsPage extends ConsumerWidget {
     final ownedCardCount = playInfo.ownedAnimalCardIndexes.length;
 
     return Scaffold(
-      backgroundColor: context.colorScheme.background,
       appBar: AppBar(
         title: Text(l10n.endangeredSpecies),
       ),
@@ -81,7 +80,7 @@ class EndangeredSpeciesCardsPage extends ConsumerWidget {
                   ),
                   Text(
                     species.translatedName,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: context.textTheme.bodyLarge,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                   ),

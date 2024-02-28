@@ -27,6 +27,7 @@ mixin _$GameState {
       throw _privateConstructorUsedError;
   int get levelTotalCount => throw _privateConstructorUsedError;
   double get finishProgress => throw _privateConstructorUsedError;
+  List<PlayInfo> get leaderBoardPlayers => throw _privateConstructorUsedError;
   int get clickCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,6 +48,7 @@ abstract class $GameStateCopyWith<$Res> {
       List<PurchaseHistory> validPurchases,
       int levelTotalCount,
       double finishProgress,
+      List<PlayInfo> leaderBoardPlayers,
       int clickCount});
 
   $PlayInfoCopyWith<$Res> get playInfo;
@@ -72,6 +74,7 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
     Object? validPurchases = null,
     Object? levelTotalCount = null,
     Object? finishProgress = null,
+    Object? leaderBoardPlayers = null,
     Object? clickCount = null,
   }) {
     return _then(_value.copyWith(
@@ -99,6 +102,10 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
           ? _value.finishProgress
           : finishProgress // ignore: cast_nullable_to_non_nullable
               as double,
+      leaderBoardPlayers: null == leaderBoardPlayers
+          ? _value.leaderBoardPlayers
+          : leaderBoardPlayers // ignore: cast_nullable_to_non_nullable
+              as List<PlayInfo>,
       clickCount: null == clickCount
           ? _value.clickCount
           : clickCount // ignore: cast_nullable_to_non_nullable
@@ -138,6 +145,7 @@ abstract class _$$GameStateImplCopyWith<$Res>
       List<PurchaseHistory> validPurchases,
       int levelTotalCount,
       double finishProgress,
+      List<PlayInfo> leaderBoardPlayers,
       int clickCount});
 
   @override
@@ -163,6 +171,7 @@ class __$$GameStateImplCopyWithImpl<$Res>
     Object? validPurchases = null,
     Object? levelTotalCount = null,
     Object? finishProgress = null,
+    Object? leaderBoardPlayers = null,
     Object? clickCount = null,
   }) {
     return _then(_$GameStateImpl(
@@ -190,6 +199,10 @@ class __$$GameStateImplCopyWithImpl<$Res>
           ? _value.finishProgress
           : finishProgress // ignore: cast_nullable_to_non_nullable
               as double,
+      leaderBoardPlayers: null == leaderBoardPlayers
+          ? _value._leaderBoardPlayers
+          : leaderBoardPlayers // ignore: cast_nullable_to_non_nullable
+              as List<PlayInfo>,
       clickCount: null == clickCount
           ? _value.clickCount
           : clickCount // ignore: cast_nullable_to_non_nullable
@@ -208,9 +221,11 @@ class _$GameStateImpl implements _GameState {
       required final List<PurchaseHistory> validPurchases,
       required this.levelTotalCount,
       required this.finishProgress,
+      required final List<PlayInfo> leaderBoardPlayers,
       this.clickCount = 0})
       : _products = products,
-        _validPurchases = validPurchases;
+        _validPurchases = validPurchases,
+        _leaderBoardPlayers = leaderBoardPlayers;
 
   factory _$GameStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$GameStateImplFromJson(json);
@@ -239,13 +254,22 @@ class _$GameStateImpl implements _GameState {
   final int levelTotalCount;
   @override
   final double finishProgress;
+  final List<PlayInfo> _leaderBoardPlayers;
+  @override
+  List<PlayInfo> get leaderBoardPlayers {
+    if (_leaderBoardPlayers is EqualUnmodifiableListView)
+      return _leaderBoardPlayers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_leaderBoardPlayers);
+  }
+
   @override
   @JsonKey()
   final int clickCount;
 
   @override
   String toString() {
-    return 'GameState(playInfo: $playInfo, levelInfo: $levelInfo, products: $products, validPurchases: $validPurchases, levelTotalCount: $levelTotalCount, finishProgress: $finishProgress, clickCount: $clickCount)';
+    return 'GameState(playInfo: $playInfo, levelInfo: $levelInfo, products: $products, validPurchases: $validPurchases, levelTotalCount: $levelTotalCount, finishProgress: $finishProgress, leaderBoardPlayers: $leaderBoardPlayers, clickCount: $clickCount)';
   }
 
   @override
@@ -264,6 +288,8 @@ class _$GameStateImpl implements _GameState {
                 other.levelTotalCount == levelTotalCount) &&
             (identical(other.finishProgress, finishProgress) ||
                 other.finishProgress == finishProgress) &&
+            const DeepCollectionEquality()
+                .equals(other._leaderBoardPlayers, _leaderBoardPlayers) &&
             (identical(other.clickCount, clickCount) ||
                 other.clickCount == clickCount));
   }
@@ -278,6 +304,7 @@ class _$GameStateImpl implements _GameState {
       const DeepCollectionEquality().hash(_validPurchases),
       levelTotalCount,
       finishProgress,
+      const DeepCollectionEquality().hash(_leaderBoardPlayers),
       clickCount);
 
   @JsonKey(ignore: true)
@@ -302,6 +329,7 @@ abstract class _GameState implements GameState {
       required final List<PurchaseHistory> validPurchases,
       required final int levelTotalCount,
       required final double finishProgress,
+      required final List<PlayInfo> leaderBoardPlayers,
       final int clickCount}) = _$GameStateImpl;
 
   factory _GameState.fromJson(Map<String, dynamic> json) =
@@ -319,6 +347,8 @@ abstract class _GameState implements GameState {
   int get levelTotalCount;
   @override
   double get finishProgress;
+  @override
+  List<PlayInfo> get leaderBoardPlayers;
   @override
   int get clickCount;
   @override

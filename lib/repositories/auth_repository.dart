@@ -31,13 +31,10 @@ class AuthRepository {
     };
   }
 
-  Future<GoogleSignInAuthentication> signInGoogle() async {
+  Future<GoogleSignInAccount?> signInGoogle() async {
     final googleAccount = await googleSignIn.signIn();
-    if (googleAccount == null) {
-      throw Exception('Sign in google failed');
-    }
 
-    return googleAccount.authentication;
+    return googleAccount;
   }
 
   Future<void> signInFirebase({

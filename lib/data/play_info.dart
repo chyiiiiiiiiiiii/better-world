@@ -9,6 +9,8 @@ part 'play_info.g.dart';
 class PlayInfo with _$PlayInfo {
   factory PlayInfo({
     @JsonKey(name: 'user_id') required String userId,
+    @JsonKey(name: 'user_name') @Default('') String username,
+    @JsonKey(name: 'user_photo_url') @Default('') String userPhotoUrl,
     @JsonKey(name: 'current_level') @Default(1) int currentLevel,
     @JsonKey(name: 'current_score') @Default(0) int currentScore,
     @JsonKey(name: 'total_score') @Default(0) int totalScore,

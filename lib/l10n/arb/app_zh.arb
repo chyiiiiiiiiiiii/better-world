@@ -1,6 +1,7 @@
 {
 	"@@locale": "zh",
 	"signInWithGoogle": "透過 Google 登入",
+	"signInError": "登入失敗，請聯繫官方",
 	"greeting": "嗨，{username}",
 	"signOutTitle": "想要登出嗎？",
 	"level": "等級：{level}",

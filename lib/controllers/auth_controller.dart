@@ -1,5 +1,7 @@
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/game_page.dart';
 import 'package:envawareness/pages/sign_in_page.dart';
+import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/router/app_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,13 +20,23 @@ class AuthController extends _$AuthController {
     try {
       final authRepository = ref.watch(authRepositoryProvider);
 
-      final googleAuth = await authRepository.signInGoogle();
-      await authRepository.signInFirebase(authentication: googleAuth);
+      final googleAccount = await authRepository.signInGoogle();
+      final authentication = await googleAccount?.authentication;
+      if (authentication == null) {
+        throw Exception('Sign in failed.');
+      }
+
+      await authRepository.signInFirebase(
+        authentication: authentication,
+      );
 
       state = authRepository.currentUser;
 
       ref.read(appRouterProvider).go(GamePage.routePath);
-    } catch (error) {}
+    } catch (error) {
+      final l10n = await getL10n();
+      ref.read(showMessageProvider.notifier).show(l10n.signInError);
+    }
   }
 
   Future<void> signOut() async {

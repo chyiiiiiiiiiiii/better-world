@@ -1,6 +1,7 @@
 {
 	"@@locale": "ja",
 	"signInWithGoogle": "Googleでサインイン",
+	"signInError": "ログインに失敗しました。公式にご連絡ください",
 	"greeting": "こんにちは、{username}",
 	"signOutTitle": "サインアウトしますか？",
 	"level": "レベル：{level}",

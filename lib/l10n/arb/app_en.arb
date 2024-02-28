@@ -1,6 +1,7 @@
 {
 	"@@locale": "en",
 	"signInWithGoogle": "Sign In with Google",
+	"signInError": "Login failed, please contact the official",
 	"greeting": "Hi, {username}",
 	"signOutTitle": "Want to sign out?",
 	"level": "Level: {level}",

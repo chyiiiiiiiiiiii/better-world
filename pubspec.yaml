@@ -42,6 +42,7 @@ dependencies:
   google_fonts: ^6.1.0
   animated_flip_counter: ^0.2.6
   simple_animations: ^5.0.2
+  lottie: ^3.1.0
   sprite: ^0.0.3
   appinio_swiper: ^2.1.0
   flutter_animate: ^4.5.0
@@ -68,3 +69,4 @@ flutter:
     - assets/images/trash_sprite/
     - assets/images/recycle/
     - assets/sounds/
+    - assets/animations/

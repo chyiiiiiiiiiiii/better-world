@@ -1,5 +1,7 @@
 import 'package:envawareness/controllers/auth_controller.dart';
+import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
+import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,19 @@ class SignInPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final screenWidth = MediaQuery.sizeOf(context).width;
+
+    ref.listen(showMessageProvider, (previous, next) async {
+      if (next.isEmpty) {
+        return;
+      }
+
+      await showMessageDialog<void>(
+        context,
+        message: next,
+      );
+
+      ref.invalidate(showMessageProvider);
+    });
 
     return Material(
       child: AppTap(

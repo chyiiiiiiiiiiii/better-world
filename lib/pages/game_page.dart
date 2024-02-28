@@ -22,13 +22,6 @@ class GamePage extends ConsumerWidget {
 
   static const routePath = '/';
 
-  Future<void> _showMessage({
-    required BuildContext context,
-    required String message,
-  }) {
-    return showMessageDialog(context, message: message);
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(showMessageProvider, (previous, next) async {
@@ -36,8 +29,8 @@ class GamePage extends ConsumerWidget {
         return;
       }
 
-      await _showMessage(
-        context: context,
+      await showMessageDialog<void>(
+        context,
         message: next,
       );
 

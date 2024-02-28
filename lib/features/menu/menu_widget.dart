@@ -2,6 +2,7 @@ import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/can_recycle_page.dart';
 import 'package:envawareness/pages/catch_game_page.dart';
+import 'package:envawareness/pages/leader_board_page.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +21,23 @@ class MenuWidget extends ConsumerWidget {
 
     return Row(
       children: [
+        IconButton(
+          icon: const Icon(
+            Icons.leaderboard_rounded,
+            color: Colors.orangeAccent,
+          ),
+          onPressed: () {
+            showDialog<void>(
+              context: context,
+              barrierColor: Colors.transparent,
+              builder: (
+                BuildContext context,
+              ) {
+                return const LeaderBoardPage();
+              },
+            );
+          },
+        ),
         IconButton(
           icon: const Icon(
             Icons.restore_rounded,
@@ -61,7 +79,7 @@ class MenuWidget extends ConsumerWidget {
         ),
         DefaultButton(
           onPressed: () {
-            ref.read(playControllerProvider.notifier).onLeaderBoardTap();
+            ref.read(playControllerProvider.notifier).onStoreTap();
           },
           text: isEarthBlocked ? l10n.close : l10n.store,
         ),

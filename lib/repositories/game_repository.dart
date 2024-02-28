@@ -77,6 +77,23 @@ class GameRepository {
 
     return products;
   }
+
+  Future<List<PlayInfo>> getLeaderBoard() async {
+    final snapshot = await playInfoCollectionReference
+        .orderBy(
+          'total_score',
+          descending: true,
+        )
+        .limit(100)
+        .get();
+    final data = snapshot.docs
+        .map(
+          (e) => e.data(),
+        )
+        .toList();
+
+    return data;
+  }
 }
 
 @riverpod

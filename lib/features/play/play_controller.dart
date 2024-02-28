@@ -28,6 +28,7 @@ class PlayController extends _$PlayController {
   Timer? _scoresPerSecondTimer;
   Timer? _checkValidPurchaseTimer;
   Timer? _uploadScoreTimer;
+  Timer? _refreshLeaderBoardTimer;
 
   String get _userId => ref.watch(authRepositoryProvider).userId;
 
@@ -38,9 +39,18 @@ class PlayController extends _$PlayController {
     _audioPlayer = AudioPlayer();
 
     final playInfo = await getPlayInfo();
-    final levelInfo = await getLevelInfo(level: playInfo.currentLevel);
-    final products = await getProducts();
-    final levelTotalCount = await getLevelTotalCount();
+    final data = await (
+      getLevelInfo(level: playInfo.currentLevel),
+      getProducts(),
+      getLeadBoardPlayers(),
+      getLevelTotalCount()
+    ).wait;
+
+    final levelInfo = data.$1;
+    final products = data.$2;
+    final players = data.$3;
+    final levelTotalCount = data.$4;
+
     final finishProgress =
         (playInfo.currentScore / levelInfo.passScore).clamp(0.0, 1.0);
     final purchaseHistoryList =
@@ -51,6 +61,7 @@ class PlayController extends _$PlayController {
     updateScoresPerSecond();
     startUploadScoreTimer();
     checkValidPurchasePerSecond();
+    startRefreshLeaderBoard();
 
     onDispose();
 
@@ -61,6 +72,7 @@ class PlayController extends _$PlayController {
       levelTotalCount: levelTotalCount,
       validPurchases: purchaseHistoryList,
       finishProgress: finishProgress,
+      leaderBoardPlayers: players,
     );
   }
 
@@ -78,6 +90,8 @@ class PlayController extends _$PlayController {
       _uploadScoreTimer = null;
       _checkValidPurchaseTimer?.cancel();
       _checkValidPurchaseTimer = null;
+      _refreshLeaderBoardTimer?.cancel();
+      _refreshLeaderBoardTimer = null;
     });
   }
 
@@ -131,6 +145,17 @@ class PlayController extends _$PlayController {
     );
   }
 
+  void startRefreshLeaderBoard() {
+    _refreshLeaderBoardTimer ??= Timer.periodic(
+      const Duration(minutes: 1),
+      (timer) async {
+        final players = await getLeadBoardPlayers();
+
+        updateLeaderBoardPlayers(players);
+      },
+    );
+  }
+
   Future<PlayInfo> getPlayInfo() async {
     final gameRepository = ref.watch(gameRepositoryProvider);
 
@@ -140,9 +165,17 @@ class PlayController extends _$PlayController {
         throw Exception("Can not obtain user's play-game history");
       }
 
-      return playInfo;
+      final user = ref.watch(authRepositoryProvider).currentUser;
+      final newPlayInfo = playInfo.copyWith(
+        userPhotoUrl: user?.photoURL ?? '',
+        username: user?.displayName ?? '',
+      );
+
+      return newPlayInfo;
     } catch (error) {
-      final playInfo = await gameRepository.addPlayInfo(userId: _userId);
+      final playInfo = await gameRepository.addPlayInfo(
+        userId: _userId,
+      );
 
       return playInfo;
     }
@@ -174,6 +207,12 @@ class PlayController extends _$PlayController {
     }
 
     return products;
+  }
+
+  Future<List<PlayInfo>> getLeadBoardPlayers() async {
+    final playInfos = await ref.watch(gameRepositoryProvider).getLeaderBoard();
+
+    return playInfos;
   }
 
   Future<void> updateLevelInfo({required int level}) async {
@@ -354,7 +393,11 @@ class PlayController extends _$PlayController {
     return newPlayInfo;
   }
 
-  void onLeaderBoardTap() {
+  void updateLeaderBoardPlayers(List<PlayInfo> players) {
+    update((previous) => previous.copyWith(leaderBoardPlayers: players));
+  }
+
+  void onStoreTap() {
     ref.read(isEarthBlockProvider.notifier).state =
         !ref.read(isEarthBlockProvider);
 

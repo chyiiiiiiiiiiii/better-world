@@ -21,8 +21,18 @@ class _AppState extends ConsumerState<App> {
   // This widget is the root of your application.
   ThemeData _buildTheme(Brightness brightness) {
     final baseTheme = ThemeData(
-      brightness: brightness,
       useMaterial3: true,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      colorScheme: ColorScheme.fromSwatch(
+        brightness: brightness,
+        primarySwatch: Colors.orange,
+        backgroundColor: brightness == Brightness.light
+            ? const Color(0xffF9EFDC)
+            : const Color(0xff1a1a1a),
+      ),
     );
     return baseTheme.copyWith(
       scaffoldBackgroundColor: brightness == Brightness.light
