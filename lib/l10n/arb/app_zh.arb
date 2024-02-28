@@ -27,7 +27,7 @@
 	"passCongratulationMessage": "恭喜通過第 {currentLevel} 級，繼續保護地球！\n(增加 {addScore}/秒)",
 	"allPassCongratulationMessage": "恭喜拯救地球，你真是一位英雄！",
 	"noAvailableScore": "沒有可用於購買的分數。",
-	"speciesAlreadyGot": "你已獲得 \n '{animalName}' \n。",
+	"speciesAlreadyGot": "你已獲得\n'{animalName}'。",
 	"doNotHaveEnoughScore": "你的分數不足。",
 	"haveBoughtIt": "你已經購買過了。"
 }

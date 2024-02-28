@@ -27,7 +27,7 @@
 	"passCongratulationMessage": "Congratulations on passing level {currentLevel}, keep saving the earth! \n(Add {addScore}/s)",
 	"allPassCongratulationMessage": "Congratulations on saving the earth, you are truly a hero!",
 	"noAvailableScore": "No available score for purchase.",
-	"speciesAlreadyGot": "The  \n '{animalName}' \nYou have got it.",
+	"speciesAlreadyGot": "The\n'{animalName}'\nYou have got it.",
 	"doNotHaveEnoughScore": "You do not have enough score.",
 	"haveBoughtIt": "You have bought it."
 }
