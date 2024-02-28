@@ -59,16 +59,22 @@ class EndangeredSpeciesCardsPage extends ConsumerWidget {
                         imageFilter: isOwned
                             ? ImageFilter.blur()
                             : ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-                        child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          imageUrl: species.image,
-                          color: isOwned ? null : Colors.black.withOpacity(1),
-                          colorBlendMode: BlendMode.color,
-                          // placeholder: (context, url) => const Center(
-                          //   child: CircularProgressIndicator(),
-                          // ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            return CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              imageUrl: species.image,
+                              color:
+                                  isOwned ? null : Colors.black.withOpacity(1),
+                              colorBlendMode: BlendMode.color,
+                              // placeholder: (context, url) => const Center(
+                              //   child: CircularProgressIndicator(),
+                              // ),
+                              memCacheHeight: constraints.maxHeight.toInt(),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -197,17 +203,23 @@ class SpeciesCard extends StatelessWidget {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            imageUrl: info.image,
-                            color: isOwned ? null : Colors.black.withOpacity(1),
-                            colorBlendMode: BlendMode.color,
-                            // placeholder: (context, url) => const Center(
-                            //   child: CircularProgressIndicator(),
-                            // ),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                            memCacheHeight: 200,
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              return CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl: info.image,
+                                color: isOwned
+                                    ? null
+                                    : Colors.black.withOpacity(1),
+                                colorBlendMode: BlendMode.color,
+                                // placeholder: (context, url) => const Center(
+                                //   child: CircularProgressIndicator(),
+                                // ),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                                memCacheHeight: constraints.maxHeight.toInt(),
+                              );
+                            },
                           ),
                         ),
                       ),

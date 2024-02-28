@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:envawareness/constants/trash_recycle_data.dart';
 import 'package:envawareness/data/recycle_game_card.dart';
 import 'package:envawareness/features/play/play_controller.dart';
@@ -26,12 +24,13 @@ class RecycleGameController extends _$RecycleGameController {
 
     const cardCount = 10;
 
-    final random = Random();
-    final selectedCards = <RecycleGameCard>[];
-    for (var i = 0; i < cardCount; i++) {
-      final index = random.nextInt(recycleData.length);
-      selectedCards.add(RecycleGameCard.fromJson(recycleData[index]));
-    }
+    final shuffleData = recycleData.toList()..shuffle();
+    final selectedCards = shuffleData
+        .take(10)
+        .map(
+          RecycleGameCard.fromJson,
+        )
+        .toList();
 
     return RecycleGameState(
       totalCount: cardCount,

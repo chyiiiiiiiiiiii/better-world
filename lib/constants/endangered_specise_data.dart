@@ -302,7 +302,7 @@ const endangeredSpeciesJson = [
     'name_en': 'Vaquita',
     'name_ja': 'バキータ',
     'image':
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Vaquita_size.svg/1200px-Vaquita_size.svg.png',
+        'https://i0.wp.com/oceangeneration.org/wp-content/uploads/2023/07/meet-the-vaquita-the-most-endangered-marine-mammal.png?fit=1440%2C850&ssl=1',
     'level': 'CR',
   },
   {

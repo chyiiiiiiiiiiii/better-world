@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:envawareness/controllers/recycle_game_controller.dart';
 import 'package:envawareness/data/recycle_game_card.dart';
@@ -132,11 +130,15 @@ class RecycleGamePage extends ConsumerWidget {
                                     Expanded(
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(12),
-                                        child: Image.asset(
-                                          data.imageUrl,
-                                          width: double.maxFinite,
-                                          height: double.maxFinite,
-                                          fit: BoxFit.cover,
+                                        child: LayoutBuilder(
+                                          builder: (context, constraints) {
+                                            return Image.asset(
+                                              data.imageUrl,
+                                              fit: BoxFit.cover,
+                                              cacheHeight:
+                                                  constraints.maxHeight.toInt(),
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),
