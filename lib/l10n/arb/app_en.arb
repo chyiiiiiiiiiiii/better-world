@@ -1,7 +1,32 @@
 {
-  "@@locale": "en",
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  }
+	"@@locale": "en",
+	"signInWithGoogle": "Sign In with Google",
+	"greeting": "Hi, {username}",
+	"signOutTitle": "Want to sign out?",
+	"level": "Level: {level}",
+	"passScore": "Pass Score: {passScore}",
+	"score": "Score",
+	"scorePerSecond": "{scorePerSecond} /s",
+	"store": "STORE",
+	"availableScore": "Available Score: {availableScore}",
+	"titleCatchGame": "Catch",
+	"titleIdentifyHelper": "Can it?",
+	"close": "Close",
+	"notRecyclable": "Not",
+	"isRecyclable": "Recyclable",
+	"recyclableGameWinner": "You're {name} !",
+	"recyclableGameWinnerName1": "Recycle Beginner",
+	"recyclableGameWinnerName2": "Recycle Newbie",
+	"recyclableGameWinnerName3": "Recycle Expert",
+	"recyclableGameWinnerName4": "Recycle Master",
+	"recyclableGameWinnerName5": "Recycle Angel",
+	"recyclableGameGetReward": "Get Reward",
+  "endangeredSpecies": "Endangered Species",
+  "endangeredLevel": "Endangered Level",
+	"passCongratulationMessage": "Congratulations on passing level {currentLevel}, keep saving the earth! (Add {addScore}/s)",
+	"allPassCongratulationMessage": "Congratulations on saving the earth, you are truly a hero!",
+	"noAvailableScore": "No available score for purchase.",
+	"speciesAlreadyGot": "The  \n '{animalName}' \nYou have got it.",
+	"doNotHaveEnoughScore": "You do not have enough score.",
+	"haveBoughtIt": "You have bought it."
 }

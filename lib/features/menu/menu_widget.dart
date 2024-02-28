@@ -1,4 +1,5 @@
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/can_recycle_page.dart';
 import 'package:envawareness/pages/catch_game_page.dart';
 import 'package:envawareness/utils/button.dart';
@@ -13,7 +14,10 @@ class MenuWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+
     final isEarthBlocked = ref.watch(isEarthBlockProvider);
+
     return Row(
       children: [
         IconButton(
@@ -47,19 +51,19 @@ class MenuWidget extends ConsumerWidget {
           onPressed: () {
             context.push(CanRecyclePage.routePath);
           },
-          text: 'Can it ?',
+          text: l10n.titleIdentifyHelper,
         ),
         DefaultButton(
           onPressed: () {
             context.push(CatchGamePage.routePath);
           },
-          text: 'Catch',
+          text: l10n.titleCatchGame,
         ),
         DefaultButton(
           onPressed: () {
             ref.read(playControllerProvider.notifier).onLeaderBoardTap();
           },
-          text: isEarthBlocked ? 'CLOSE' : 'STORE',
+          text: isEarthBlocked ? l10n.close : l10n.store,
         ),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:envawareness/controllers/recycle_game_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:flutter/material.dart';
@@ -10,22 +11,9 @@ class RecycleGamePage extends ConsumerWidget {
   const RecycleGamePage({super.key});
   static const routePath = '/recycle-game-page';
 
-  String _getScoreTitle(int passCount) {
-    if (passCount >= 10) {
-      return '環保小天使';
-    } else if (passCount >= 5) {
-      return '環保高手';
-    } else if (passCount >= 3) {
-      return '環保達人';
-    } else if (passCount >= 1) {
-      return '環保新手';
-    } else {
-      return '環保小白';
-    }
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final state = ref.watch(recycleGameControllerProvider);
     final gameCards = state.cards;
     final passCount = state.passCount;
@@ -58,7 +46,7 @@ class RecycleGamePage extends ConsumerWidget {
                               style: context.textTheme.headlineMedium,
                             ),
                             Text(
-                              'Not',
+                              l10n.notRecyclable,
                               style: context.textTheme.headlineSmall,
                             ),
                           ],
@@ -75,7 +63,7 @@ class RecycleGamePage extends ConsumerWidget {
                               style: context.textTheme.headlineMedium,
                             ),
                             Text(
-                              'Recyclable',
+                              l10n.isRecyclable,
                               style: context.textTheme.headlineSmall,
                             ),
                           ],
@@ -176,7 +164,7 @@ class RecycleGamePage extends ConsumerWidget {
                         child: Column(
                           children: [
                             Text(
-                              'Score:',
+                              '${l10n.score}:',
                               style: Theme.of(context).textTheme.headlineLarge,
                             ),
                             Text(
@@ -187,7 +175,15 @@ class RecycleGamePage extends ConsumerWidget {
                               height: 40,
                             ),
                             Text(
-                              '你是${_getScoreTitle(passCount)} ！',
+                              l10n.recyclableGameWinner(
+                                switch (passCount) {
+                                  >= 10 => l10n.recyclableGameWinnerName5,
+                                  >= 5 => l10n.recyclableGameWinnerName4,
+                                  >= 3 => l10n.recyclableGameWinnerName3,
+                                  >= 1 => l10n.recyclableGameWinnerName2,
+                                  _ => l10n.recyclableGameWinnerName1,
+                                },
+                              ),
                               style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             const SizedBox(
@@ -205,7 +201,7 @@ class RecycleGamePage extends ConsumerWidget {
                                     )
                                     .getPrize(totalScore);
                               },
-                              text: 'Get Reward',
+                              text: l10n.recyclableGameGetReward,
                             ),
                           ],
                         ),

@@ -7,6 +7,7 @@ import 'package:envawareness/data/level_info.dart';
 import 'package:envawareness/data/play_info.dart';
 import 'package:envawareness/data/product.dart';
 import 'package:envawareness/data/purchase_history.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/repositories/game_repository.dart';
@@ -235,8 +236,9 @@ class PlayController extends _$PlayController {
       return;
     }
 
+    final l10n = await getL10n();
     ref.read(showMessageProvider.notifier).show(
-          'Congratulations on passing level ${playInfo.currentLevel}, keep saving the planet! (Add 1/s)',
+          l10n.passCongratulationMessage(playInfo.currentLevel, 1),
         );
 
     final newPlayInfo = await updateMyLevelToNext();
@@ -252,9 +254,10 @@ class PlayController extends _$PlayController {
       return false;
     }
 
-    ref.read(showMessageProvider.notifier).show(
-          'Congratulations on saving the all planets, you are truly an environmental hero!',
-        );
+    final l10n = await getL10n();
+    ref
+        .read(showMessageProvider.notifier)
+        .show(l10n.allPassCongratulationMessage);
 
     final playInfo = state.requireValue.playInfo;
     final newPlayInfo = playInfo.copyWith(isGameCompleted: true);

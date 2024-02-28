@@ -5,6 +5,7 @@ import 'package:envawareness/controllers/auth_controller.dart';
 import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/endangered_specise_cards_page.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
@@ -20,6 +21,7 @@ class PlayView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final user = ref.watch(
       authControllerProvider.select((state) => state),
     );
@@ -49,7 +51,7 @@ class PlayView extends ConsumerWidget {
                       onTap: () {
                         showChooseDialog(
                           context,
-                          message: 'Want to sign out?',
+                          message: l10n.signOutTitle,
                           onConfirm: () => ref
                               .read(authControllerProvider.notifier)
                               .signOut(),
@@ -82,7 +84,7 @@ class PlayView extends ConsumerWidget {
                     ),
                     Gaps.w12,
                     Text(
-                      'Hi, $username',
+                      l10n.greeting(username),
                       style: context.textTheme.titleMedium,
                     ),
                   ],
@@ -136,13 +138,13 @@ class PlayView extends ConsumerWidget {
             Row(
               children: [
                 Text(
-                  'Level: ${levelInfo.level}',
+                  l10n.level(levelInfo.level),
                   style: context.textTheme.titleMedium,
                 ),
                 const SizedBox(width: 20),
                 Expanded(
                   child: Text(
-                    'Pass Score: ${levelInfo.passScore}',
+                    l10n.passScore(levelInfo.passScore),
                     style: context.textTheme.titleMedium,
                   ),
                 ),
@@ -155,7 +157,7 @@ class PlayView extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Re',
+                  l10n.score,
                   style: context.textTheme.headlineSmall,
                   textAlign: TextAlign.center,
                 ),
@@ -172,7 +174,7 @@ class PlayView extends ConsumerWidget {
               textStyle: context.textTheme.displayLarge,
             ),
             Text(
-              '$scorePerSecond/s',
+              l10n.scorePerSecond(scorePerSecond),
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall

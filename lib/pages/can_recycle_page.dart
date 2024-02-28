@@ -1,4 +1,5 @@
 import 'package:envawareness/controllers/can_recycle_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
@@ -79,6 +80,7 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
   @override
   Widget build(BuildContext context) {
     final result = ref.watch(canRecycleControllerProvider);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
