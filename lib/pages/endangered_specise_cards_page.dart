@@ -27,54 +27,55 @@ class EndangeredSpeciesCardsPage extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: GridView.count(
-          crossAxisCount: 3,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          children: List.generate(
-            endangeredSpecies.length,
-            (index) {
-              final isOwned = playInfo.ownedAnimalCardIndexes.contains(index);
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+          ),
+          itemCount: endangeredSpeciesList.length,
+          itemBuilder: (context, index) {
+            final species = endangeredSpeciesList[index];
+            final isOwned = playInfo.ownedAnimalCardIndexes.contains(index);
 
-              return AppTap(
-                onTap: () {
-                  showSpeciesCardDialog(
-                    context,
-                    isOwned: isOwned,
-                    info: endangeredSpecies[index],
-                  );
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(6),
-                        child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          imageUrl: endangeredSpecies[index].image,
-                          color: isOwned ? null : Colors.black.withOpacity(1),
-                          colorBlendMode: BlendMode.color,
-                          // placeholder: (context, url) => const Center(
-                          //   child: CircularProgressIndicator(),
-                          // ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                        ),
+            return AppTap(
+              onTap: () {
+                showSpeciesCardDialog(
+                  context,
+                  isOwned: isOwned,
+                  info: species,
+                );
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: species.image,
+                        color: isOwned ? null : Colors.black.withOpacity(1),
+                        colorBlendMode: BlendMode.color,
+                        // placeholder: (context, url) => const Center(
+                        //   child: CircularProgressIndicator(),
+                        // ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
-                    Text(
-                      endangeredSpecies[index].name,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+                  ),
+                  Text(
+                    species.translatedName,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -156,7 +157,7 @@ class SpeciesCard extends StatelessWidget {
                 top: 440,
                 child: TiltParallax(
                   child: Text(
-                    info.name,
+                    info.translatedName,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           color: const Color.fromARGB(255, 49, 70, 121),

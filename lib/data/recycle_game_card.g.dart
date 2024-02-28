@@ -11,7 +11,7 @@ _$RecycleGameCardImpl _$$RecycleGameCardImplFromJson(
     _$RecycleGameCardImpl(
       name: json['name'] as String? ?? '',
       nameEn: json['name_en'] as String? ?? '',
-      nameJp: json['name_jp'] as String? ?? '',
+      nameJa: json['name_ja'] as String? ?? '',
       value: json['value'] as int? ?? 0,
       imageUrl: json['image_url'] as String? ?? '',
     );
@@ -21,7 +21,7 @@ Map<String, dynamic> _$$RecycleGameCardImplToJson(
     <String, dynamic>{
       'name': instance.name,
       'name_en': instance.nameEn,
-      'name_jp': instance.nameJp,
+      'name_ja': instance.nameJa,
       'value': instance.value,
       'image_url': instance.imageUrl,
     };
