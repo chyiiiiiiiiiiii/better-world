@@ -98,17 +98,14 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
               data: (data) => Column(
                 children: [
                   if (data.isNotEmpty)
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      margin: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        data,
-                        style: context.theme.textTheme.titleMedium,
-                        textAlign: TextAlign.center,
+                    Dialog(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          data,
+                          style: context.theme.textTheme.titleMedium,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                   Gaps.h24,
@@ -128,17 +125,14 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
               ),
               error: (error, _) => Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    margin: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      "Sorry, we couldn't process the image. Please try again.",
-                      style: context.theme.textTheme.titleMedium,
-                      textAlign: TextAlign.center,
+                  Dialog(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        "Sorry, we couldn't process the image. Please try again.",
+                        style: context.theme.textTheme.titleMedium,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                   Gaps.h24,

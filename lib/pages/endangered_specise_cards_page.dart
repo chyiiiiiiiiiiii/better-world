@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envawareness/constants/endangered_specise_data.dart';
 import 'package:envawareness/data/endangered_species_info.dart';
@@ -49,16 +51,22 @@ class EndangeredSpeciesCardsPage extends ConsumerWidget {
                     Expanded(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(6),
-                        child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          imageUrl: endangeredSpecies[index].image,
-                          color: isOwned ? null : Colors.black.withOpacity(1),
-                          colorBlendMode: BlendMode.color,
-                          // placeholder: (context, url) => const Center(
-                          //   child: CircularProgressIndicator(),
-                          // ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
+                        child: ImageFiltered(
+                          imageFilter: isOwned
+                              ? ImageFilter.blur()
+                              : ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: endangeredSpecies[index].image,
+                            color: isOwned ? null : Colors.black.withOpacity(1),
+                            colorBlendMode: BlendMode.color,
+
+                            // placeholder: (context, url) => const Center(
+                            //   child: CircularProgressIndicator(),
+                            // ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
                         ),
                       ),
                     ),
