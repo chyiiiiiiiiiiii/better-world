@@ -36,6 +36,7 @@ class PlayView extends ConsumerWidget {
     final scorePerSecond = playInfo.perClickScore + validProductScore;
 
     final isDarkMode = ref.watch(darkModeProvider);
+    final editMode = ref.watch(editModeProvider);
 
     return SafeArea(
       child: Padding(
@@ -123,10 +124,11 @@ class PlayView extends ConsumerWidget {
                       onTap: () {
                         ref.read(editModeProvider.notifier).toggle();
                       },
-                      child: const Padding(
-                        padding: EdgeInsets.all(8),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
                         child: Icon(
-                          Icons.edit_rounded,
+                          Icons.threed_rotation,
+                          color: editMode ? context.theme.primaryColor : null,
                         ),
                       ),
                     ),

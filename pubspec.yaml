@@ -14,11 +14,12 @@ dependencies:
   intl: any
 
   flutter_gemini: ^2.0.3
+  animated_text_kit: ^4.2.2
   image_picker: ^1.0.7
   firebase_core: ^2.25.4
   firebase_auth: ^4.17.4
   cloud_firestore: ^4.15.5
-
+  shared_preferences: ^2.2.2
   connectivity_plus: ^5.0.2
 
   go_router: ^13.2.0
@@ -67,4 +68,5 @@ flutter:
     - assets/images/
     - assets/images/trash_sprite/
     - assets/images/recycle/
+    - assets/images/game/
     - assets/sounds/

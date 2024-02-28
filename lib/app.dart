@@ -28,6 +28,9 @@ class _AppState extends ConsumerState<App> {
       scaffoldBackgroundColor: brightness == Brightness.light
           ? const Color(0xffF9EFDC)
           : const Color(0xff1a1a1a),
+      primaryColor: brightness == Brightness.light
+          ? const Color(0xff79E077)
+          : const Color.fromARGB(255, 107, 193, 106),
       textTheme: GoogleFonts.mPlusRounded1cTextTheme(
         baseTheme.textTheme.copyWith(
           displaySmall: GoogleFonts.mPlusRounded1c(

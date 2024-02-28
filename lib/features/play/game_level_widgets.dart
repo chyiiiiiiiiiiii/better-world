@@ -1,6 +1,6 @@
 import 'package:envawareness/utils/radient.dart';
 import 'package:envawareness/zdogs/dash_zdog.dart';
-import 'package:envawareness/zdogs/earth_zdog.dart';
+import 'package:envawareness/zdogs/game_zdog.dart';
 import 'package:flutter/material.dart';
 import 'package:zflutter/zflutter.dart';
 
