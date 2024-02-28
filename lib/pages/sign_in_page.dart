@@ -1,4 +1,6 @@
 import 'package:envawareness/controllers/auth_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
+import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +12,7 @@ class SignInPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final screenWidth = MediaQuery.sizeOf(context).width;
 
     return Material(
@@ -18,7 +21,7 @@ class SignInPage extends ConsumerWidget {
         child: Center(
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.colorScheme.background,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
@@ -39,8 +42,8 @@ class SignInPage extends ConsumerWidget {
                   ),
                   const SizedBox(width: 20),
                   Text(
-                    'Sign In with Google',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    l10n.signInWithGoogle,
+                    style: context.textTheme.headlineMedium,
                   ),
                 ],
               ),

@@ -32,5 +32,3 @@ class AuthController extends _$AuthController {
     await ref.read(appRouterProvider).replace<void>(SignInPage.routePath);
   }
 }
-
-class AppRouter {}

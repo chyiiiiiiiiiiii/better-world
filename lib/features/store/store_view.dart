@@ -2,6 +2,7 @@ import 'package:envawareness/data/play_info.dart';
 import 'package:envawareness/data/product.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/features/store/store_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/endangered_specise_cards_page.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/states/game_state.dart';
@@ -20,6 +21,8 @@ class StoreView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+
     final products = ref.watch(
       playControllerProvider.select(
         (value) => value.requireValue.products,
@@ -37,12 +40,12 @@ class StoreView extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'STORE',
+            l10n.store,
             style: Theme.of(context).textTheme.displayLarge,
           ),
           Gaps.h84,
           Text(
-            'Available scores: $availableScore',
+            l10n.availableScore(availableScore),
             style: context.textTheme.titleLarge,
             textAlign: TextAlign.center,
           ),
@@ -134,6 +137,8 @@ class _Item extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+
     final availableScore = ref.watch(
       playControllerProvider.select(
         (value) => value.requireValue.playInfo.availableScore,
@@ -153,13 +158,13 @@ class _Item extends ConsumerWidget {
         if (!hasEnoughScore) {
           ref
               .read(showMessageProvider.notifier)
-              .show('You do not have enough score.');
+              .show(l10n.doNotHaveEnoughScore);
 
           return;
         }
 
         if (isProductGot) {
-          ref.read(showMessageProvider.notifier).show('You have bought it.');
+          ref.read(showMessageProvider.notifier).show(l10n.haveBoughtIt);
 
           return;
         }

@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envawareness/constants/endangered_specise_data.dart';
 import 'package:envawareness/data/endangered_species_info.dart';
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +18,14 @@ class EndangeredSpeciesCardsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final playInfo = ref.watch(playControllerProvider).requireValue.playInfo;
     final ownedCardCount = playInfo.ownedAnimalCardIndexes.length;
 
     return Scaffold(
       backgroundColor: context.colorScheme.background,
       appBar: AppBar(
-        title: const Text('Endangered Species'),
+        title: Text(l10n.endangeredSpecies),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -114,6 +116,8 @@ class SpeciesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop();
@@ -134,7 +138,7 @@ class SpeciesCard extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          '瀕危等級：${info.level}',
+                          '${l10n.endangeredLevel}：${info.level}',
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge

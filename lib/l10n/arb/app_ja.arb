@@ -1,7 +1,32 @@
 {
-  "@@locale": "ja",
-  "helloWorld": "こんにちは",
-  "@helloWorld": {
-    "description": "挨拶"
-  }
+	"@@locale": "ja",
+	"signInWithGoogle": "Googleでサインイン",
+	"greeting": "こんにちは、{username}",
+	"signOutTitle": "サインアウトしますか？",
+	"level": "レベル：{level}",
+	"passScore": "合格スコア：{passScore}",
+	"score": "スコア",
+	"scorePerSecond": "{scorePerSecond} /秒",
+	"store": "ストア",
+	"availableScore": "利用可能スコア：{availableScore}",
+	"titleCatchGame": "キャッチ",
+	"titleIdentifyHelper": "それはできるか？",
+	"close": "閉じる",
+	"notRecyclable": "リサイクル不可",
+	"isRecyclable": "リサイクル可能",
+	"recyclableGameWinner": "あなたは {name} です！",
+	"recyclableGameWinnerName1": "リサイクル初心者",
+	"recyclableGameWinnerName2": "リサイクル新人",
+	"recyclableGameWinnerName3": "リサイクル専門家",
+	"recyclableGameWinnerName4": "リサイクルマスター",
+	"recyclableGameWinnerName5": "リサイクルエンジェル",
+	"recyclableGameGetReward": "報酬を獲得",
+	"endangeredSpecies": "絶滅危惧種",
+	"endangeredLevel": "絶滅の危機レベル",
+	"passCongratulationMessage": "レベル {currentLevel} の合格おめでとうございます、地球を救うために引き続き頑張りましょう！(スコア {addScore}/秒を追加)",
+	"allPassCongratulationMessage": "地球を救うことに成功しました、本当に英雄です！",
+	"noAvailableScore": "購入可能なスコアがありません。",
+	"speciesAlreadyGot": "すでに '{animalName}' を獲得しています。",
+	"doNotHaveEnoughScore": "十分なスコアがありません。",
+	"haveBoughtIt": "すでに購入しました。"
 }

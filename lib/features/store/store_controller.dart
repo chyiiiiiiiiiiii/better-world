@@ -6,6 +6,7 @@ import 'package:envawareness/data/play_info.dart';
 import 'package:envawareness/data/product.dart';
 import 'package:envawareness/data/purchase_history.dart';
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/repositories/game_repository.dart';
@@ -28,9 +29,10 @@ class StoreController extends _$StoreController {
       final availableScore =
           ref.read(playControllerProvider).requireValue.playInfo.availableScore;
       if (availableScore < product.price) {
+        final l10n = await getL10n();
         ref
             .read(showMessageProvider.notifier)
-            .show('No available score for purchase.');
+            .show(l10n.noAvailableScore);
 
         return;
       }
@@ -70,6 +72,8 @@ class StoreController extends _$StoreController {
 
   Future<EndangeredSpeciesInfo?> purchaseAnimalCard() async {
     try {
+        final l10n = await getL10n();
+
       final availableScore =
           ref.read(playControllerProvider).requireValue.playInfo.availableScore;
       final animalCardPrice = ref
@@ -81,7 +85,7 @@ class StoreController extends _$StoreController {
       if (availableScore < animalCardPrice) {
         ref
             .read(showMessageProvider.notifier)
-            .show('No available score for purchase.');
+            .show(l10n.noAvailableScore);
 
         return null;
       }
@@ -112,7 +116,7 @@ class StoreController extends _$StoreController {
       if (hasDrewExistCard) {
         ref
             .read(showMessageProvider.notifier)
-            .show("The animal \n '$animalName' \nYou have got it.");
+            .show(l10n.speciesAlreadyGot(animalName));
       }
 
       final newPlayInfo = playInfo.copyWith(
