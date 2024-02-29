@@ -15,15 +15,41 @@ import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/spacings.dart';
 import 'package:envawareness/zdogs/game_zdog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class GamePage extends ConsumerWidget {
+class GamePage extends ConsumerStatefulWidget {
   const GamePage({super.key});
 
   static const routePath = '/';
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<GamePage> createState() => _GamePageState();
+}
+
+class _GamePageState extends ConsumerState<GamePage>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    animationController = AnimationController(
+      vsync: this,
+      duration: Durations.extralong4,
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     ref.listen(showMessageProvider, (previous, next) async {
       if (next.isEmpty) {
         return;
@@ -41,24 +67,36 @@ class GamePage extends ConsumerWidget {
     final isDarkMode = ref.watch(darkModeProvider);
     return Material(
       color: context.colorScheme.background,
-      child: Container(
-        decoration: BoxDecoration(
-          image: isDarkMode
-              ? const DecorationImage(
-                  opacity: 0.3,
-                  image: AssetImage('assets/images/bg.gif'),
-                  fit: BoxFit.cover,
-                )
-              : null,
-          gradient: RadialGradient(
-            colors: [
-              const Color.fromARGB(202, 248, 205, 126),
-              context.theme.scaffoldBackgroundColor,
-              context.theme.scaffoldBackgroundColor,
-            ],
-            stops: const [0.0, 0.85, 1.0],
-          ),
-        ),
+      child: AnimatedBuilder(
+        animation: animationController,
+        builder: (context, child) {
+          final animatedValue = animationController.value;
+
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              image: isDarkMode
+                  ? const DecorationImage(
+                      opacity: 0.3,
+                      image: AssetImage('assets/images/bg.gif'),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+              gradient: RadialGradient(
+                colors: [
+                  const Color.fromARGB(202, 248, 205, 126),
+                  context.theme.scaffoldBackgroundColor,
+                  context.theme.scaffoldBackgroundColor,
+                ],
+                stops: [
+                  0.02 + 0.1 * animatedValue,
+                  0.85 - 0.1 * animatedValue,
+                  1.0,
+                ],
+              ),
+            ),
+            child: child,
+          );
+        },
         child: Padding(
           padding: EdgeInsets.only(
             top: Platform.isAndroid ? context.paddingTop / 2 : 0,
@@ -73,9 +111,15 @@ class GamePage extends ConsumerWidget {
                 alignment: Alignment.center,
                 children: [
                   const ParticleArea(),
-                  const Positioned.fill(
+                  Positioned.fill(
                     top: 50,
-                    child: GameZdog(),
+                    child: const GameZdog()
+                        .animate(delay: Durations.medium2)
+                        .scale()
+                        .move(
+                          begin: Offset(-context.width, -context.width),
+                          end: Offset.zero,
+                        ),
                   ),
                   if (!isEarthBlock)
                     const PlayView()
@@ -107,7 +151,7 @@ class GamePage extends ConsumerWidget {
               );
             },
             loading: () {
-              return const Center(child: CircularProgressIndicator());
+              return const SizedBox.shrink();
             },
             error: (error, stackTrace) {
               return Text(

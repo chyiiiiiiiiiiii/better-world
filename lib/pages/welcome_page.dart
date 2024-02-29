@@ -141,7 +141,10 @@ class _SubPage extends StatelessWidget {
                   .textTheme
                   .titleMedium
                   ?.copyWith(color: Colors.white),
-            ).animate().scale(delay: const Duration(seconds: 3))
+            ).animate().scale(
+                  delay: const Duration(seconds: 3),
+                  duration: Durations.short2,
+                )
           else
             IconButton(
               onPressed: onPressed,
