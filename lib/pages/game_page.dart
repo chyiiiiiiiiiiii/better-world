@@ -90,10 +90,13 @@ class _GamePageState extends ConsumerState<GamePage>
               return DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: RadialGradient(
-                    colors: const [
-                      Color.fromARGB(181, 248, 205, 126),
-                      Color.fromARGB(80, 248, 205, 126),
-                      Colors.transparent,
+                    colors: [
+                      const Color.fromARGB(156, 248, 205, 126),
+                      const Color.fromARGB(66, 255, 193, 78),
+                      if (isDarkMode)
+                        Colors.transparent
+                      else
+                        const Color.fromARGB(0, 255, 255, 255),
                     ],
                     stops: [
                       0.4 + (0.1 * animatedValue),
@@ -114,7 +117,7 @@ class _GamePageState extends ConsumerState<GamePage>
                 data: (gameState) {
                   final validPurchaseProducts =
                       gameState.getValidPurchaseProducts();
-
+                  const durationMillisecods = 1400;
                   return Stack(
                     alignment: Alignment.center,
                     children: [
@@ -122,11 +125,21 @@ class _GamePageState extends ConsumerState<GamePage>
                       Positioned.fill(
                         top: 50,
                         child: const GameZdog()
-                            .animate(delay: Durations.medium2)
-                            .scale()
+                            .animate()
+                            .scale(
+                              begin: const Offset(.2, .2),
+                              end: const Offset(1, 1),
+                              duration: const Duration(
+                                milliseconds: durationMillisecods,
+                              ),
+                            )
                             .move(
-                              begin: Offset(-context.width, -context.width),
+                              begin: Offset(0, context.height),
                               end: Offset.zero,
+                              duration: const Duration(
+                                milliseconds: durationMillisecods,
+                              ),
+                              curve: Curves.easeInOutBack,
                             ),
                       ),
                       if (!isEarthBlock)

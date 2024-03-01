@@ -384,11 +384,11 @@ class SunZdog extends ConsumerWidget {
                 height: 100,
                 stroke: value + (solarPower ? 30 : 0),
                 fill: true,
-                color: const Color.fromARGB(255, 255, 214, 110),
+                color: const Color.fromARGB(229, 255, 214, 110),
               ),
               ZShape(
                 stroke: 80,
-                color: const Color.fromARGB(255, 249, 183, 18),
+                color: const Color.fromARGB(227, 249, 183, 18),
               ),
               ZShape(
                 color: Colors.black,
