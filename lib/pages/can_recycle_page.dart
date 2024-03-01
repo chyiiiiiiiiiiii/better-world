@@ -123,7 +123,6 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
               result.when(
                 data: (data) {
                   final hasResponse = data.aiResponse.isNotEmpty;
-
                   return Column(
                     children: [
                       if (hasResponse) ...[
