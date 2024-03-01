@@ -18,7 +18,9 @@ class RecycleGameController extends _$RecycleGameController {
       > 100 => 2000,
       > 50 => 1000,
       > 20 => 500,
-      > 10 => 100,
+      > 15 => 100,
+      > 10 => 50,
+      > 5 => 10,
       _ => 50,
     };
 

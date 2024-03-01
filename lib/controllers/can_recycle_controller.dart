@@ -1,39 +1,66 @@
 import 'dart:typed_data';
 
-import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:envawareness/states/recycle_validator_state.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'can_recycle_controller.g.dart';
 
+const aiApiKey = String.fromEnvironment('AI_API_KEY');
+
 @riverpod
 class CanRecycleController extends _$CanRecycleController {
+  final _generativeModel = GenerativeModel(
+    model: 'gemini-pro-vision',
+    apiKey: aiApiKey,
+  );
+
   Future<void> canRecycleThis(Uint8List bytes) async {
+    await update((previous) => previous.copyWith(pickedImage: bytes));
+
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final result = await getImage(bytes);
+
       return result;
     });
   }
 
-  Future<String> getImage(Uint8List bytes) async {
-    final gemini = Gemini.instance;
+  Future<RecycleValidatorState> getImage(Uint8List bytes) async {
     try {
-      final result = await gemini.textAndImage(
-        text: 'Is this recyclable? response in 25 words or less',
+      // flutter_gemini
+      // final gemini = Gemini.instance;
+      // final result = await gemini.textAndImage(
+      //   text: 'Is this recyclable? response in 25 words or less',
 
-        /// text
-        images: [bytes],
+      //   /// text
+      //   images: [bytes],
 
-        /// list of images
-      );
-      return result?.content?.parts?.last.text ?? '';
+      //   /// list of images
+      // );
+      // return result?.content?.parts?.last.text ?? '';
+
+      final prompt =
+          TextPart('Is this recyclable? response in 25 words or less');
+      final imageParts = [
+        DataPart('image/jpeg', bytes),
+      ];
+      final response = await _generativeModel.generateContent([
+        Content.multi([
+          prompt,
+          ...imageParts,
+        ]),
+      ]);
+      final result = response.text ?? '';
+
+      return state.requireValue.copyWith(aiResponse: result);
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  FutureOr<String> build() async {
-    return '';
+  FutureOr<RecycleValidatorState> build() async {
+    return RecycleValidatorState();
   }
 }

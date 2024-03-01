@@ -19,7 +19,7 @@ class MenuWidget extends ConsumerWidget {
 
     final isEarthBlocked = ref.watch(isEarthBlockProvider);
 
-    return Row(
+    return Wrap(
       children: [
         IconButton(
           icon: const Icon(

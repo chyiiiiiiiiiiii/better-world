@@ -38,64 +38,75 @@ class LeaderBoardPage extends ConsumerWidget {
                   final player = players.elementAt(index);
 
                   return Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Spacings.px12,
+                      vertical: Spacings.px8,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: ListTile(
-                      leading: Stack(
-                        alignment: Alignment.center,
-                        clipBehavior: Clip.none,
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: player.userPhotoUrl,
-                            imageBuilder: (context, imageProvider) =>
-                                CircleAvatar(
-                              backgroundImage: imageProvider,
-                            ),
-                            placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                const CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              child: Icon(Icons.face),
-                            ),
-                          ),
-                          if (isFirst)
-                            Positioned(
-                              top: -16,
-                              left: -16,
-                              child: Transform.rotate(
-                                angle: 315 * math.pi / 180,
-                                child: Lottie.asset(
-                                  'assets/animations/crown.lottie.json',
-                                  width: 36,
-                                ),
+                    child: Row(
+                      children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          clipBehavior: Clip.none,
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: player.userPhotoUrl,
+                              imageBuilder: (context, imageProvider) =>
+                                  CircleAvatar(
+                                backgroundImage: imageProvider,
+                              ),
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  const CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: Icon(Icons.face),
                               ),
                             ),
-                        ],
-                      ),
-                      title: Text(
-                        player.username,
-                        style: context.textTheme.titleLarge
-                            ?.copyWith(color: Colors.black),
-                      ),
-                      trailing: Text.rich(
-                        TextSpan(
-                          text: player.totalScore.toString(),
-                          style: context.textTheme.titleLarge
-                              ?.copyWith(color: Colors.black),
-                          children: [
-                            TextSpan(
-                              text: ' score',
-                              style: context.textTheme.titleSmall
-                                  ?.copyWith(color: Colors.black),
-                            ),
+                            if (isFirst)
+                              Positioned(
+                                top: -16,
+                                left: -16,
+                                child: Transform.rotate(
+                                  angle: 315 * math.pi / 180,
+                                  child: Lottie.asset(
+                                    'assets/animations/crown.lottie.json',
+                                    width: 36,
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
-                        style: context.textTheme.titleLarge
-                            ?.copyWith(color: Colors.black),
-                      ),
+                        Gaps.w12,
+                        Expanded(
+                          child: Text(
+                            player.username,
+                            style: context.textTheme.titleLarge
+                                ?.copyWith(color: Colors.black),
+                          ),
+                        ),
+                        Gaps.w8,
+                        Text.rich(
+                          TextSpan(
+                            text: player.totalScore.toString(),
+                            style: context.textTheme.titleLarge?.copyWith(
+                              color: context.colorScheme.primary,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: ' (s)',
+                                style: context.textTheme.titleSmall
+                                    ?.copyWith(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                          style: context.textTheme.titleLarge
+                              ?.copyWith(color: Colors.black),
+                        ),
+                      ],
                     ),
                   );
                 },

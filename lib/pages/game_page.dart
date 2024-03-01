@@ -129,6 +129,8 @@ class _GamePageState extends ConsumerState<GamePage>
                       child: StoreView(),
                     ),
                   const Positioned(
+                    left: 0,
+                    right: 0,
                     bottom: Spacings.px8,
                     child: MenuWidget(),
                   ),

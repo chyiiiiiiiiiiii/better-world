@@ -1,8 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:envawareness/controllers/can_recycle_controller.dart';
-import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
+import 'package:envawareness/utils/spacings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -80,74 +82,97 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
   @override
   Widget build(BuildContext context) {
     final result = ref.watch(canRecycleControllerProvider);
+    final pickedImage = result.value?.pickedImage ?? Uint8List(0);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Can it be recycled?',
-              style: context.theme.textTheme.headlineMedium,
-              textAlign: TextAlign.center,
-            ),
-            Gaps.h12,
-            result.when(
-              data: (data) => Column(
-                children: [
-                  if (data.isNotEmpty)
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Spacings.px20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Can it be recycled?',
+                style: context.theme.textTheme.headlineMedium,
+                textAlign: TextAlign.center,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: pickedImage.isEmpty ? 0 : Spacings.px20,
+                ),
+                child: AnimatedSize(
+                  duration: Durations.short4,
+                  child: AspectRatio(
+                    aspectRatio: pickedImage.isEmpty ? 1 / 0.1 : 1 / 0.7,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(Spacings.px20),
+                      child: pickedImage.isNotEmpty
+                          ? Image.memory(
+                              pickedImage,
+                              fit: BoxFit.cover,
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                  ),
+                ),
+              ),
+              result.when(
+                data: (data) {
+                  final hasResponse = data.aiResponse.isNotEmpty;
+
+                  return Column(
+                    children: [
+                      if (hasResponse) ...[
+                        Dialog(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              data.aiResponse,
+                              style: context.theme.textTheme.titleMedium,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        Gaps.h24,
+                      ],
+                      DefaultButton(
+                        onPressed: getImage,
+                        text: !hasResponse ? 'upload trash photo' : 'Try again',
+                      ),
+                    ],
+                  );
+                },
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                error: (error, _) => Column(
+                  children: [
                     Dialog(
                       child: Padding(
                         padding: const EdgeInsets.all(8),
                         child: Text(
-                          data,
+                          "Sorry, we couldn't process the image. Please try again.",
                           style: context.theme.textTheme.titleMedium,
                           textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                  Gaps.h24,
-                  Center(
-                    child: DefaultButton(
-                      onPressed: getImage,
-                      text: data.isEmpty ? 'upload trash photo' : 'Try again',
-                    ),
-                  ),
-                ],
-              ),
-              loading: () => const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-              error: (error, _) => Column(
-                children: [
-                  Dialog(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Text(
-                        "Sorry, we couldn't process the image. Please try again.",
-                        style: context.theme.textTheme.titleMedium,
-                        textAlign: TextAlign.center,
+                    Gaps.h20,
+                    Center(
+                      child: DefaultButton(
+                        onPressed: getImage,
+                        text: 'Try again',
                       ),
                     ),
-                  ),
-                  Gaps.h24,
-                  Center(
-                    child: DefaultButton(
-                      onPressed: getImage,
-                      text: 'Try again',
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

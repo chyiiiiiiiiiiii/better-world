@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app_startup.g.dart';
 
@@ -11,6 +12,7 @@ Future<void> appStartup(AppStartupRef ref) async {
   await Future.wait(
     [
       Firebase.initializeApp(),
+      SharedPreferences.getInstance(),
     ],
   );
 
