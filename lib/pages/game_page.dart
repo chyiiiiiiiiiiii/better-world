@@ -67,101 +67,111 @@ class _GamePageState extends ConsumerState<GamePage>
     final isDarkMode = ref.watch(darkModeProvider);
     return Material(
       color: context.colorScheme.background,
-      child: AnimatedBuilder(
-        animation: animationController,
-        builder: (context, child) {
-          final animatedValue = animationController.value;
-
-          return DecoratedBox(
-            decoration: BoxDecoration(
-              image: isDarkMode
-                  ? const DecorationImage(
-                      opacity: 0.3,
-                      image: AssetImage('assets/images/bg.gif'),
-                      fit: BoxFit.cover,
-                    )
-                  : null,
-              gradient: RadialGradient(
-                colors: [
-                  const Color.fromARGB(202, 248, 205, 126),
-                  context.theme.scaffoldBackgroundColor,
-                  context.theme.scaffoldBackgroundColor,
-                ],
-                stops: [
-                  0.02 + 0.1 * animatedValue,
-                  0.85 - 0.1 * animatedValue,
-                  1.0,
-                ],
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                image: isDarkMode
+                    ? const DecorationImage(
+                        opacity: 0.3,
+                        image: AssetImage('assets/images/bg.gif'),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
               ),
             ),
-            child: child,
-          );
-        },
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: Platform.isAndroid ? context.paddingTop / 2 : 0,
-            bottom: context.safePaddingBottom,
           ),
-          child: ref.watch(playControllerProvider).when(
-            data: (gameState) {
-              final validPurchaseProducts =
-                  gameState.getValidPurchaseProducts();
+          AnimatedBuilder(
+            animation: animationController,
+            builder: (context, child) {
+              final animatedValue = animationController.value;
 
-              return Stack(
-                alignment: Alignment.center,
-                children: [
-                  const ParticleArea(),
-                  Positioned.fill(
-                    top: 50,
-                    child: const GameZdog()
-                        .animate(delay: Durations.medium2)
-                        .scale()
-                        .move(
-                          begin: Offset(-context.width, -context.width),
-                          end: Offset.zero,
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    colors: const [
+                      Color.fromARGB(181, 248, 205, 126),
+                      Color.fromARGB(80, 248, 205, 126),
+                      Colors.transparent,
+                    ],
+                    stops: [
+                      0.4 + (0.1 * animatedValue),
+                      0.7 - (0.1 * animatedValue),
+                      1.0,
+                    ],
+                  ),
+                ),
+                child: child,
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: Platform.isAndroid ? context.paddingTop / 2 : 0,
+                bottom: context.safePaddingBottom,
+              ),
+              child: ref.watch(playControllerProvider).when(
+                data: (gameState) {
+                  final validPurchaseProducts =
+                      gameState.getValidPurchaseProducts();
+
+                  return Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      const ParticleArea(),
+                      Positioned.fill(
+                        top: 50,
+                        child: const GameZdog()
+                            .animate(delay: Durations.medium2)
+                            .scale()
+                            .move(
+                              begin: Offset(-context.width, -context.width),
+                              end: Offset.zero,
+                            ),
+                      ),
+                      if (!isEarthBlock)
+                        const PlayView()
+                      else
+                        const Positioned.fill(
+                          top: 120,
+                          child: StoreView(),
                         ),
-                  ),
-                  if (!isEarthBlock)
-                    const PlayView()
-                  else
-                    const Positioned.fill(
-                      top: 120,
-                      child: StoreView(),
-                    ),
-                  const Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: Spacings.px8,
-                    child: MenuWidget(),
-                  ),
-                  Positioned(
-                    left: Spacings.px8,
-                    bottom: Spacings.px84,
-                    child: ValidProductSideView(
-                      validPurchaseProducts: validPurchaseProducts,
-                    ),
-                  ),
-                  Positioned(
-                    right: Spacings.px8,
-                    bottom: Spacings.px84,
-                    child: RightSideView(
-                      canPlayRecycleGame:
-                          !isEarthBlock && gameState.canPlayRecycleGame,
-                    ),
-                  ),
-                ],
-              );
-            },
-            loading: () {
-              return const SizedBox.shrink();
-            },
-            error: (error, stackTrace) {
-              return Text(
-                '$error',
-              );
-            },
+                      const Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: Spacings.px8,
+                        child: MenuWidget(),
+                      ),
+                      Positioned(
+                        left: Spacings.px8,
+                        bottom: Spacings.px84,
+                        child: ValidProductSideView(
+                          validPurchaseProducts: validPurchaseProducts,
+                        ),
+                      ),
+                      Positioned(
+                        right: Spacings.px8,
+                        bottom: Spacings.px84,
+                        child: RightSideView(
+                          canPlayRecycleGame:
+                              !isEarthBlock && gameState.canPlayRecycleGame,
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                loading: () {
+                  return const SizedBox.shrink();
+                },
+                error: (error, stackTrace) {
+                  return Text(
+                    '$error',
+                  );
+                },
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
