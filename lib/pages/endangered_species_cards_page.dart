@@ -160,7 +160,11 @@ class SpeciesCard extends ConsumerWidget {
                                     .bodyLarge
                                     ?.copyWith(
                                       color: const Color.fromARGB(
-                                          255, 49, 70, 121),
+                                        255,
+                                        49,
+                                        70,
+                                        121,
+                                      ),
                                     ),
                               ),
                               Text(
@@ -170,7 +174,11 @@ class SpeciesCard extends ConsumerWidget {
                                     .bodyLarge
                                     ?.copyWith(
                                       color: const Color.fromARGB(
-                                          255, 49, 70, 121),
+                                        255,
+                                        49,
+                                        70,
+                                        121,
+                                      ),
                                     ),
                               ),
                             ],
@@ -256,30 +264,31 @@ class SpeciesCard extends ConsumerWidget {
                 ),
               ),
             ),
-            Positioned(
-              top: 580,
-              child: AddToGoogleWalletButton(
-                pass: ref
-                    .read(googleWalletControllerProvider.notifier)
-                    .getPassJson(
-                  header: info.translatedName,
-                  subHeader: l10n.endangeredSpecies,
-                  endangeredLevel: info.level,
-                  logoImageUrl: info.image,
-                  heroImageUrl: info.image,
-                  properties: [
-                    GoogleWalletPassProperty(
-                      id: 'endangered_species',
-                      header: l10n.endangeredLevel,
-                      body: info.level,
-                    ),
-                  ],
+            if (Platform.isAndroid && isOwned)
+              Positioned(
+                top: 580,
+                child: AddToGoogleWalletButton(
+                  pass: ref
+                      .read(googleWalletControllerProvider.notifier)
+                      .getPassJson(
+                    header: info.translatedName,
+                    subHeader: l10n.endangeredSpecies,
+                    endangeredLevel: info.level,
+                    logoImageUrl: info.image,
+                    heroImageUrl: info.image,
+                    properties: [
+                      GoogleWalletPassProperty(
+                        id: 'endangered_species',
+                        header: l10n.endangeredLevel,
+                        body: info.level,
+                      ),
+                    ],
+                  ),
+                  onSuccess: () {},
+                  onCanceled: () {},
+                  onError: (Object error) {},
                 ),
-                onSuccess: () {},
-                onCanceled: () {},
-                onError: (Object error) {},
               ),
-            ),
           ],
         ),
       ),
