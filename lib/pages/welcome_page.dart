@@ -55,14 +55,14 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
               translate: ZVector.only(x: 100, y: 60),
               child: DashZdog(),
             ),
+            label:
+                '''但記住，這場旅程不止於此。隨著你的進步，你將有機會拯救那些瀕臨絕種的珍貴生命，從珊瑚礁中的彩色魚群到遠古森林的隱秘野生動物。每一個被救援的生命，都是對這個星球的一份愛與承諾。''',
             onPressed: () {
               _pageController.nextPage(
                 duration: const Duration(milliseconds: 400),
                 curve: Curves.easeInOut,
               );
             },
-            label:
-                '''但記住，這場旅程不止於此。隨著你的進步，你將有機會拯救那些瀕臨絕種的珍貴生命，從珊瑚礁中的彩色魚群到遠古森林的隱秘野生動物。每一個被救援的生命，都是對這個星球的一份愛與承諾。''',
           ),
           _SubPage(
             zoom: 0.8,
@@ -72,16 +72,16 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
                 rotateValue: ZVector.zero,
               ),
             ),
+            isLast: true,
+            label: '''
+所以，準備好接受挑戰了嗎？讓我們一起踏上這場既是遊戲又是使命的冒險之旅，為了地球，為了我們共同的家園。
+''',
             onPressed: () async {
               final prefs = await SharedPreferences.getInstance();
 
               await prefs.setBool('firstTimeEnter', false);
               context.pushReplacement(GamePage.routePath);
             },
-            isLast: true,
-            label: '''
-所以，準備好接受挑戰了嗎？讓我們一起踏上這場既是遊戲又是使命的冒險之旅，為了地球，為了我們共同的家園。
-''',
           ),
         ],
       ),
@@ -105,63 +105,67 @@ class _SubPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(32),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (zdogWidget != null)
-            SizedBox(
-              width: 100,
-              height: 20,
-              child: ZIllustration(
-                zoom: zoom,
-                children: [zdogWidget!],
-              ),
-            ),
-          AnimatedTextKit(
-            isRepeatingAnimation: false,
-            animatedTexts: [
-              TypewriterAnimatedText(
-                label,
-                textAlign: TextAlign.center,
-                textStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontSize: 16,
-                    ),
-                speed: const Duration(milliseconds: 50),
-              ),
-            ],
-          ),
-          Gaps.h32,
-          if (isLast)
-            DefaultButton(
-              onPressed: onPressed,
-              text: '我準備好了',
-              textStyle: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: Colors.white),
-            ).animate().scale(
-                  delay: const Duration(seconds: 3),
-                  duration: Durations.short2,
-                )
-          else
-            IconButton(
-              onPressed: onPressed,
-              iconSize: 40,
-              icon: const Icon(Icons.arrow_drop_down_rounded),
-            )
-                .animate(
-                  onPlay: (controller) =>
-                      controller.repeat(reverse: true), // loop
-                )
-                .fade(
-                  begin: 0.3,
-                  duration: const Duration(
-                    seconds: 1,
-                  ),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (zdogWidget != null)
+              SizedBox(
+                width: 100,
+                height: 20,
+                child: ZIllustration(
+                  zoom: zoom,
+                  children: [zdogWidget!],
                 ),
-        ],
+              ),
+            AnimatedTextKit(
+              isRepeatingAnimation: false,
+              animatedTexts: [
+                TypewriterAnimatedText(
+                  label,
+                  textAlign: TextAlign.center,
+                  textStyle:
+                      Theme.of(context).textTheme.headlineSmall?.copyWith(
+                            fontSize: 16,
+                          ),
+                  speed: const Duration(milliseconds: 50),
+                ),
+              ],
+            ),
+            Gaps.h32,
+            if (isLast)
+              DefaultButton(
+                onPressed: onPressed,
+                text: '我準備好了',
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(color: Colors.white),
+              ).animate().scale(
+                    delay: const Duration(seconds: 3),
+                    duration: Durations.short2,
+                  )
+            else
+              IconButton(
+                onPressed: onPressed,
+                iconSize: 40,
+                icon: const Icon(Icons.arrow_drop_down_rounded),
+              )
+                  .animate(
+                    onPlay: (controller) =>
+                        controller.repeat(reverse: true), // loop
+                  )
+                  .fade(
+                    begin: 0.3,
+                    duration: const Duration(
+                      seconds: 1,
+                    ),
+                  ),
+          ],
+        ),
       ),
     );
   }
