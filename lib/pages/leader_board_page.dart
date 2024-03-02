@@ -2,8 +2,11 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:envawareness/controllers/auth_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
+import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/spacings.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +19,26 @@ class LeaderBoardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final players =
-        ref.watch(playControllerProvider).requireValue.leaderBoardPlayers;
+    final l10n = context.l10n;
+    final players = ref.watch(
+      playControllerProvider.select(
+        (value) => value.requireValue.leaderBoardPlayers,
+      ),
+    );
+    final myUid = ref.watch(authControllerProvider).value?.uid ?? '';
 
     return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+      filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: Spacings.px20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Text(
+              l10n.leaderBoard,
+              style: context.textTheme.headlineMedium,
+            ),
+            Gaps.h20,
             Expanded(
               child: ListView.separated(
                 padding: const EdgeInsets.symmetric(
@@ -36,6 +49,9 @@ class LeaderBoardPage extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final isFirst = index == 0;
                   final player = players.elementAt(index);
+                  final isMe = player.userId == myUid;
+
+                  const textColor = Colors.black;
 
                   return Container(
                     padding: const EdgeInsets.symmetric(
@@ -43,7 +59,7 @@ class LeaderBoardPage extends ConsumerWidget {
                       vertical: Spacings.px8,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: isMe ? context.colorScheme.primary : Colors.white,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
@@ -87,7 +103,7 @@ class LeaderBoardPage extends ConsumerWidget {
                           child: Text(
                             player.username,
                             style: context.textTheme.titleLarge
-                                ?.copyWith(color: Colors.black),
+                                ?.copyWith(color: textColor),
                           ),
                         ),
                         Gaps.w8,
@@ -95,18 +111,16 @@ class LeaderBoardPage extends ConsumerWidget {
                           TextSpan(
                             text: player.totalScore.toString(),
                             style: context.textTheme.titleLarge?.copyWith(
-                              color: context.colorScheme.primary,
+                              color: textColor,
                             ),
                             children: [
                               TextSpan(
                                 text: ' (s)',
                                 style: context.textTheme.titleSmall
-                                    ?.copyWith(color: Colors.black),
+                                    ?.copyWith(color: textColor),
                               ),
                             ],
                           ),
-                          style: context.textTheme.titleLarge
-                              ?.copyWith(color: Colors.black),
                         ),
                       ],
                     ),
@@ -117,13 +131,11 @@ class LeaderBoardPage extends ConsumerWidget {
                 },
               ),
             ),
-            IconButton(
-              icon: const Icon(
-                Icons.check,
-                color: Colors.green,
-                weight: 10,
+            Center(
+              child: DefaultButton(
+                onPressed: context.pop,
+                text: l10n.close,
               ),
-              onPressed: () => context.pop(),
             ),
           ],
         ),

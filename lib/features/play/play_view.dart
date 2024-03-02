@@ -10,6 +10,7 @@ import 'package:envawareness/pages/endangered_species_cards_page.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/gaps.dart';
+import 'package:envawareness/utils/spacings.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -22,9 +23,11 @@ class PlayView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final user = ref.watch(
-      authControllerProvider.select((state) => state),
-    );
+    final user = ref
+        .watch(
+          authControllerProvider,
+        )
+        .value;
     final username = user?.displayName ?? '';
     final userPhotoURL = user?.photoURL ?? '';
 
@@ -34,6 +37,7 @@ class PlayView extends ConsumerWidget {
 
     final validProductScore = gameState.getValidProductScore();
     final scorePerSecond = playInfo.perClickScore + validProductScore;
+    final currentProgress = gameState.finishProgress;
 
     final isDarkMode = ref.watch(darkModeProvider);
     final editMode = ref.watch(editModeProvider);
@@ -137,23 +141,17 @@ class PlayView extends ConsumerWidget {
               ],
             ),
             Gaps.h8,
-            Row(
-              children: [
-                Text(
-                  l10n.level(levelInfo.level),
-                  style: context.textTheme.titleMedium,
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Text(
-                    l10n.passScore(levelInfo.passScore),
-                    style: context.textTheme.titleMedium,
-                  ),
-                ),
-              ],
+            Text(
+              l10n.level(levelInfo.level),
+              style: context.textTheme.titleMedium,
             ),
             Gaps.h8,
-            const Divider(),
+            LinearProgressIndicator(
+              value: currentProgress,
+              color: context.colorScheme.primary,
+              borderRadius:
+                  const BorderRadius.all(Radius.circular(Spacings.px20)),
+            ),
             Gaps.h8,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -172,7 +170,7 @@ class PlayView extends ConsumerWidget {
             ),
             AnimatedFlipCounter(
               duration: const Duration(milliseconds: 500),
-              value: playInfo.currentScore,
+              value: playInfo.totalScore,
               textStyle: context.textTheme.displayLarge,
             ),
             Text(

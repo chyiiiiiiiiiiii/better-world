@@ -20,7 +20,7 @@ class DefaultButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         decoration: BoxDecoration(
-          color: context.theme.primaryColor,
+          color: context.colorScheme.primary,
           borderRadius: BorderRadius.circular(Spacings.px64),
         ),
         padding: const EdgeInsets.all(Spacings.px8),

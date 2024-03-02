@@ -10,6 +10,8 @@ import 'package:envawareness/data/google_wallet_pass_property.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
+import 'package:envawareness/utils/gaps.dart';
+import 'package:envawareness/utils/spacings.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,74 +27,99 @@ class EndangeredSpeciesCardsPage extends ConsumerWidget {
     final l10n = context.l10n;
     final playInfo = ref.watch(playControllerProvider).requireValue.playInfo;
     final ownedCardCount = playInfo.ownedAnimalCardIndexes.length;
+    final totalSpeciesCount = endangeredSpeciesList.length;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.endangeredSpecies),
+        title: Text(l10n.endangeredSpeciesISaved),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
+      body: Column(
+        children: [
+          Text.rich(
+            TextSpan(
+              text: '$ownedCardCount🦕',
+              style: context.textTheme.titleLarge?.copyWith(
+                color: context.colorScheme.secondary,
+              ),
+              children: [
+                TextSpan(
+                  text: '/$totalSpeciesCount',
+                  style: context.textTheme.titleMedium,
+                ),
+              ],
+            ),
           ),
-          itemCount: endangeredSpeciesList.length,
-          itemBuilder: (context, index) {
-            final species = endangeredSpeciesList[index];
-            final isOwned = playInfo.ownedAnimalCardIndexes.contains(index);
+          Gaps.h12,
+          Expanded(
+            child: GridView.builder(
+              padding: EdgeInsets.only(
+                left: 20,
+                right: 20,
+                bottom: context.paddingBottom,
+              ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+              ),
+              itemCount: endangeredSpeciesList.length,
+              itemBuilder: (context, index) {
+                final species = endangeredSpeciesList[index];
+                final isOwned = playInfo.ownedAnimalCardIndexes.contains(index);
 
-            return AppTap(
-              onTap: () {
-                showSpeciesCardDialog(
-                  context,
-                  isOwned: isOwned,
-                  info: species,
-                );
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(6),
-                      child: ImageFiltered(
-                        imageFilter: isOwned
-                            ? ImageFilter.blur()
-                            : ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            return CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              imageUrl: species.image,
-                              color:
-                                  isOwned ? null : Colors.black.withOpacity(1),
-                              colorBlendMode: BlendMode.color,
-                              // placeholder: (context, url) => const Center(
-                              //   child: CircularProgressIndicator(),
-                              // ),
-                              memCacheHeight: constraints.maxHeight.toInt(),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                            );
-                          },
+                return AppTap(
+                  onTap: () {
+                    showSpeciesCardDialog(
+                      context,
+                      isOwned: isOwned,
+                      info: species,
+                    );
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: ImageFiltered(
+                            imageFilter: isOwned
+                                ? ImageFilter.blur()
+                                : ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                return CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: species.image,
+                                  color: isOwned
+                                      ? null
+                                      : Colors.black.withOpacity(1),
+                                  colorBlendMode: BlendMode.color,
+                                  // placeholder: (context, url) => const Center(
+                                  //   child: CircularProgressIndicator(),
+                                  // ),
+                                  width: constraints.maxWidth,
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                );
+                              },
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      Text(
+                        species.translatedName,
+                        style: context.textTheme.bodyLarge,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
-                  Text(
-                    species.translatedName,
-                    style: context.textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -210,35 +237,44 @@ class SpeciesCard extends ConsumerWidget {
                           height: 400,
                           child: TiltParallax(
                             size: const Offset(30, 30),
-                            child: Container(
-                              margin: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.grey,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 3),
+                            child: Padding(
+                              padding: const EdgeInsets.all(Spacings.px20),
+                              child: Stack(
+                                children: [
+                                  Positioned.fill(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.grey,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.2),
+                                            spreadRadius: 5,
+                                            blurRadius: 7,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          imageUrl: info.image,
+                                          color: isOwned
+                                              ? null
+                                              : Colors.black.withOpacity(1),
+                                          colorBlendMode: BlendMode.color,
+                                          // placeholder: (context, url) => const Center(
+                                          //   child: CircularProgressIndicator(),
+                                          // ),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  imageUrl: info.image,
-                                  color: isOwned
-                                      ? null
-                                      : Colors.black.withOpacity(1),
-                                  colorBlendMode: BlendMode.color,
-                                  // placeholder: (context, url) => const Center(
-                                  //   child: CircularProgressIndicator(),
-                                  // ),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                ),
                               ),
                             ),
                           ),

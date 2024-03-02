@@ -4,7 +4,7 @@
 	"signInError": "登入失敗，請聯繫官方",
 	"greeting": "嗨，{username}",
 	"signOutTitle": "想要登出嗎？",
-	"level": "等級：{level}",
+	"level": "愛地球等級：{level}",
 	"passScore": "及格分數：{passScore}",
 	"score": "分數",
 	"scorePerSecond": "{scorePerSecond} /秒",
@@ -23,11 +23,13 @@
 	"recyclableGameWinnerName5": "回收天使",
 	"recyclableGameGetReward": "獲得獎勵",
 	"endangeredSpecies": "瀕危物種",
+	"endangeredSpeciesISaved": "我已拯救的瀕危物種",
 	"endangeredLevel": "瀕危等級",
 	"passCongratulationMessage": "恭喜通過第 {currentLevel} 級，繼續保護地球！\n(增加 {addScore}/秒)",
 	"allPassCongratulationMessage": "恭喜拯救地球，你真是一位英雄！",
 	"noAvailableScore": "沒有可用於購買的分數。",
 	"speciesAlreadyGot": "你已獲得\n'{animalName}'。",
 	"doNotHaveEnoughScore": "你的分數不足。",
-	"haveBoughtIt": "你已經購買過了。"
+	"haveBoughtIt": "你已經購買過了。",
+	"leaderBoard": "愛地球排行榜"
 }

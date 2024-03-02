@@ -30,6 +30,8 @@ class SignInPage extends ConsumerWidget {
       ref.invalidate(showMessageProvider);
     });
 
+    final isLoading = ref.read(authControllerProvider).isLoading;
+
     return Material(
       child: AppTap(
         onTap: ref.read(authControllerProvider.notifier).signIn,
@@ -48,20 +50,22 @@ class SignInPage extends ConsumerWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.asset(
-                    'assets/images/google.png',
-                    width: screenWidth * 0.1,
-                  ),
-                  const SizedBox(width: 20),
-                  Text(
-                    l10n.signInWithGoogle,
-                    style: context.textTheme.headlineMedium,
-                  ),
-                ],
-              ),
+              child: isLoading
+                  ? const CircularProgressIndicator()
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          'assets/images/google.png',
+                          width: screenWidth * 0.1,
+                        ),
+                        const SizedBox(width: 20),
+                        Text(
+                          l10n.signInWithGoogle,
+                          style: context.textTheme.headlineMedium,
+                        ),
+                      ],
+                    ),
             ),
           ),
         ),

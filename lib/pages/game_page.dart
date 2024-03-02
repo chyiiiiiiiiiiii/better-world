@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/dialogs/showing.dart';
-import 'package:envawareness/features/menu/menu_widget.dart';
+import 'package:envawareness/features/bottom_side_widget.dart';
 import 'package:envawareness/features/particle/particle.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/features/play/play_view.dart';
@@ -63,8 +63,9 @@ class _GamePageState extends ConsumerState<GamePage>
       ref.invalidate(showMessageProvider);
     });
 
-    final isEarthBlock = ref.watch(isEarthBlockProvider);
+    final isStoreOpened = ref.watch(isStoreOpenedProvider);
     final isDarkMode = ref.watch(darkModeProvider);
+
     return Material(
       color: context.colorScheme.background,
       child: Stack(
@@ -117,7 +118,7 @@ class _GamePageState extends ConsumerState<GamePage>
                 data: (gameState) {
                   final validPurchaseProducts =
                       gameState.getValidPurchaseProducts();
-                  const durationMillisecods = 1400;
+                  const durationMilliseconds = 1400;
                   return Stack(
                     alignment: Alignment.center,
                     children: [
@@ -130,19 +131,19 @@ class _GamePageState extends ConsumerState<GamePage>
                               begin: const Offset(.2, .2),
                               end: const Offset(1, 1),
                               duration: const Duration(
-                                milliseconds: durationMillisecods,
+                                milliseconds: durationMilliseconds,
                               ),
                             )
                             .move(
                               begin: Offset(0, context.height),
                               end: Offset.zero,
                               duration: const Duration(
-                                milliseconds: durationMillisecods,
+                                milliseconds: durationMilliseconds,
                               ),
                               curve: Curves.easeInOutBack,
                             ),
                       ),
-                      if (!isEarthBlock)
+                      if (!isStoreOpened)
                         const PlayView()
                       else
                         const Positioned.fill(
@@ -153,22 +154,28 @@ class _GamePageState extends ConsumerState<GamePage>
                         left: 0,
                         right: 0,
                         bottom: Spacings.px8,
-                        child: MenuWidget(),
+                        child: BottomSideWidget(),
                       ),
                       Positioned(
                         left: Spacings.px8,
-                        bottom: Spacings.px84,
+                        bottom: context.height / 7,
                         child: ValidProductSideView(
                           validPurchaseProducts: validPurchaseProducts,
                         ),
                       ),
                       Positioned(
                         right: Spacings.px8,
-                        bottom: Spacings.px84,
-                        child: RightSideView(
-                          canPlayRecycleGame:
-                              !isEarthBlock && gameState.canPlayRecycleGame,
-                        ),
+                        bottom: Spacings.px64,
+                        child: isStoreOpened
+                            ? const SizedBox.shrink()
+                            : RightSideView(
+                                canPlayRecycleGame:
+                                    gameState.canPlayRecycleGame,
+                              )
+                                .animate(
+                                  delay: Durations.extralong4,
+                                )
+                                .fade(),
                       ),
                     ],
                   );

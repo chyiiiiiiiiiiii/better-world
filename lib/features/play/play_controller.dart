@@ -8,10 +8,13 @@ import 'package:envawareness/data/play_info.dart';
 import 'package:envawareness/data/product.dart';
 import 'package:envawareness/data/purchase_history.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
+import 'package:envawareness/pages/game_page.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/repositories/game_repository.dart';
 import 'package:envawareness/repositories/store_repository.dart';
+import 'package:envawareness/router/app_router.dart';
+import 'package:envawareness/router/go_router_extension.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -276,9 +279,14 @@ class PlayController extends _$PlayController {
     }
 
     final l10n = await getL10n();
-    ref.read(showMessageProvider.notifier).show(
-          l10n.passCongratulationMessage(playInfo.currentLevel, 1),
-        );
+    final appRouter = ref.read(appRouterProvider);
+    final isOnHomePage = appRouter.currentRoutePath == GamePage.routePath;
+    final isStoreOpened = ref.read(isStoreOpenedProvider);
+    if (isOnHomePage && !isStoreOpened) {
+      ref.read(showMessageProvider.notifier).show(
+            l10n.passCongratulationMessage(playInfo.currentLevel, 1),
+          );
+    }
 
     final newPlayInfo = await updateMyLevelToNext();
     await updateLevelInfo(level: newPlayInfo.currentLevel);
@@ -309,7 +317,7 @@ class PlayController extends _$PlayController {
   }
 
   Future<void> onEarthTap() async {
-    final blockEarth = ref.read(isEarthBlockProvider);
+    final blockEarth = ref.read(isStoreOpenedProvider);
     if (blockEarth) {
       return;
     }
@@ -398,14 +406,14 @@ class PlayController extends _$PlayController {
   }
 
   void onStoreTap() {
-    ref.read(isEarthBlockProvider.notifier).state =
-        !ref.read(isEarthBlockProvider);
+    ref.read(isStoreOpenedProvider.notifier).state =
+        !ref.read(isStoreOpenedProvider);
 
     ref.read(leaderBoardAnimationControllerProvider.notifier).toggle();
   }
 }
 
-final isEarthBlockProvider = StateProvider<bool>((ref) {
+final isStoreOpenedProvider = StateProvider<bool>((ref) {
   return false;
 });
 

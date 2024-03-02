@@ -1,10 +1,15 @@
+import 'package:envawareness/pages/catch_game_page.dart';
 import 'package:envawareness/pages/recycle_game_page.dart';
+import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
+import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/widgets/app_tap.dart';
+import 'package:envawareness/widgets/background_shinning.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class RightSideView extends StatelessWidget {
+class RightSideView extends ConsumerWidget {
   const RightSideView({
     required this.canPlayRecycleGame,
     super.key,
@@ -13,93 +18,55 @@ class RightSideView extends StatelessWidget {
   final bool canPlayRecycleGame;
 
   @override
-  Widget build(BuildContext context) {
-    return AnimatedScale(
-      scale: canPlayRecycleGame ? 1 : 0,
-      duration: canPlayRecycleGame ? Durations.medium2 : Durations.short2,
-      child: const RecycleWidget(),
-    );
-  }
-}
-
-class RecycleWidget extends StatefulWidget {
-  const RecycleWidget({
-    super.key,
-  });
-
-  @override
-  State<RecycleWidget> createState() => _RecycleWidgetState();
-}
-
-class _RecycleWidgetState extends State<RecycleWidget>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-      value: 0.5,
-    )..repeat(reverse: true);
-    _animation = Tween<double>(
-      begin: 0,
-      end: 20,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOutCubic,
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        return Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            // gradient: RadialGradient(
-            //   colors: [
-            //     Colors.green.withOpacity(0),
-            //     Colors.green.withOpacity(0.1),
-            //     Colors.green.withOpacity(0.1),
-            //   ],
-            //   stops: [0.0, _animation.value + 0.3, 1.0],
-            // ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.white.withAlpha(200),
-                blurRadius: _animation.value + 4,
-                spreadRadius: _animation.value,
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Column(
+      children: [
+        BackgroundShinning(
+          isShinning: canPlayRecycleGame,
+          child: AppTap(
+            onTap: () {
+              canPlayRecycleGame
+                  ? context.push(CatchGamePage.routePath)
+                  : ref.read(showMessageProvider.notifier).show('還需要加把勁，持續點擊');
+            },
+            child: AnimatedSize(
+              duration: Durations.medium2,
+              child: Image.asset(
+                'assets/images/catch.png',
+                width:
+                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
+                height:
+                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
+                color: canPlayRecycleGame ? null : Colors.grey.shade400,
+                colorBlendMode: BlendMode.modulate,
               ),
-            ],
+            ),
           ),
-          child: child,
-        );
-      },
-      child: AppTap(
-        onTap: () {
-          context.push(RecycleGamePage.routePath);
-        },
-        child: Image.asset(
-          'assets/images/recycle-bin.png',
-          width: context.width / 6,
-          height: context.width / 6,
         ),
-      ),
+        Gaps.h24,
+        BackgroundShinning(
+          isShinning: canPlayRecycleGame,
+          child: AppTap(
+            onTap: () {
+              canPlayRecycleGame
+                  ? context.push(RecycleGamePage.routePath)
+                  : ref.read(showMessageProvider.notifier).show('還需要加把勁，持續點擊');
+            },
+            child: AnimatedSize(
+              duration: Durations.medium2,
+              child: Image.asset(
+                'assets/images/recycle-bin.png',
+                width:
+                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
+                height:
+                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
+                color: canPlayRecycleGame ? null : Colors.grey.shade400,
+                colorBlendMode: BlendMode.modulate,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/game_page.dart';
 import 'package:envawareness/pages/sign_in_page.dart';
-import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/pages/welcome_page.dart';
+import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/router/app_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,11 +14,13 @@ part 'auth_controller.g.dart';
 @Riverpod(keepAlive: true)
 class AuthController extends _$AuthController {
   @override
-  User? build() {
+  FutureOr<User?> build() {
     return ref.watch(authRepositoryProvider).currentUser;
   }
 
   Future<void> signIn() async {
+    state = const AsyncValue.loading();
+
     try {
       final authRepository = ref.watch(authRepositoryProvider);
 
@@ -32,7 +34,8 @@ class AuthController extends _$AuthController {
         authentication: authentication,
       );
 
-      state = authRepository.currentUser;
+      final user = authRepository.currentUser;
+      state =  AsyncValue.data(user);
 
       final prefs = await SharedPreferences.getInstance();
       if (prefs.getBool('firstTimeEnter') ?? true) {
@@ -41,9 +44,12 @@ class AuthController extends _$AuthController {
       }
 
       ref.read(appRouterProvider).go(GamePage.routePath);
-    } catch (error) {
+
+    } catch (error, st) {
       final l10n = await getL10n();
       ref.read(showMessageProvider.notifier).show(l10n.signInError);
+
+      state = AsyncValue.error(error, st);
     }
   }
 

@@ -1,15 +1,18 @@
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/can_recycle_page.dart';
-import 'package:envawareness/pages/catch_game_page.dart';
 import 'package:envawareness/pages/leader_board_page.dart';
+import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
+import 'package:envawareness/utils/gaps.dart';
+import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class MenuWidget extends ConsumerWidget {
-  const MenuWidget({
+class BottomSideWidget extends ConsumerWidget {
+  const BottomSideWidget({
     super.key,
   });
 
@@ -17,16 +20,27 @@ class MenuWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
 
-    final isEarthBlocked = ref.watch(isEarthBlockProvider);
+    final isStoreOpened = ref.watch(isStoreOpenedProvider);
 
-    return Wrap(
+    if (isStoreOpened) {
+      return Center(
+        child: DefaultButton(
+          onPressed: ref.read(playControllerProvider.notifier).onStoreTap,
+          text: l10n.close,
+        ),
+      )
+          .animate(
+            key: const Key('close'),
+            delay: Durations.extralong4,
+          )
+          .fade();
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          icon: const Icon(
-            Icons.leaderboard_rounded,
-            color: Colors.orangeAccent,
-          ),
-          onPressed: () {
+        AppTap(
+          onTap: () {
             showDialog<void>(
               context: context,
               barrierColor: Colors.transparent,
@@ -37,7 +51,13 @@ class MenuWidget extends ConsumerWidget {
               },
             );
           },
+          child: Image.asset(
+            'assets/images/leaderboard.png',
+            width: context.width / 7,
+            height: context.width / 7,
+          ),
         ),
+        Gaps.w20,
         // IconButton(
         //   icon: const Icon(
         //     Icons.restore_rounded,
@@ -66,25 +86,33 @@ class MenuWidget extends ConsumerWidget {
         //     ref.read(playControllerProvider.notifier).updateScoresPerSecond();
         //   },
         // ),
-        DefaultButton(
-          onPressed: () {
-            context.push(CanRecyclePage.routePath);
-          },
-          text: l10n.titleIdentifyHelper,
-        ),
-        DefaultButton(
-          onPressed: () {
-            context.push(CatchGamePage.routePath);
-          },
-          text: l10n.titleCatchGame,
-        ),
-        DefaultButton(
-          onPressed: () {
+        AppTap(
+          onTap: () {
             ref.read(playControllerProvider.notifier).onStoreTap();
           },
-          text: isEarthBlocked ? l10n.close : l10n.store,
+          child: Image.asset(
+            'assets/images/shop.png',
+            width: context.width / 7,
+            height: context.width / 7,
+          ),
+        ),
+        Gaps.w20,
+        AppTap(
+          onTap: () {
+            context.push(CanRecyclePage.routePath);
+          },
+          child: Image.asset(
+            'assets/images/scan.png',
+            width: context.width / 7,
+            height: context.width / 7,
+          ),
         ),
       ],
-    );
+    )
+        .animate(
+          key: const Key('open'),
+          delay: Durations.extralong4,
+        )
+        .fadeIn();
   }
 }
