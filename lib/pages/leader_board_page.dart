@@ -58,8 +58,10 @@ class LeaderBoardPage extends ConsumerWidget {
                                   CircleAvatar(
                                 backgroundImage: imageProvider,
                               ),
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(),
+                              placeholder: (context, url) => const CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: Icon(Icons.face),
+                              ),
                               errorWidget: (context, url, error) =>
                                   const CircleAvatar(
                                 backgroundColor: Colors.transparent,

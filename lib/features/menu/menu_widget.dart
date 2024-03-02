@@ -38,33 +38,34 @@ class MenuWidget extends ConsumerWidget {
             );
           },
         ),
-        IconButton(
-          icon: const Icon(
-            Icons.restore_rounded,
-            color: Colors.red,
-          ),
-          onPressed: () async {
-            // Temp for restoring data.
+        // IconButton(
+        //   icon: const Icon(
+        //     Icons.restore_rounded,
+        //     color: Colors.red,
+        //   ),
+        //   onPressed: () async {
+        //     // Temp for restoring data.
 
-            final newPlayInfo =
-                ref.read(playControllerProvider).requireValue.playInfo.copyWith(
-                      currentLevel: 1,
-                      currentScore: 0,
-                      isGameCompleted: false,
-                      perClickScore: 1,
-                      totalScore: 0,
-                      usedScore: 0,
-                    );
+        //     final newPlayInfo =
+        //         ref.read(playControllerProvider).requireValue.playInfo.copyWith(
+        //               currentLevel: 1,
+        //               currentScore: 0,
+        //               isGameCompleted: false,
+        //               perClickScore: 1,
+        //               totalScore: 0,
+        //               usedScore: 0,
+        //               animalCardDrawCount: 0,
+        //             );
 
-            await ref.watch(playControllerProvider.notifier).updatePlayInfo(
-                  newPlayInfo,
-                );
-            await ref
-                .read(playControllerProvider.notifier)
-                .updateLevelInfo(level: 1);
-            ref.read(playControllerProvider.notifier).updateScoresPerSecond();
-          },
-        ),
+        //     await ref.watch(playControllerProvider.notifier).updatePlayInfo(
+        //           newPlayInfo,
+        //         );
+        //     await ref
+        //         .read(playControllerProvider.notifier)
+        //         .updateLevelInfo(level: 1);
+        //     ref.read(playControllerProvider.notifier).updateScoresPerSecond();
+        //   },
+        // ),
         DefaultButton(
           onPressed: () {
             context.push(CanRecyclePage.routePath);

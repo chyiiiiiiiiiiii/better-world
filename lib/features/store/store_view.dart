@@ -3,7 +3,7 @@ import 'package:envawareness/data/product.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/features/store/store_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
-import 'package:envawareness/pages/endangered_specise_cards_page.dart';
+import 'package:envawareness/pages/endangered_species_cards_page.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';

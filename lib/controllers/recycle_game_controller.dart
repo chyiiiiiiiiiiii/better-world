@@ -20,8 +20,8 @@ class RecycleGameController extends _$RecycleGameController {
       > 20 => 500,
       > 15 => 100,
       > 10 => 50,
-      > 5 => 10,
-      _ => 50,
+      > 5 => 20,
+      _ => 10,
     };
 
     const cardCount = 10;

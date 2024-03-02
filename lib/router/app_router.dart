@@ -1,6 +1,6 @@
 import 'package:envawareness/pages/can_recycle_page.dart';
 import 'package:envawareness/pages/catch_game_page.dart';
-import 'package:envawareness/pages/endangered_specise_cards_page.dart';
+import 'package:envawareness/pages/endangered_species_cards_page.dart';
 import 'package:envawareness/pages/game_page.dart';
 import 'package:envawareness/pages/recycle_game_page.dart';
 import 'package:envawareness/pages/sign_in_page.dart';
