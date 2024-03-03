@@ -1,23 +1,42 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:envawareness/constants/firestore_collections.dart';
 import 'package:envawareness/data/level_info.dart';
 
-double _boundedExponentialGrowth(int n, double p0, double r, double a) {
+/// n = Initial position, usually starting from 1
+/// p0 = Initial value
+/// r = Growth rate
+/// a = Parameter controlling the growth upper limit
+///
+/// A "bounded exponential growth model" is used to calculate the experience points required to reach each level.
+/// This model will gradually slow down the growth rate as the level increases, avoiding the unlimited growth of experience value requirements.
+double boundedExponentialGrowth({
+  required int n,
+  required double p0,
+  double r = 1.1,
+  double a = 0.005,
+}) {
   if (n == 1) {
     return p0;
   }
+
   return p0 * pow(r, n - 1) / (1 + a * pow(r, n - 1));
 }
 
 Future<void> addLevelsToFirestore() async {
-  const p0 = 1000.0; // 起始
-  const r = 1.1; // 成長率
-  const a = 0.005; // 控制成長上限的参数
+  const beginValue = 100.0;
 
   for (var n = 1; n <= 200; n++) {
-    final points = n == 1 ? 100 : _boundedExponentialGrowth(n, p0, r, a);
+    final points = n == 1
+        ? beginValue
+        : boundedExponentialGrowth(
+            n: n,
+            p0: beginValue,
+          );
+
     await FirebaseFirestore.instance
         .collection(FirestoreCollections.level)
         .withConverter(

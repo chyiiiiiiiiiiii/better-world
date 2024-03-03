@@ -31,15 +31,15 @@ class GoogleWalletController extends _$GoogleWalletController {
 
     final result = '''
     {
-      "iss": "${Constants.issuerEmail}",
+      "iss": "${Constants.googleWalletIssuerEmail}",
       "aud": "google",
       "typ": "savetowallet",
       "origins": [],
       "payload": {
         "genericObjects": [
           {
-            "id": "${Constants.issuerId}.$passId",
-            "classId": "${Constants.issuerId}.${Constants.passClassEndangeredSpecies}",
+            "id": "${Constants.googleWalletIssuerId}.$passId",
+            "classId": "${Constants.googleWalletIssuerId}.${Constants.googleWalletPassClassEndangeredSpecies}",
             "genericType": "GENERIC_TYPE_UNSPECIFIED",
             "hexBackgroundColor": "#F9EDD6",
             "logo": {

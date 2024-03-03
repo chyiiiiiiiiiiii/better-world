@@ -31,5 +31,11 @@
 	"speciesAlreadyGot": "You have already obtained '{animalName}'.",
 	"doNotHaveEnoughScore": "You do not have enough score.",
 	"haveBoughtIt": "You have already purchased it.",
-	"leaderBoard": "Love Earth Leaderboard"
+	"leaderBoard": "Love Earth Leaderboard",
+	"canRecycleGameText": "尋找身邊的可回收物品，AI可以幫助你確認🤖",
+	"canRecycleGameShoot": "拍攝物品",
+	"canRecycleGameNext": "繼續尋找",
+	"canRecycleGameTryAgain": "再試一次",
+	"canRecycleGameError": "不好意思，AI無法處理提供的照片。",
+	"canRecycleGameAddScore": "獲得{addScore}分"
 }

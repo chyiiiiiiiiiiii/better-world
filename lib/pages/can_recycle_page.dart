@@ -1,6 +1,8 @@
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:envawareness/controllers/can_recycle_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
@@ -75,14 +77,19 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
     } else {
       await ref
           .read(canRecycleControllerProvider.notifier)
-          .canRecycleThis(bytes!);
+          .checkRecyclable(bytes!);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final result = ref.watch(canRecycleControllerProvider);
-    final pickedImage = result.value?.pickedImage ?? Uint8List(0);
+    final l10n = context.l10n;
+
+    final asyncState = ref.watch(canRecycleControllerProvider);
+    final isLoading = asyncState.isLoading;
+
+    final pickedImage = asyncState.value?.pickedImage ?? Uint8List(0);
+    final hasAiResponse = (asyncState.value?.aiResponse ?? '').isNotEmpty;
 
     return Scaffold(
       appBar: AppBar(
@@ -96,7 +103,7 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Can it be recycled?',
+                l10n.canRecycleGameText,
                 style: context.theme.textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
@@ -111,60 +118,70 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(Spacings.px20),
                       child: pickedImage.isNotEmpty
-                          ? Image.memory(
-                              pickedImage,
-                              fit: BoxFit.cover,
+                          ? Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Positioned.fill(
+                                  child: ImageFiltered(
+                                    imageFilter: ImageFilter.blur(
+                                      sigmaX: isLoading ? 5 : 0,
+                                      sigmaY: isLoading ? 5 : 0,
+                                    ),
+                                    child: Image.memory(
+                                      pickedImage,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                if (isLoading)
+                                  const CircularProgressIndicator(),
+                              ],
                             )
                           : const SizedBox.shrink(),
                     ),
                   ),
                 ),
               ),
-              result.when(
+              asyncState.when(
                 data: (data) {
-                  final hasResponse = data.aiResponse.isNotEmpty;
                   return Column(
                     children: [
-                      if (hasResponse) ...[
-                        Dialog(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Text(
-                              data.aiResponse,
-                              style: context.theme.textTheme.titleMedium,
-                              textAlign: TextAlign.center,
-                            ),
+                      if (hasAiResponse) ...[
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            data.aiResponse,
+                            style: context.theme.textTheme.titleMedium,
+                            textAlign: TextAlign.center,
                           ),
                         ),
                         Gaps.h24,
                       ],
                       DefaultButton(
                         onPressed: getImage,
-                        text: !hasResponse ? 'upload trash photo' : 'Try again',
+                        text: hasAiResponse
+                            ? l10n.canRecycleGameNext
+                            : l10n.canRecycleGameShoot,
                       ),
                     ],
                   );
                 },
-                loading: () => const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                loading: () => const SizedBox.shrink(),
                 error: (error, _) => Column(
                   children: [
-                    Dialog(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Text(
-                          "Sorry, we couldn't process the image. Please try again.",
-                          style: context.theme.textTheme.titleMedium,
-                          textAlign: TextAlign.center,
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        l10n.canRecycleGameError,
+                        style: context.theme.textTheme.titleMedium,
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    Gaps.h20,
+                    Gaps.h24,
                     Center(
                       child: DefaultButton(
                         onPressed: getImage,
-                        text: 'Try again',
+                        text: l10n.canRecycleGameTryAgain,
                       ),
                     ),
                   ],

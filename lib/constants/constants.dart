@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 final class Constants {
   const Constants._();
 
-  static const issuerId = '3388000000022320262';
-  static const issuerEmail = 'ab20803@gmail.com';
-  static const passClassEndangeredSpecies = 'endangered_species';
+  static const googleWalletIssuerId = '3388000000022320262';
+  static const googleWalletIssuerEmail = 'ab20803@gmail.com';
+  static const googleWalletPassClassEndangeredSpecies = 'endangered_species';
 }

@@ -28,6 +28,7 @@ class _AppState extends ConsumerState<App> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
+      primaryColor: const Color(0xff79E077),
       colorScheme: isLight
           ? const ColorScheme.light(
               primary: Color(0xff79E077),
