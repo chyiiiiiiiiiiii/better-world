@@ -628,7 +628,7 @@ const endangeredSpeciesJson = [
     'name_en': 'Whale Shark',
     'name_ja': 'ジンベイザメ',
     'image':
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Whale-Shark-Scale-Chart-SVG-Steveoc86.svg/1200px-Whale-Shark-Scale-Chart-SVG-Steveoc86.svg.png',
+        'https://png.pngtree.com/thumb_back/fh260/background/20230423/pngtree-whale-shark-in-water-image_2485591.jpg',
     'level': 'EN',
   },
   {

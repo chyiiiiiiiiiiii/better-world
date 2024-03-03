@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:envawareness/constants/constants.dart';
 import 'package:envawareness/constants/firestore_collections.dart';
 import 'package:envawareness/data/level_info.dart';
 
@@ -27,14 +28,14 @@ double boundedExponentialGrowth({
 }
 
 Future<void> addLevelsToFirestore() async {
-  const beginValue = 100.0;
+  const beginValue = Constants.beginLevelPassScore;
 
-  for (var n = 1; n <= 200; n++) {
+  for (var n = 1; n <= Constants.appTotalLevels; n++) {
     final points = n == 1
         ? beginValue
         : boundedExponentialGrowth(
             n: n,
-            p0: beginValue,
+            p0: beginValue.toDouble(),
           );
 
     await FirebaseFirestore.instance

@@ -11,6 +11,8 @@ import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/repositories/auth_repository.dart';
 import 'package:envawareness/repositories/game_repository.dart';
 import 'package:envawareness/repositories/store_repository.dart';
+import 'package:envawareness/states/store_state.dart';
+import 'package:envawareness/utils/game_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,8 +22,22 @@ part 'store_controller.g.dart';
 class StoreController extends _$StoreController {
   String get _userId => ref.watch(authRepositoryProvider).userId;
   @override
-  Future<void> build() async {
-    return;
+  Future<StoreState> build() async {
+    final currentLevel = await ref.watch(
+      playControllerProvider.selectAsync(
+        (data) => data.playInfo.currentLevel,
+      ),
+    );
+
+    final animalCardPrice = calculateGamePerItemScore(
+      currentLevel: currentLevel,
+      numItems: 1,
+      maxScoreProportionToTotalScore: 0.4,
+    );
+
+    return StoreState(
+      animalCardPrice: animalCardPrice,
+    );
   }
 
   Future<void> purchase({required Product product}) async {
@@ -74,11 +90,7 @@ class StoreController extends _$StoreController {
 
       final availableScore =
           ref.read(playControllerProvider).requireValue.playInfo.availableScore;
-      final animalCardPrice = ref
-          .watch(playControllerProvider)
-          .requireValue
-          .playInfo
-          .animalCardPrice;
+      final animalCardPrice = state.requireValue.animalCardPrice;
 
       if (availableScore < animalCardPrice) {
         ref.read(showMessageProvider.notifier).show(l10n.noAvailableScore);

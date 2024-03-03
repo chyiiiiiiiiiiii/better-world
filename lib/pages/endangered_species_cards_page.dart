@@ -10,12 +10,14 @@ import 'package:envawareness/data/google_wallet_pass_property.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
+import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/spacings.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
+import 'package:go_router/go_router.dart';
 
 class EndangeredSpeciesCardsPage extends ConsumerWidget {
   const EndangeredSpeciesCardsPage({super.key});
@@ -129,6 +131,7 @@ Future<void> showSpeciesCardDialog(
   BuildContext context, {
   required EndangeredSpeciesInfo info,
   bool isOwned = true,
+  bool canNavigateSpeciesPage = false,
 }) async {
   return showDialog<void>(
     context: context,
@@ -136,6 +139,7 @@ Future<void> showSpeciesCardDialog(
       return SpeciesCard(
         isOwned: isOwned,
         info: info,
+        canNavigateSpeciesPage: canNavigateSpeciesPage,
       );
     },
   );
@@ -145,9 +149,11 @@ class SpeciesCard extends ConsumerWidget {
   const SpeciesCard({
     required this.isOwned,
     required this.info,
+    this.canNavigateSpeciesPage = false,
     super.key,
   });
   final bool isOwned;
+  final bool canNavigateSpeciesPage;
   final EndangeredSpeciesInfo info;
 
   @override
@@ -265,9 +271,10 @@ class SpeciesCard extends ConsumerWidget {
                                               ? null
                                               : Colors.black.withOpacity(1),
                                           colorBlendMode: BlendMode.color,
-                                          // placeholder: (context, url) => const Center(
-                                          //   child: CircularProgressIndicator(),
-                                          // ),
+                                          placeholder: (context, url) =>
+                                              const ColoredBox(
+                                            color: Colors.white,
+                                          ),
                                           errorWidget: (context, url, error) =>
                                               const Icon(Icons.error),
                                         ),
@@ -288,43 +295,49 @@ class SpeciesCard extends ConsumerWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
                   ),
                 ),
               ),
             ),
-            if (Platform.isAndroid && isOwned)
-              Positioned(
-                top: 580,
-                child: AddToGoogleWalletButton(
-                  pass: ref
-                      .read(googleWalletControllerProvider.notifier)
-                      .getPassJson(
-                    header: info.translatedName,
-                    subHeader: l10n.endangeredSpecies,
-                    endangeredLevel: info.level,
-                    logoImageUrl: info.image,
-                    heroImageUrl: info.image,
-                    properties: [
-                      GoogleWalletPassProperty(
-                        id: 'endangered_species',
-                        header: l10n.endangeredLevel,
-                        body: info.level,
+            Positioned(
+              top: 570,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  if (Platform.isAndroid && isOwned)
+                    AddToGoogleWalletButton(
+                      pass: ref
+                          .read(googleWalletControllerProvider.notifier)
+                          .getPassJson(
+                        header: info.translatedName,
+                        subHeader: l10n.endangeredSpecies,
+                        endangeredLevel: info.level,
+                        logoImageUrl: info.image,
+                        heroImageUrl: info.image,
+                        properties: [
+                          GoogleWalletPassProperty(
+                            id: 'endangered_species',
+                            header: l10n.endangeredLevel,
+                            body: info.level,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  onSuccess: () {},
-                  onCanceled: () {},
-                  onError: (Object error) {},
-                ),
+                      onSuccess: () {},
+                      onCanceled: () {},
+                      onError: (Object error) {},
+                    ),
+                  if (canNavigateSpeciesPage) ...[
+                    Gaps.h20,
+                    DefaultButton(
+                      text: '我的物種圖鑑',
+                      onPressed: () =>
+                          context.push(EndangeredSpeciesCardsPage.routePath),
+                    ),
+                  ],
+                ],
               ),
+            ),
           ],
         ),
       ),

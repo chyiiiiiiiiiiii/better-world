@@ -1,5 +1,6 @@
 import 'package:envawareness/data/play_info.dart';
 import 'package:envawareness/data/product.dart';
+import 'package:envawareness/extensions/int_extension.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/features/store/store_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
@@ -81,8 +82,16 @@ class _AnimalCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final animalCardPrice =
-        ref.watch(playControllerProvider).requireValue.playInfo.animalCardPrice;
+    final animalCardPrice = ref.watch(
+          storeControllerProvider.select(
+            (value) => value.value?.animalCardPrice,
+          ),
+        ) ??
+        0;
+
+    if (animalCardPrice.isZero) {
+      return const SizedBox.shrink();
+    }
 
     return AppTap(
       onTap: () async {
@@ -97,7 +106,11 @@ class _AnimalCard extends ConsumerWidget {
           return;
         }
 
-        await showSpeciesCardDialog(context, info: data);
+        await showSpeciesCardDialog(
+          context,
+          info: data,
+          canNavigateSpeciesPage: true,
+        );
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,

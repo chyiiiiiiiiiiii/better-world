@@ -18,16 +18,18 @@ class DefaultButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppTap(
       onTap: onPressed,
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           color: context.colorScheme.primary,
           borderRadius: BorderRadius.circular(Spacings.px64),
         ),
-        padding: const EdgeInsets.all(Spacings.px8),
-        child: Text(
-          text,
-          style: textStyle ??
-              context.textTheme.titleLarge?.copyWith(color: Colors.white),
+        child: Padding(
+          padding: const EdgeInsets.all(Spacings.px8),
+          child: Text(
+            text,
+            style: textStyle ??
+                context.textTheme.titleLarge?.copyWith(color: Colors.white),
+          ),
         ),
       ),
     );

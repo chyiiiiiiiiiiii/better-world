@@ -164,7 +164,7 @@ class RecycleGamePage extends ConsumerWidget {
                         child: Column(
                           children: [
                             Text(
-                              '${l10n.score}:',
+                              '${l10n.environmentalScore}:',
                               style: Theme.of(context).textTheme.headlineLarge,
                             ),
                             Text(
@@ -174,17 +174,29 @@ class RecycleGamePage extends ConsumerWidget {
                             const SizedBox(
                               height: 40,
                             ),
-                            Text(
-                              l10n.recyclableGameWinner(
-                                switch (passCount) {
-                                  >= 10 => l10n.recyclableGameWinnerName5,
-                                  >= 5 => l10n.recyclableGameWinnerName4,
-                                  >= 3 => l10n.recyclableGameWinnerName3,
-                                  >= 1 => l10n.recyclableGameWinnerName2,
-                                  _ => l10n.recyclableGameWinnerName1,
-                                },
+                            Text.rich(
+                              TextSpan(
+                                text: l10n.recyclableGameYouAre,
+                                style: context.textTheme.headlineSmall,
+                                children: [
+                                  TextSpan(
+                                    text: switch (passCount) {
+                                      >= 10 => l10n.recyclableGameWinnerName5,
+                                      >= 5 => l10n.recyclableGameWinnerName4,
+                                      >= 3 => l10n.recyclableGameWinnerName3,
+                                      >= 1 => l10n.recyclableGameWinnerName2,
+                                      _ => l10n.recyclableGameWinnerName1,
+                                    },
+                                    style: context.textTheme.headlineLarge
+                                        ?.copyWith(
+                                      color: context.colorScheme.secondary,
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: ' 💪🏼',
+                                  ),
+                                ],
                               ),
-                              style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             const SizedBox(
                               height: 100,

@@ -68,14 +68,15 @@ class BottomSideWidget extends ConsumerWidget {
 
         //     final newPlayInfo =
         //         ref.read(playControllerProvider).requireValue.playInfo.copyWith(
-        //               currentLevel: 1,
-        //               currentScore: 0,
-        //               isGameCompleted: false,
-        //               perClickScore: 1,
-        //               totalScore: 0,
-        //               usedScore: 0,
-        //               animalCardDrawCount: 0,
-        //             );
+        //       currentLevel: 1,
+        //       currentScore: 0,
+        //       isGameCompleted: false,
+        //       perClickScore: 1,
+        //       totalScore: 0,
+        //       usedScore: 0,
+        //       animalCardDrawCount: 0,
+        //       ownedAnimalCardIndexes: [],
+        //     );
 
         //     await ref.watch(playControllerProvider.notifier).updatePlayInfo(
         //           newPlayInfo,

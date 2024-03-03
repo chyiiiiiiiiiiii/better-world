@@ -278,16 +278,6 @@ class PlayController extends _$PlayController {
       return;
     }
 
-    final l10n = await getL10n();
-    final appRouter = ref.read(appRouterProvider);
-    final isOnHomePage = appRouter.currentRoutePath == GamePage.routePath;
-    final isStoreOpened = ref.read(isStoreOpenedProvider);
-    if (isOnHomePage && !isStoreOpened) {
-      ref.read(showMessageProvider.notifier).show(
-            l10n.passCongratulationMessage(playInfo.currentLevel, 1),
-          );
-    }
-
     final newPlayInfo = await updateMyLevelToNext();
     await updateLevelInfo(level: newPlayInfo.currentLevel);
   }
@@ -386,7 +376,10 @@ class PlayController extends _$PlayController {
     final newLevel = playInfo.currentLevel + 1;
     final newCurrentScore =
         playInfo.currentScore - state.requireValue.levelInfo.passScore;
-    final newPerClickScore = playInfo.perClickScore + 1;
+
+    final isUpTenLevels = (newLevel % 10 == 0);
+    final newPerClickScore = playInfo.perClickScore + (isUpTenLevels ? 1 : 0);
+
     final newPlayInfo = playInfo.copyWith(
       currentLevel: newLevel,
       currentScore: newCurrentScore,
@@ -397,6 +390,18 @@ class PlayController extends _$PlayController {
     await ref
         .watch(gameRepositoryProvider)
         .updatePlayInfo(playInfo: newPlayInfo);
+
+    final l10n = await getL10n();
+    final appRouter = ref.read(appRouterProvider);
+    final isOnHomePage = appRouter.currentRoutePath == GamePage.routePath;
+    final isStoreOpened = ref.read(isStoreOpenedProvider);
+    if (isOnHomePage && !isStoreOpened) {
+      ref.read(showMessageProvider.notifier).show(
+            isUpTenLevels
+                ? l10n.passCongratulationWithScoreMessage(newLevel)
+                : l10n.passCongratulationMessage(newLevel),
+          );
+    }
 
     return newPlayInfo;
   }

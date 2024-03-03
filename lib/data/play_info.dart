@@ -37,5 +37,4 @@ extension PlayInfoExtension on PlayInfo {
       .map((index) => endangeredSpeciesList.elementAt(index))
       .toList();
 
-  int get animalCardPrice => (1 + animalCardDrawCount) * 500;
 }

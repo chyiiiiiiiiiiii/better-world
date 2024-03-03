@@ -5,7 +5,9 @@ part 'store_state.g.dart';
 
 @freezed
 class StoreState with _$StoreState {
-  factory StoreState() = _StoreState;
+  factory StoreState({
+    required int animalCardPrice,
+  }) = _StoreState;
 
   factory StoreState.fromJson(Map<String, dynamic> json) =>
       _$StoreStateFromJson(json);

@@ -1,5 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:envawareness/constants/constants.dart';
 import 'package:envawareness/firebase/firestore_helper.dart';
 
 /// 計算遊戲內每個物品的經驗值
@@ -12,7 +13,7 @@ int calculateGamePerItemScore({
   required int currentLevel,
   required int numItems,
   required double maxScoreProportionToTotalScore,
-  int beginLevelPassScore = 100,
+  int beginLevelPassScore = Constants.beginLevelPassScore,
 }) {
   final totalExperience = boundedExponentialGrowth(
     n: currentLevel,
