@@ -82,6 +82,8 @@ class _AnimalCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+
     final animalCardPrice = ref.watch(
           storeControllerProvider.select(
             (value) => value.value?.animalCardPrice,
@@ -122,7 +124,7 @@ class _AnimalCard extends ConsumerWidget {
             height: context.width / 3,
           ),
           Text(
-            'Gotcha\n\$$animalCardPrice',
+            '${l10n.saveSpecies}\n\$$animalCardPrice',
             style: context.textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),

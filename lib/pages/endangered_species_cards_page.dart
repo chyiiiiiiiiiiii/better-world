@@ -305,7 +305,8 @@ class SpeciesCard extends ConsumerWidget {
               right: 0,
               child: Column(
                 children: [
-                  if (Platform.isAndroid && isOwned)
+                  if (Platform.isAndroid && isOwned) ...[
+                    Gaps.h20,
                     AddToGoogleWalletButton(
                       pass: ref
                           .read(googleWalletControllerProvider.notifier)
@@ -327,14 +328,13 @@ class SpeciesCard extends ConsumerWidget {
                       onCanceled: () {},
                       onError: (Object error) {},
                     ),
-                  if (canNavigateSpeciesPage) ...[
-                    Gaps.h20,
+                  ],
+                  if (canNavigateSpeciesPage)
                     DefaultButton(
-                      text: '我的物種圖鑑',
+                      text: l10n.myEndangeredSpeciesAlbum,
                       onPressed: () =>
                           context.push(EndangeredSpeciesCardsPage.routePath),
                     ),
-                  ],
                 ],
               ),
             ),

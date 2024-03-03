@@ -1,5 +1,6 @@
 import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/router/app_router.dart';
+import 'package:envawareness/utils/common.dart';
 import 'package:envawareness/widgets/connectivity_detector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -42,43 +43,83 @@ class _AppState extends ConsumerState<App> {
             ),
     );
 
+    final languageCode = platformLocale.languageCode;
+
     return baseTheme.copyWith(
-      textTheme: GoogleFonts.mPlusRounded1cTextTheme(
-        baseTheme.textTheme.copyWith(
-          displaySmall: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.displaySmall,
-            fontWeight: FontWeight.w800,
+      textTheme: switch (languageCode) {
+        'zh' => GoogleFonts.notoSansTcTextTheme(
+            baseTheme.textTheme.copyWith(
+              displayLarge: GoogleFonts.notoSansTc(
+                textStyle: baseTheme.textTheme.displayLarge,
+                fontWeight: FontWeight.w800,
+              ),
+              displayMedium: GoogleFonts.notoSansTc(
+                textStyle: baseTheme.textTheme.displayMedium,
+                fontWeight: FontWeight.w800,
+              ),
+              displaySmall: GoogleFonts.notoSansTc(
+                textStyle: baseTheme.textTheme.displaySmall,
+                fontWeight: FontWeight.w800,
+              ),
+              headlineLarge: GoogleFonts.notoSansTc(
+                textStyle: baseTheme.textTheme.headlineLarge,
+                fontWeight: FontWeight.w800,
+              ),
+              headlineMedium: GoogleFonts.notoSansTc(
+                textStyle: baseTheme.textTheme.headlineMedium,
+                fontWeight: FontWeight.w800,
+              ),
+              headlineSmall: GoogleFonts.notoSansTc(
+                textStyle: baseTheme.textTheme.headlineSmall,
+                fontWeight: FontWeight.w800,
+              ),
+              titleLarge: GoogleFonts.notoSansTc(
+                textStyle: baseTheme.textTheme.titleLarge,
+                fontWeight: FontWeight.w800,
+              ),
+              titleMedium: GoogleFonts.notoSansTc(
+                textStyle: baseTheme.textTheme.titleMedium,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
           ),
-          displayMedium: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.displayMedium,
-            fontWeight: FontWeight.w800,
+        _ => GoogleFonts.mPlusRounded1cTextTheme(
+            baseTheme.textTheme.copyWith(
+              displayLarge: GoogleFonts.mPlusRounded1c(
+                textStyle: baseTheme.textTheme.displayLarge,
+                fontWeight: FontWeight.w800,
+              ),
+              displayMedium: GoogleFonts.mPlusRounded1c(
+                textStyle: baseTheme.textTheme.displayMedium,
+                fontWeight: FontWeight.w800,
+              ),
+              displaySmall: GoogleFonts.mPlusRounded1c(
+                textStyle: baseTheme.textTheme.displaySmall,
+                fontWeight: FontWeight.w800,
+              ),
+              headlineLarge: GoogleFonts.mPlusRounded1c(
+                textStyle: baseTheme.textTheme.headlineLarge,
+                fontWeight: FontWeight.w800,
+              ),
+              headlineMedium: GoogleFonts.mPlusRounded1c(
+                textStyle: baseTheme.textTheme.headlineMedium,
+                fontWeight: FontWeight.w800,
+              ),
+              headlineSmall: GoogleFonts.mPlusRounded1c(
+                textStyle: baseTheme.textTheme.headlineSmall,
+                fontWeight: FontWeight.w800,
+              ),
+              titleLarge: GoogleFonts.mPlusRounded1c(
+                textStyle: baseTheme.textTheme.titleLarge,
+                fontWeight: FontWeight.w800,
+              ),
+              titleMedium: GoogleFonts.mPlusRounded1c(
+                textStyle: baseTheme.textTheme.titleMedium,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
           ),
-          displayLarge: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.displayLarge,
-            fontWeight: FontWeight.w800,
-          ),
-          headlineLarge: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.headlineLarge,
-            fontWeight: FontWeight.w800,
-          ),
-          headlineMedium: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.headlineMedium,
-            fontWeight: FontWeight.w800,
-          ),
-          headlineSmall: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.headlineSmall,
-            fontWeight: FontWeight.w800,
-          ),
-          titleLarge: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.titleLarge,
-            fontWeight: FontWeight.w800,
-          ),
-          titleMedium: GoogleFonts.mPlusRounded1c(
-            textStyle: baseTheme.textTheme.titleMedium,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ),
+      },
     );
   }
 

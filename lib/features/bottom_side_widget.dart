@@ -26,7 +26,7 @@ class BottomSideWidget extends ConsumerWidget {
       return Center(
         child: DefaultButton(
           onPressed: ref.read(playControllerProvider.notifier).onStoreTap,
-          text: l10n.close,
+          text: l10n.leave,
         ),
       )
           .animate(
