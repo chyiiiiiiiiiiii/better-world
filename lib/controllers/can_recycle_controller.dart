@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:envawareness/constants/constants.dart';
+import 'package:envawareness/constants/environment_variables.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/states/recycle_validator_state.dart';
@@ -10,13 +12,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'can_recycle_controller.g.dart';
 
-const aiApiKey = String.fromEnvironment('AI_API_KEY');
-
 @riverpod
 class CanRecycleController extends _$CanRecycleController {
   final _generativeModel = GenerativeModel(
-    model: 'gemini-pro-vision',
-    apiKey: aiApiKey,
+    model: Constants.generativeAiModel,
+    apiKey: EnvironmentVariables.googleAiStudioApiKey,
   );
 
   @override

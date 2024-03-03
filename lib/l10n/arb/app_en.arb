@@ -1,5 +1,9 @@
 {
 	"@@locale": "en",
+	"welcomeMessage": "Welcome, brave adventurer. You have arrived in a world on the brink of collapse, a place in desperate need of change and hope. Here, every click is more than just a touch on the screen; it is a symbol of power, an investment in the future. Your mission is to use this power to harness solar and wind energy, leading this world into a greener, more sustainable future.",
+	"welcomeMessage2": "But remember, this journey goes beyond that. With your progress, you will have the opportunity to save precious lives on the verge of extinction, from colorful fish in coral reefs to hidden wildlife in ancient forests. Every life rescued is an act of love and commitment to this planet.",
+	"welcomeMessage3": "So, are you ready to accept the challenge? Let us embark on this adventure that is both a game and a mission, for the Earth, for our shared home!",
+	"welcomeConfirm": "GO!",
 	"signInWithGoogle": "Sign in with Google",
 	"signInError": "Sign-in failed, please contact support",
 	"greeting": "Hi, {username}",
@@ -32,10 +36,10 @@
 	"doNotHaveEnoughScore": "You do not have enough score.",
 	"haveBoughtIt": "You have already purchased it.",
 	"leaderBoard": "Love Earth Leaderboard",
-	"canRecycleGameText": "尋找身邊的可回收物品，AI可以幫助你確認🤖",
-	"canRecycleGameShoot": "拍攝物品",
-	"canRecycleGameNext": "繼續尋找",
-	"canRecycleGameTryAgain": "再試一次",
-	"canRecycleGameError": "不好意思，AI無法處理提供的照片。",
-	"canRecycleGameAddScore": "獲得{addScore}分"
+	"canRecycleGameText": "Find recyclable items around you, the environmental AI can help you confirm",
+	"canRecycleGameShoot": "Take a photo",
+	"canRecycleGameNext": "Continue searching",
+	"canRecycleGameTryAgain": "Try again",
+	"canRecycleGameError": "Sorry, the AI cannot process the provided photo.",
+	"canRecycleGameAddScore": "Earn {addScore} points"
 }

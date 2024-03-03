@@ -1,5 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/game_page.dart';
+import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/radient.dart';
@@ -22,8 +24,18 @@ class WelcomePage extends ConsumerStatefulWidget {
 
 class _WelcomePageState extends ConsumerState<WelcomePage> {
   final _pageController = PageController();
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       body: PageView(
         controller: _pageController,
@@ -47,16 +59,14 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
                 curve: Curves.easeInOut,
               );
             },
-            label:
-                '''歡迎，勇敢的探險家。你來到了一個瀕臨崩潰的世界，一個急需變革與希望的地方。在這裡，每一次點擊都不僅僅是觸碰屏幕那麼簡單；它是力量的象徵，是對未來的投資。你的使命，是利用這份力量來點亮太陽能和風力發電，帶領這個世界進入一個更加綠色、可持續的未來''',
+            label: l10n.welcomeMessage,
           ),
           _SubPage(
             zdogWidget: const ZPositioned(
               translate: ZVector.only(x: 100, y: 60),
               child: DashZdog(),
             ),
-            label:
-                '''但記住，這場旅程不止於此。隨著你的進步，你將有機會拯救那些瀕臨絕種的珍貴生命，從珊瑚礁中的彩色魚群到遠古森林的隱秘野生動物。每一個被救援的生命，都是對這個星球的一份愛與承諾。''',
+            label: l10n.welcomeMessage2,
             onPressed: () {
               _pageController.nextPage(
                 duration: const Duration(milliseconds: 400),
@@ -73,13 +83,16 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
               ),
             ),
             isLast: true,
-            label: '''
-所以，準備好接受挑戰了嗎？讓我們一起踏上這場既是遊戲又是使命的冒險之旅，為了地球，為了我們共同的家園。
-''',
+            label: l10n.welcomeMessage3,
             onPressed: () async {
-              final prefs = await SharedPreferences.getInstance();
+              final pref = await SharedPreferences.getInstance();
 
-              await prefs.setBool('firstTimeEnter', false);
+              await pref.setBool('firstTimeEnter', false);
+
+              if (!context.mounted) {
+                return;
+              }
+
               context.pushReplacement(GamePage.routePath);
             },
           ),
@@ -105,20 +118,22 @@ class _SubPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return GestureDetector(
-      onTap: onPressed,
+      onTap: onPressed.call,
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (zdogWidget != null)
+            if (zdogWidget case final zdogWidget?)
               SizedBox(
                 width: 100,
                 height: 20,
                 child: ZIllustration(
                   zoom: zoom,
-                  children: [zdogWidget!],
+                  children: [zdogWidget],
                 ),
               ),
             AnimatedTextKit(
@@ -127,10 +142,9 @@ class _SubPage extends StatelessWidget {
                 TypewriterAnimatedText(
                   label,
                   textAlign: TextAlign.center,
-                  textStyle:
-                      Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontSize: 16,
-                          ),
+                  textStyle: context.textTheme.headlineSmall?.copyWith(
+                    fontSize: 16,
+                  ),
                   speed: const Duration(milliseconds: 50),
                 ),
               ],
@@ -139,7 +153,7 @@ class _SubPage extends StatelessWidget {
             if (isLast)
               DefaultButton(
                 onPressed: onPressed,
-                text: '我準備好了',
+                text: l10n.welcomeConfirm,
                 textStyle: Theme.of(context)
                     .textTheme
                     .titleMedium

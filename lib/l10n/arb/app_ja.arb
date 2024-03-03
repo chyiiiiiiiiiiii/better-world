@@ -1,5 +1,9 @@
 {
 	"@@locale": "ja",
+	"welcomeMessage": "歓迎、勇敢な冒険者。あなたは崩壊寸前の世界にやってきました。変革と希望が必要な場所です。ここでは、画面をタップするたびに、それは単なる触れることではありません。それは力の象徴であり、未来への投資です。あなたの使命は、この力を使って太陽光や風力発電を活用し、より緑豊かで持続可能な未来に導くことです。",
+	"welcomeMessage2": "しかし、この旅はここで終わりません。あなたの進歩に応じて、絶滅の危機に瀕した貴重な生命を救うチャンスがあります。サンゴ礁の色鮮やかな魚から古代の森に生息する秘密の野生動物まで、救出された生命はこの惑星への愛と約束です。",
+	"welcomeMessage3": "さあ、挑戦に立ち向かう準備はできていますか？地球のため、私たちの共同の家のために、ゲームでもあり使命でもある冒険の旅に一緒に出かけましょう！",
+	"welcomeConfirm": "出発する！",
 	"signInWithGoogle": "Googleでサインイン",
 	"signInError": "サインインに失敗しました。公式にお問い合わせください。",
 	"greeting": "こんにちは、{username}さん",
@@ -32,10 +36,10 @@
 	"doNotHaveEnoughScore": "スコアが足りません。",
 	"haveBoughtIt": "すでに購入済みです。",
 	"leaderBoard": "地球愛ランキング",
-	"canRecycleGameText": "尋找身邊的可回收物品，AI可以幫助你確認🤖",
-	"canRecycleGameShoot": "拍攝物品",
-	"canRecycleGameNext": "繼續尋找",
-	"canRecycleGameTryAgain": "再試一次",
-	"canRecycleGameError": "不好意思，AI無法處理提供的照片。",
-	"canRecycleGameAddScore": "獲得{addScore}分"
+	"canRecycleGameText": "身の回りのリサイクル可能なアイテムを探して、環境保護AIが確認をお手伝いします",
+	"canRecycleGameShoot": "アイテムを撮影",
+	"canRecycleGameNext": "次を探す",
+	"canRecycleGameTryAgain": "もう一度試す",
+	"canRecycleGameError": "申し訳ありませんが、AIは提供された写真を処理できません。",
+	"canRecycleGameAddScore": "{addScore}ポイントを獲得"
 }

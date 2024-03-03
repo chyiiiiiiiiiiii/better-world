@@ -7,4 +7,6 @@ final class Constants {
   static const googleWalletIssuerId = '3388000000022320262';
   static const googleWalletIssuerEmail = 'ab20803@gmail.com';
   static const googleWalletPassClassEndangeredSpecies = 'endangered_species';
+
+  static const generativeAiModel = 'gemini-pro-vision';
 }
