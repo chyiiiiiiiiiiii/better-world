@@ -56,13 +56,13 @@ class GoogleWalletController extends _$GoogleWalletController {
             "subheader": {
               "defaultValue": {
                 "language": "en",
-                "value": $subHeader
+                "value": "$subHeader"
               }
             },
             "header": {
               "defaultValue": {
                 "language": "en",
-                "value": $header
+                "value": "$header"
               }
             },
             "barcode": {
