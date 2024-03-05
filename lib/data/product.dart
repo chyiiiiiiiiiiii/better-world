@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'product.freezed.dart';
@@ -15,4 +16,33 @@ class Product with _$Product {
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
+}
+
+extension ProductX on Product {
+  Widget getIcon({double size = 44}) {
+    switch (id) {
+      case '1':
+        return Icon(
+          Icons.forest_rounded,
+          size: size,
+          color: Colors.green,
+        );
+      case '2':
+        return Icon(
+          Icons.wb_sunny_rounded,
+          size: size,
+          color: Colors.orange,
+        );
+      case '3':
+        return Icon(
+          Icons.wind_power_rounded,
+          size: size,
+          color: Colors.lightBlue,
+        );
+    }
+    return Icon(
+      Icons.wind_power_rounded,
+      size: size,
+    );
+  }
 }

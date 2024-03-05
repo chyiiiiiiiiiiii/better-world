@@ -9,6 +9,7 @@ import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/gaps.dart';
+import 'package:envawareness/utils/recycle_icon.dart';
 import 'package:envawareness/utils/spacings.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class StoreView extends ConsumerWidget {
             l10n.store,
             style: Theme.of(context).textTheme.displayLarge,
           ),
-          Gaps.h84,
+          Gaps.h64,
           Text(
             l10n.availableScore(availableScore),
             style: context.textTheme.titleLarge,
@@ -114,27 +115,50 @@ class _AnimalCard extends ConsumerWidget {
           canNavigateSpeciesPage: true,
         );
       },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(
-            'assets/images/animals.png',
-            colorBlendMode: BlendMode.modulate,
-            width: context.width / 3,
-            height: context.width / 3,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'assets/images/animals.png',
+                colorBlendMode: BlendMode.modulate,
+                width: context.width / 3,
+                height: context.width / 3,
+              ),
+              Column(
+                children: [
+                  Text(
+                    l10n.saveSpecies,
+                    style: context.textTheme.titleMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const RecycleIcon(
+                        size: 14,
+                      ),
+                      Gaps.w4,
+                      Text(
+                        '$animalCardPrice',
+                        style: context.textTheme.titleMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
-          Text(
-            '${l10n.saveSpecies}\n\$$animalCardPrice',
-            style: context.textTheme.titleMedium,
-            textAlign: TextAlign.center,
-          ),
-        ],
+        ),
       ).animate().scale(
             delay: const Duration(
-              milliseconds: 1500,
+              milliseconds: 1800,
             ),
             duration: const Duration(
-              milliseconds: 150,
+              milliseconds: 300,
             ),
           ),
     );
@@ -186,32 +210,49 @@ class _Item extends ConsumerWidget {
 
         ref.read(storeControllerProvider.notifier).purchase(product: product);
       },
-      child: Column(
-        children: [
-          Image.asset(
-            'assets/images/product_1.png',
-            color: isProductAvailable ? null : Colors.grey,
-            colorBlendMode: BlendMode.modulate,
-          ).animate().scale(
-                delay: const Duration(
-                  milliseconds: 1000,
-                ),
-                duration: Duration(
-                  milliseconds: 150 * index,
-                ),
-                begin: Offset.zero,
-                end: const Offset(1, 1),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              product.getIcon(),
+              Gaps.h8,
+              Text(
+                product.name,
+                style: context.textTheme.titleMedium,
               ),
-          Text(
-            '+${product.addScore}/${product.validTimeSeconds}(s)',
-            style: context.textTheme.titleMedium,
+              Gaps.h8,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const RecycleIcon(),
+                  Gaps.w4,
+                  Text(
+                    '${product.price}',
+                    style:
+                        context.textTheme.titleMedium?.copyWith(height: -0.3),
+                  ),
+                ],
+              ),
+              Gaps.h4,
+              Text(
+                '+${product.addScore}/${product.validTimeSeconds}(s)',
+                style: context.textTheme.labelSmall,
+              ),
+            ],
           ),
-          Text(
-            '\$${product.price}',
-            style: context.textTheme.titleMedium,
+        ),
+      ).animate().scale(
+            delay: Duration(
+              milliseconds: 600 + 300 * (index + 1),
+            ),
+            duration: const Duration(
+              milliseconds: 300,
+            ),
+            curve: Curves.easeInOut,
+            begin: Offset.zero,
+            end: const Offset(1, 1),
           ),
-        ],
-      ),
     );
   }
 }

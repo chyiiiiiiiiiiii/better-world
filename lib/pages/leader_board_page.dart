@@ -61,6 +61,9 @@ class LeaderBoardPage extends ConsumerWidget {
                     decoration: BoxDecoration(
                       color: isMe ? context.colorScheme.primary : Colors.white,
                       borderRadius: BorderRadius.circular(20),
+                      border: isMe
+                          ? Border.all(color: Colors.white, width: 4)
+                          : null,
                     ),
                     child: Row(
                       children: [
@@ -86,13 +89,13 @@ class LeaderBoardPage extends ConsumerWidget {
                             ),
                             if (isFirst)
                               Positioned(
-                                top: -16,
-                                left: -16,
+                                top: -24,
+                                left: -24,
                                 child: Transform.rotate(
                                   angle: 315 * math.pi / 180,
                                   child: Lottie.asset(
                                     'assets/animations/crown.lottie.json',
-                                    width: 36,
+                                    width: 50,
                                   ),
                                 ),
                               ),
