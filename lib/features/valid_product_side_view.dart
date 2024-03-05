@@ -22,14 +22,12 @@ class ValidProductSideView extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Image.asset(
-                      'assets/images/product_1.png',
-                      width: 24,
-                    ),
-                    Gaps.w8,
+                    e.getIcon(size: 20),
+                    Gaps.w4,
                     Text(
-                      e.name,
-                      style: context.textTheme.titleMedium,
+                      '${e.name} +${e.addScore}',
+                      style:
+                          context.textTheme.titleMedium?.copyWith(height: -0.1),
                     )
                         .animate(
                           onPlay: (controller) => controller.repeat(

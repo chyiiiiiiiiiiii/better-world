@@ -27,18 +27,28 @@ class RightSideView extends ConsumerWidget {
             onTap: () {
               canPlayRecycleGame
                   ? context.push(CatchGamePage.routePath)
-                  : ref.read(showMessageProvider.notifier).show('還需要加把勁，持續點擊');
+                  : ref
+                      .read(showMessageProvider.notifier)
+                      .show('加把勁，持續點擊，累積能量！');
             },
             child: AnimatedSize(
               duration: Durations.medium2,
-              child: Image.asset(
-                'assets/images/catch.png',
-                width:
-                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
-                height:
-                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
-                color: canPlayRecycleGame ? null : Colors.grey.shade400,
-                colorBlendMode: BlendMode.modulate,
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  Colors.grey.withAlpha(canPlayRecycleGame ? 255 : 300),
+                  BlendMode.modulate,
+                ),
+                child: Image.asset(
+                  'assets/images/catch.png',
+                  width: canPlayRecycleGame
+                      ? context.width / 6
+                      : context.width / 7,
+                  height: canPlayRecycleGame
+                      ? context.width / 6
+                      : context.width / 7,
+                  color: canPlayRecycleGame ? null : Colors.grey.shade400,
+                  colorBlendMode: BlendMode.modulate,
+                ),
               ),
             ),
           ),
@@ -54,14 +64,22 @@ class RightSideView extends ConsumerWidget {
             },
             child: AnimatedSize(
               duration: Durations.medium2,
-              child: Image.asset(
-                'assets/images/recycle-bin.png',
-                width:
-                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
-                height:
-                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
-                color: canPlayRecycleGame ? null : Colors.grey.shade400,
-                colorBlendMode: BlendMode.modulate,
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  Colors.grey.withAlpha(canPlayRecycleGame ? 255 : 300),
+                  BlendMode.modulate,
+                ),
+                child: Image.asset(
+                  'assets/images/recycle-bin.png',
+                  width: canPlayRecycleGame
+                      ? context.width / 6
+                      : context.width / 7,
+                  height: canPlayRecycleGame
+                      ? context.width / 6
+                      : context.width / 7,
+                  color: canPlayRecycleGame ? null : Colors.grey.shade400,
+                  colorBlendMode: BlendMode.modulate,
+                ),
               ),
             ),
           ),

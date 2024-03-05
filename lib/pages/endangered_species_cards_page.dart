@@ -180,17 +180,17 @@ class SpeciesCard extends ConsumerWidget {
                 childLayout: ChildLayout(
                   outer: [
                     Positioned.fill(
-                      top: 480,
+                      top: 425,
                       child: TiltParallax(
                         child: Padding(
                           padding: const EdgeInsets.all(8),
                           child: Column(
                             children: [
                               Text(
-                                '${l10n.endangeredLevel}：${info.level}',
+                                info.enDangerLevelName,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyLarge
+                                    .bodyMedium
                                     ?.copyWith(
                                       color: const Color.fromARGB(
                                         255,
@@ -199,6 +199,27 @@ class SpeciesCard extends ConsumerWidget {
                                         121,
                                       ),
                                     ),
+                              ),
+                              Gaps.h12,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '${l10n.endangeredLevel}：',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: const Color.fromARGB(
+                                            255,
+                                            49,
+                                            70,
+                                            121,
+                                          ),
+                                        ),
+                                  ),
+                                  ...info.endangerStars,
+                                ],
                               ),
                               Text(
                                 info.description,
@@ -220,7 +241,7 @@ class SpeciesCard extends ConsumerWidget {
                       ),
                     ),
                     Positioned.fill(
-                      top: 440,
+                      top: 400,
                       child: TiltParallax(
                         child: Text(
                           info.translatedName,
@@ -235,12 +256,12 @@ class SpeciesCard extends ConsumerWidget {
                       ),
                     ),
                     Positioned.fill(
-                      top: 40,
+                      top: 100,
                       child: Align(
                         alignment: Alignment.topCenter,
                         child: SizedBox(
                           width: double.maxFinite,
-                          height: 400,
+                          height: 300,
                           child: TiltParallax(
                             size: const Offset(30, 30),
                             child: Padding(

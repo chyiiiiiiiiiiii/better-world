@@ -187,6 +187,7 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
                   ],
                 ),
               ),
+              Gaps.h84,
             ],
           ),
         ),
