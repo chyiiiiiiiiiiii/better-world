@@ -46,5 +46,6 @@
 	"canRecycleGameNext": "Continue searching",
 	"canRecycleGameTryAgain": "Try again",
 	"canRecycleGameError": "Sorry, the AI cannot process the provided photo.",
-	"canRecycleGameAddScore": "Earn {addScore} points"
+	"canRecycleGameAddScore": "Earn {addScore} points",
+	"remindClickForPoint": "加把勁，持續點擊，累積能量！"
 }

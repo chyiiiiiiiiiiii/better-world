@@ -1,3 +1,4 @@
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/catch_game_page.dart';
 import 'package:envawareness/pages/recycle_game_page.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
@@ -19,6 +20,8 @@ class RightSideView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+
     return Column(
       children: [
         BackgroundShinning(
@@ -29,26 +32,18 @@ class RightSideView extends ConsumerWidget {
                   ? context.push(CatchGamePage.routePath)
                   : ref
                       .read(showMessageProvider.notifier)
-                      .show('加把勁，持續點擊，累積能量！');
+                      .show(l10n.remindClickForPoint);
             },
             child: AnimatedSize(
               duration: Durations.medium2,
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                  Colors.grey.withAlpha(canPlayRecycleGame ? 255 : 300),
-                  BlendMode.modulate,
-                ),
-                child: Image.asset(
-                  'assets/images/catch.png',
-                  width: canPlayRecycleGame
-                      ? context.width / 6
-                      : context.width / 7,
-                  height: canPlayRecycleGame
-                      ? context.width / 6
-                      : context.width / 7,
-                  color: canPlayRecycleGame ? null : Colors.grey.shade400,
-                  colorBlendMode: BlendMode.modulate,
-                ),
+              child: Image.asset(
+                'assets/images/catch.png',
+                width:
+                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
+                height:
+                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
+                color: canPlayRecycleGame ? null : Colors.grey,
+                colorBlendMode: BlendMode.modulate,
               ),
             ),
           ),
@@ -60,26 +55,20 @@ class RightSideView extends ConsumerWidget {
             onTap: () {
               canPlayRecycleGame
                   ? context.push(RecycleGamePage.routePath)
-                  : ref.read(showMessageProvider.notifier).show('還需要加把勁，持續點擊');
+                  : ref
+                      .read(showMessageProvider.notifier)
+                      .show(l10n.remindClickForPoint);
             },
             child: AnimatedSize(
               duration: Durations.medium2,
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                  Colors.grey.withAlpha(canPlayRecycleGame ? 255 : 300),
-                  BlendMode.modulate,
-                ),
-                child: Image.asset(
-                  'assets/images/recycle-bin.png',
-                  width: canPlayRecycleGame
-                      ? context.width / 6
-                      : context.width / 7,
-                  height: canPlayRecycleGame
-                      ? context.width / 6
-                      : context.width / 7,
-                  color: canPlayRecycleGame ? null : Colors.grey.shade400,
-                  colorBlendMode: BlendMode.modulate,
-                ),
+              child: Image.asset(
+                'assets/images/recycle-bin.png',
+                width:
+                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
+                height:
+                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
+                color: canPlayRecycleGame ? null : Colors.grey,
+                colorBlendMode: BlendMode.modulate,
               ),
             ),
           ),

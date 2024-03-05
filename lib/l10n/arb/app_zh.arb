@@ -37,7 +37,7 @@
   "passCongratulationWithScoreMessage": "恭喜你的愛地球等級上升到 {currentLevel}，請繼續拯救地球！\n(每秒的累積點數+1)",
   "allPassCongratulationMessage": "恭喜拯救地球，你真是一位英雄！",
   "noAvailableScore": "沒有可用於購買的點數。",
-  "speciesAlreadyGot": "你已拯救'{animalName}'了，趕快去尋找其他物種吧！",
+  "speciesAlreadyGot": "你已拯救'{animalName}'了，趕快去尋找其他物種！",
   "doNotHaveEnoughScore": "你的點數不足。",
   "haveBoughtIt": "你已經購買過了。",
   "leaderBoard": "愛地球排行榜",
@@ -46,5 +46,6 @@
   "canRecycleGameNext": "繼續尋找",
   "canRecycleGameTryAgain": "再試一次",
   "canRecycleGameError": "不好意思，AI無法處理提供的照片。",
-  "canRecycleGameAddScore": "獲得{addScore}分"
+  "canRecycleGameAddScore": "獲得{addScore}分",
+  "remindClickForPoint": "加把勁，持續點擊，累積能量！"
 }
