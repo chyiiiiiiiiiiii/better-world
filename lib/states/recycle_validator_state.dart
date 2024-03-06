@@ -11,6 +11,7 @@ class RecycleValidatorState with _$RecycleValidatorState {
   factory RecycleValidatorState({
     @Uint8ListConverter() Uint8List? pickedImage,
     @Default('') String aiResponse,
+    @Default(0) int addScore,
   }) = _RecycleValidatorState;
 
   factory RecycleValidatorState.fromJson(Map<String, dynamic> json) =>

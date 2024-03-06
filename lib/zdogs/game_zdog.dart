@@ -632,13 +632,15 @@ class WindTurbinesZdog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final validPurchaseProducts = ref
-        .watch(
-          playControllerProvider.select(
-            (value) => value.requireValue.getValidPurchaseProducts(),
-          ),
-        )
-        .map((e) => e.id);
+            .watch(
+              playControllerProvider.select(
+                (value) => value.value?.getValidPurchaseProducts(),
+              ),
+            )
+            ?.map((e) => e.id) ??
+        [];
     final windPower = validPurchaseProducts.contains('3');
+
     return LoopAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 360),
       duration: Duration(milliseconds: (windPower ? 500 : 5000)),
@@ -724,13 +726,15 @@ class TriangleTreeZdog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final validPurchaseProducts = ref
-        .watch(
-          playControllerProvider.select(
-            (value) => value.requireValue.getValidPurchaseProducts(),
-          ),
-        )
-        .map((e) => e.id);
+            .watch(
+              playControllerProvider.select(
+                (value) => value.value?.getValidPurchaseProducts(),
+              ),
+            )
+            ?.map((e) => e.id) ??
+        [];
     final treePower = validPurchaseProducts.contains('1');
+
     return MirrorAnimationBuilder<double>(
       tween: Tween(begin: 1, end: treePower ? 1.3 : 1.05),
       duration: const Duration(milliseconds: 300),
@@ -788,17 +792,21 @@ class CircleTreeZdog extends ConsumerWidget {
   });
   final ZVector rotate;
   final ZVector translate;
-  final Color leafColor = const Color.fromARGB(255, 160, 215, 64);
+
+  static const Color _leafColor = Color.fromARGB(255, 160, 215, 64);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final validPurchaseProducts = ref
-        .watch(
-          playControllerProvider.select(
-            (value) => value.requireValue.getValidPurchaseProducts(),
-          ),
-        )
-        .map((e) => e.id);
+            .watch(
+              playControllerProvider.select(
+                (value) => value.value?.getValidPurchaseProducts(),
+              ),
+            )
+            ?.map((e) => e.id) ??
+        [];
     final treePower = validPurchaseProducts.contains('1');
+
     return MirrorAnimationBuilder<double>(
       tween: Tween(begin: 1, end: treePower ? 1.2 : 1.05),
       duration: const Duration(milliseconds: 300),
@@ -815,7 +823,7 @@ class CircleTreeZdog extends ConsumerWidget {
                   diameter: 5,
                   length: 20,
                   color: const Color.fromARGB(255, 161, 119, 56),
-                  backface: leafColor,
+                  backface: _leafColor,
                 ),
               ),
               ZPositioned(
@@ -824,7 +832,7 @@ class CircleTreeZdog extends ConsumerWidget {
                 ),
                 child: ZShape(
                   stroke: 20 * value,
-                  color: leafColor,
+                  color: _leafColor,
                 ),
               ),
             ],

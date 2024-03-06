@@ -37,7 +37,7 @@ class ValidProductSideView extends StatelessWidget {
                         .fade(duration: Durations.extralong3),
                   ],
                 ),
-                Gaps.h8,
+                Gaps.h20,
               ],
             ),
           )

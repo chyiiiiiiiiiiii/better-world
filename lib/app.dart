@@ -1,3 +1,4 @@
+import 'package:envawareness/constants/constants.dart';
 import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/router/app_router.dart';
 import 'package:envawareness/utils/common.dart';
@@ -131,7 +132,7 @@ class _AppState extends ConsumerState<App> {
     return MaterialApp.router(
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
-      title: 'Envawareness',
+      title: Constants.appName,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: darMode

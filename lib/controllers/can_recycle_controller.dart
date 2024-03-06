@@ -1,11 +1,10 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:envawareness/constants/constants.dart';
 import 'package:envawareness/constants/environment_variables.dart';
 import 'package:envawareness/features/play/play_controller.dart';
-import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/states/recycle_validator_state.dart';
-import 'package:envawareness/utils/common.dart';
 import 'package:envawareness/utils/game_helper.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -49,14 +48,14 @@ class CanRecycleController extends _$CanRecycleController {
       // );
       // return result?.content?.parts?.last.text ?? '';
 
-      final languageCode = platformLocale.languageCode;
+      final locale = Platform.localeName;
 
       final prompt = TextPart(
         '''
-          Is this recyclable? Response in 25 words or less depend on language code I give.
+          Is this recyclable? Give me response in 30 words or less with some loverly description depend on language code I give.
           And also, return true and false in the beginning for telling me if it's recyclable or not.
 
-          This is language code "$languageCode".
+          This is locale $locale.
 
           The response format is "true,<response>".
         ''',
@@ -84,13 +83,15 @@ class CanRecycleController extends _$CanRecycleController {
         maxScoreProportionToTotalScore: isRecyclable ? 0.1 : 0.01,
       );
 
-      final l10n = await getL10n();
       final message = '''
-            🤖${responseText.split(',').elementAtOrNull(1)}\n(${l10n.canRecycleGameAddScore(addScore)})
+            🤖: ${responseText.split(',').elementAtOrNull(1)}
           '''
           .trim();
 
-      return state.requireValue.copyWith(aiResponse: message);
+      return state.requireValue.copyWith(
+        aiResponse: message,
+        addScore: addScore,
+      );
     } catch (e) {
       rethrow;
     }

@@ -46,6 +46,7 @@ class StoreView extends ConsumerWidget {
             style: Theme.of(context).textTheme.displayLarge,
           ),
           Gaps.h64,
+          Gaps.h12,
           Text(
             l10n.availableScore(availableScore),
             style: context.textTheme.titleLarge,

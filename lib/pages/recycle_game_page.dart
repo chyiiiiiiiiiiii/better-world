@@ -4,6 +4,8 @@ import 'package:envawareness/data/recycle_game_card.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
+import 'package:envawareness/utils/gaps.dart';
+import 'package:envawareness/utils/recycle_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -167,9 +169,18 @@ class RecycleGamePage extends ConsumerWidget {
                               '${l10n.environmentalScore}:',
                               style: Theme.of(context).textTheme.headlineLarge,
                             ),
-                            Text(
-                              totalScore.toString(),
-                              style: context.textTheme.displayLarge,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const RecycleIcon(
+                                  size: 36,
+                                ),
+                                Gaps.w8,
+                                Text(
+                                  totalScore.toString(),
+                                  style: context.textTheme.displayLarge,
+                                ),
+                              ],
                             ),
                             const SizedBox(
                               height: 40,

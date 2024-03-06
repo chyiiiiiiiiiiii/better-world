@@ -627,8 +627,7 @@ const endangeredSpeciesJson = [
     'name': '鯨鯊',
     'name_en': 'Whale Shark',
     'name_ja': 'ジンベイザメ',
-    'image':
-        'https://png.pngtree.com/thumb_back/fh260/background/20230423/pngtree-whale-shark-in-water-image_2485591.jpg',
+    'image': 'https://cff2.earth.com/uploads/2023/08/30081416/International-Whale-Shark-Day-960x640.jpg',
     'level': 'EN',
   },
   {

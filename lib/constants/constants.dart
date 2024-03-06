@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 final class Constants {
   const Constants._();
 
+  static const appName = 'Better World';
+
   static const appTotalLevels = 200;
   static const beginLevelPassScore = 80;
 

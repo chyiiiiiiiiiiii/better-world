@@ -327,7 +327,6 @@ class SpeciesCard extends ConsumerWidget {
               child: Column(
                 children: [
                   if (Platform.isAndroid && isOwned) ...[
-                    Gaps.h20,
                     AddToGoogleWalletButton(
                       pass: ref
                           .read(googleWalletControllerProvider.notifier)
@@ -349,6 +348,7 @@ class SpeciesCard extends ConsumerWidget {
                       onCanceled: () {},
                       onError: (Object error) {},
                     ),
+                    Gaps.h20,
                   ],
                   if (canNavigateSpeciesPage)
                     DefaultButton(

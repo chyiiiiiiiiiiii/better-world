@@ -81,7 +81,7 @@ class GameRepository {
   Future<List<PlayInfo>> getLeaderBoard() async {
     final snapshot = await playInfoCollectionReference
         .orderBy(
-          'total_score',
+          'owned_animal_cards',
           descending: true,
         )
         .limit(100)

@@ -6,6 +6,7 @@ import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
+import 'package:envawareness/utils/recycle_icon.dart';
 import 'package:envawareness/utils/spacings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,9 +21,10 @@ class CanRecyclePage extends ConsumerStatefulWidget {
 }
 
 class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
+  final picker = ImagePicker();
+
   Future<void> getImage() async {
-    final picker = ImagePicker();
-    var picerRes = await showDialog<String>(
+    final pickImageWay = await showDialog<String>(
       context: context,
       builder: (_) {
         return AlertDialog(
@@ -45,34 +47,45 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
         );
       },
     );
+
+    if (!mounted) {
+      return;
+    }
+
+    final imageWidth = context.width * 1.5;
+
     XFile? image;
-    picerRes = picerRes?.toString();
-    if (picerRes == 'Camera') {
-      image = await picker.pickImage(source: ImageSource.camera, maxWidth: 300);
-    } else if (picerRes == 'Gallery') {
-      image = await picker.pickImage(source: ImageSource.gallery);
+    if (pickImageWay == 'Camera') {
+      image = await picker.pickImage(
+        source: ImageSource.camera,
+        maxWidth: imageWidth,
+      );
+    } else if (pickImageWay == 'Gallery') {
+      image = await picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: imageWidth,
+      );
     } else {
       return;
     }
-// Capture a photo.
-    // final photo = await picker.pickImage(source: ImageSource.camera);
     final bytes = await image?.readAsBytes();
     if (bytes == null && mounted) {
-      await showDialog<void>(
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: const Text('No image selected'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+      // await showDialog<void>(
+      //   context: context,
+      //   builder: (_) {
+      //     return AlertDialog(
+      //       title: const Text('Error'),
+      //       content: const Text('No image selected'),
+      //       actions: [
+      //         TextButton(
+      //           onPressed: () => Navigator.pop(context),
+      //           child: const Text('OK'),
+      //         ),
+      //       ],
+      //     );
+      //   },
+      // );
+
       return;
     } else {
       await ref
@@ -104,7 +117,7 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
             children: [
               Text(
                 l10n.canRecycleGameText,
-                style: context.theme.textTheme.headlineMedium,
+                style: context.theme.textTheme.titleLarge,
                 textAlign: TextAlign.center,
               ),
               Padding(
@@ -149,10 +162,39 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
                       if (hasAiResponse) ...[
                         Padding(
                           padding: const EdgeInsets.all(8),
-                          child: Text(
-                            data.aiResponse,
-                            style: context.theme.textTheme.titleMedium,
-                            textAlign: TextAlign.center,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: context.colorScheme.secondary,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: const Border(),
+                                  ),
+                                  child: Text(
+                                    data.aiResponse,
+                                    style: context.theme.textTheme.titleMedium
+                                        ?.copyWith(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              Gaps.w20,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const RecycleIcon(
+                                    size: 24,
+                                  ),
+                                  Gaps.w8,
+                                  Text(
+                                    data.addScore.toString(),
+                                    style:
+                                        context.theme.textTheme.headlineLarge,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                         Gaps.h24,

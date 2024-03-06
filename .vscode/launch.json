@@ -5,7 +5,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "envawareness",
+			"name": "Better World",
 			"request": "launch",
 			"type": "dart",
 			"args": [
@@ -14,13 +14,13 @@
 			]
 		},
 		{
-			"name": "envawareness (profile mode)",
+			"name": "Better World (profile mode)",
 			"request": "launch",
 			"type": "dart",
 			"flutterMode": "profile"
 		},
 		{
-			"name": "envawareness (release mode)",
+			"name": "Better World (release mode)",
 			"request": "launch",
 			"type": "dart",
 			"flutterMode": "release",

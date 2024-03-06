@@ -110,20 +110,30 @@ class LeaderBoardPage extends ConsumerWidget {
                           ),
                         ),
                         Gaps.w8,
-                        Text.rich(
-                          TextSpan(
-                            text: player.totalScore.toString(),
-                            style: context.textTheme.titleLarge?.copyWith(
-                              color: textColor,
-                            ),
-                            children: [
+                        Column(
+                          children: [
+                            Text.rich(
                               TextSpan(
-                                text: ' (s)',
-                                style: context.textTheme.titleSmall
-                                    ?.copyWith(color: textColor),
+                                text: player.ownedAnimalCardIndexes.length
+                                    .toString(),
+                                style: context.textTheme.titleLarge?.copyWith(
+                                  color: textColor,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: ' 🦕',
+                                    style: context.textTheme.titleSmall
+                                        ?.copyWith(color: textColor),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            Text(
+                              '${player.totalScore}(p)',
+                              style: context.textTheme.titleSmall
+                                  ?.copyWith(color: textColor),
+                            ),
+                          ],
                         ),
                       ],
                     ),
