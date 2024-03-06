@@ -1,6 +1,12 @@
 import 'package:envawareness/utils/radient.dart';
+import 'package:envawareness/zdogs/circle_tree_zdog.dart';
 import 'package:envawareness/zdogs/dash_zdog.dart';
 import 'package:envawareness/zdogs/game_zdog.dart';
+import 'package:envawareness/zdogs/pyramid_zdog.dart';
+import 'package:envawareness/zdogs/solar_panel.dart';
+import 'package:envawareness/zdogs/sun_zdog.dart';
+import 'package:envawareness/zdogs/triangle_zdog.dart';
+import 'package:envawareness/zdogs/wind_zdog.dart';
 import 'package:flutter/material.dart';
 import 'package:zflutter/zflutter.dart';
 
