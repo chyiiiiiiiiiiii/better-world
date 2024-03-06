@@ -6,12 +6,14 @@ class AppTap extends StatefulWidget {
     required this.onTap,
     required this.child,
     this.hasEffect = true,
+    this.onTapUp,
     super.key,
   });
 
   final VoidCallback onTap;
   final Widget child;
   final bool hasEffect;
+  final GestureTapUpCallback? onTapUp;
 
   @override
   State<AppTap> createState() => _AppTapState();
@@ -38,6 +40,7 @@ class _AppTapState extends State<AppTap> {
           setState(() {
             isPressing = false;
           });
+          widget.onTapUp?.call(details);
         },
         onTapCancel: () {
           setState(() {
