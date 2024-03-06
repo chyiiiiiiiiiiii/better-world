@@ -154,7 +154,7 @@ const endangeredSpeciesJson = [
     'name_en': "Steller's Sea Cow",
     'name_ja': 'ステラーカイギュウ',
     'image':
-        'https://upload.wikimedia.org/wikipedia/commons/0/05/Commander_Islands_Map_-_Russian.png',
+        'https://5b0988e595225.cdn.sohucs.com/images/20190522/76de1bbe898249cbacc61d0c84907268.png',
     'level': 'EX',
   },
   {
