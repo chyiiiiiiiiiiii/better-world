@@ -6,6 +6,182 @@ List<EndangeredSpeciesInfo> get endangeredSpeciesList {
 
 const endangeredSpeciesJson = [
   {
+    'name': '原牛',
+    'name_en': 'Gaur',
+    'name_ja': 'ガウル',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Copenhagen_Aurochse.jpg/1200px-Copenhagen_Aurochse.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '峇里虎',
+    'name_en': 'Bali Tiger',
+    'name_ja': 'バリトラ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/c/c8/BaronOscarVojnich3Nov1911Ti.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '黑鰭白鮭',
+    'name_en': 'Blackfin Cisco',
+    'name_ja': 'ブラックフィンシスコ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/FMIB_42893_Blackfin_of_Lake_Michigan_-_Leucichthys_nigripinnis_%28Gill%29.jpeg/1200px-FMIB_42893_Blackfin_of_Lake_Michigan_-_Leucichthys_nigripinnis_%28Gill%29.jpeg',
+    'level': 'EX',
+  },
+  {
+    'name': '加勒比僧海豹',
+    'name_en': 'Caribbean Monk Seal',
+    'name_ja': 'カリブアザラシ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/2/21/Cms-newyorkzoologicalsociety1910.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '卡羅萊納長尾鸚鵡',
+    'name_en': 'Carolina Parakeet',
+    'name_ja': 'キャロライナインコ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Conuropsis_carolinensis_%28Carolina_parakeet%29.jpg/1200px-Conuropsis_carolinensis_%28Carolina_parakeet%29.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '渡渡鳥',
+    'name_en': 'Dodo',
+    'name_ja': 'ドードー',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Oxford_Dodo_display.jpg/1200px-Oxford_Dodo_display.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '海濱灰雀',
+    'name_en': 'Seaside Sparrow',
+    'name_ja': 'シーサイドスパロー',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Dusky_Seaside_Sparrow.jpg/1200px-Dusky_Seaside_Sparrow.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '金蟾蜍',
+    'name_en': 'Golden Toad',
+    'name_ja': 'ゴールデントード',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Bufo_periglenes1.jpg/1200px-Bufo_periglenes1.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '大海雀',
+    'name_en': 'Great Auk',
+    'name_ja': 'グレートオーク',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/4/4e/Great_Auk_%28Pinguinis_impennis%29_specimen%2C_Kelvingrove%2C_Glasgow_-_geograph.org.uk_-_1108249.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '關島闊嘴鳥',
+    'name_en': 'Guam Broadbill',
+    'name_ja': 'グアムヒロハシ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Myiagra_freycineti.jpg/1200px-Myiagra_freycineti.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '日本海獅',
+    'name_en': 'Japanese Sea Lion',
+    'name_ja': 'ニホンアシカ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/8/84/Zalophus_japonicus.JPG',
+    'level': 'EX',
+  },
+  {
+    'name': '台灣雲豹',
+    'name_en': 'Formosan Clouded Leopard',
+    'name_ja': 'フォルモサユキヒョウ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/LeopardusBrachyurusWolf.jpg/1200px-LeopardusBrachyurusWolf.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '爪哇虎',
+    'name_en': 'Javan Tiger',
+    'name_ja': 'ジャワトラ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/8/84/Panthera_tigris_virgata.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '拉布拉多鴨',
+    'name_en': 'Labrador Duck',
+    'name_ja': 'ラブラドールダック',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/a/a2/Stavenn_Camptorhynchus_labradorius_01.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '小兔形袋狸',
+    'name_en': 'Desert Rat-kangaroo',
+    'name_ja': 'デザートラットカンガルー',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/5/5c/Lesserbilby.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '紐西蘭鵪鶉',
+    'name_en': 'New Zealand Quail',
+    'name_ja': 'ニュージーランドウズラ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/1/17/Coturnix_novaezelandiae.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '旅鴿',
+    'name_en': 'Passenger Pigeon',
+    'name_ja': 'リョコウバト',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/ROM-BirdGallery-PassengerPigeon.png/1200px-ROM-BirdGallery-PassengerPigeon.png',
+    'level': 'EX',
+  },
+  {
+    'name': '熊氏鹿',
+    'name_en': "Schomburgk's Deer",
+    'name_ja': 'ションブルククの鹿',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/7/7c/SchomburgksDeer-Berlin1911.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '大海牛',
+    'name_en': "Steller's Sea Cow",
+    'name_ja': 'ステラーカイギュウ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/0/05/Commander_Islands_Map_-_Russian.png',
+    'level': 'EX',
+  },
+  {
+    'name': '袋狼',
+    'name_en': 'Thylacine',
+    'name_ja': 'タスマニアタイガー',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/d/d5/Thylacinus.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '圖拉克袋鼠',
+    'name_en': 'Toolache Wallaby',
+    'name_ja': 'トゥーラチウォラビー',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/e/e7/Macropus_greyi_-_Gould.jpg',
+    'level': 'EX',
+  },
+  {
+    'name': '西部黑犀',
+    'name_en': 'Western Black Rhinoceros',
+    'name_ja': 'セイヨウクロサイ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/3/33/Diceros_bicornis_longipes.jpg',
+    'level': 'EX',
+  },
+  {
     'name': '巴巴里獅',
     'name_en': 'Barbary Lion',
     'name_ja': 'バーバリライオン',
@@ -907,5 +1083,148 @@ const endangeredSpeciesJson = [
     'image':
         'https://upload.wikimedia.org/wikipedia/commons/8/8d/Lightmatter_panda.jpg',
     'level': 'VU',
+  },
+  {
+    'name': '美洲野牛',
+    'name_en': 'American Bison',
+    'name_ja': 'アメリカンバイソン',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/American_bison_k5680-1.jpg/1200px-American_bison_k5680-1.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '鬃狼',
+    'name_en': 'Maned Wolf',
+    'name_ja': 'マネッドウルフ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/4/45/Maned_wolf-aguara_guazu.jpeg',
+    'level': 'NT',
+  },
+  {
+    'name': '條紋鬣狗',
+    'name_en': 'Striped Hyena',
+    'name_ja': 'ストライプハイエナ',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Striped_hyena_%28Hyaena_hyaena%29_-_cropped.jpg/1200px-Striped_hyena_%28Hyaena_hyaena%29_-_cropped.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '長尾虎貓',
+    'name_en': 'Marbled Cat',
+    'name_ja': 'マーブルドキャット',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Margaykat_Leopardus_wiedii.jpg/1200px-Margaykat_Leopardus_wiedii.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '潘帕斯貓',
+    'name_en': 'Pampas Cat',
+    'name_ja': 'パンパスキャット',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/8/81/Leopardus_pajeros_20101006.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '金貓',
+    'name_en': 'Asian Golden Cat',
+    'name_ja': 'アジアゴールデンキャット',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Asian_Golden_cat.jpg/1200px-Asian_Golden_cat.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '非洲豹',
+    'name_en': 'African Leopard',
+    'name_ja': 'アフリカンレオパード',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Leopard_africa.jpg/1200px-Leopard_africa.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '美洲豹',
+    'name_en': 'Jaguar',
+    'name_ja': 'ジャガー',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Junior-Jaguar-Belize-Zoo.jpg/1200px-Junior-Jaguar-Belize-Zoo.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '帝雉',
+    'name_en': 'Great Curassow',
+    'name_ja': 'グレートクラッソー',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/6/60/Mikado_Pheasant_398.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '藍腹鷳',
+    'name_en': 'Blue-bellied Roller',
+    'name_ja': 'ブルーベリーローラー',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/0/03/Swinhoe%27s_Pheasant_0673.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '棕頸鷺',
+    'name_en': 'Rufous-necked Heron',
+    'name_ja': 'ルーファスネックドヘロン',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Egretta_rufescens_at_Fort_De_Soto_Park_-_Andrea_Westmoreland.jpg/1200px-Egretta_rufescens_at_Fort_De_Soto_Park_-_Andrea_Westmoreland.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '麥哲倫企鵝',
+    'name_en': 'Magellanic Penguin',
+    'name_ja': 'マゼランペンギン',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/2/22/Magellanic-penguin02.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '皇帝企鵝',
+    'name_en': 'Emperor Penguin',
+    'name_ja': 'エンペラーペンギン',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/2/27/Emperor_penguins.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '白腰杓鷸',
+    'name_en': 'Spoon-billed Sandpiper',
+    'name_ja': 'スプーンビルサンドパイパー',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Eurasian_Curlew.jpg/1200px-Eurasian_Curlew.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '白馬雞',
+    'name_en': 'White Eared Pheasant',
+    'name_ja': 'ホワイトイヤードフェザント',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/WhiteEaredPheasant.jpg/1200px-WhiteEaredPheasant.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '白犀',
+    'name_en': 'White Rhinoceros',
+    'name_ja': 'ホワイトライノセロス',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Rhinoc%C3%A9ros_blanc_JHE.jpg/1200px-Rhinoc%C3%A9ros_blanc_JHE.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '一角鯨',
+    'name_en': 'Narwhal',
+    'name_ja': 'ナーワル',
+    'image': 'https://www.tanmizhi.com/img/allimg/11/20-2011301KH5.jpg',
+    'level': 'NT',
+  },
+  {
+    'name': '鼬鯊',
+    'name_en': 'Weasel Shark',
+    'name_ja': 'ウィーゼルシャーク',
+    'image':
+        'https://upload.wikimedia.org/wikipedia/commons/1/12/Scarface-tigershark.jpg',
+    'level': 'NT',
   },
 ];

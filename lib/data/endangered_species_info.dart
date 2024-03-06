@@ -25,6 +25,7 @@ extension EndangeredSpeciesInfoExtension on EndangeredSpeciesInfo {
   List<Widget> get endangerStars {
     final starIcon = Icon(Icons.star_rounded, color: Colors.yellow[800]);
     return switch (level) {
+      'EX' => [starIcon, starIcon, starIcon, starIcon, starIcon, starIcon],
       'EW' => [starIcon, starIcon, starIcon, starIcon, starIcon],
       'CR' => [starIcon, starIcon, starIcon, starIcon],
       'EN' => [starIcon, starIcon, starIcon],
@@ -37,6 +38,7 @@ extension EndangeredSpeciesInfoExtension on EndangeredSpeciesInfo {
 
   String get enDangerLevelName {
     return switch (level) {
+      'EX' => 'Extinct',
       'EW' => 'Extinct in the Wild',
       'CR' => 'Critically Endangered',
       'EN' => 'Endangered',

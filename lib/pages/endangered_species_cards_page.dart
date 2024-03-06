@@ -285,19 +285,70 @@ class SpeciesCard extends ConsumerWidget {
                                       ),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
-                                        child: CachedNetworkImage(
-                                          fit: BoxFit.cover,
-                                          imageUrl: info.image,
-                                          color: isOwned
-                                              ? null
-                                              : Colors.black.withOpacity(1),
-                                          colorBlendMode: BlendMode.color,
-                                          placeholder: (context, url) =>
-                                              const ColoredBox(
-                                            color: Colors.white,
-                                          ),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
+                                        child: Stack(
+                                          children: [
+                                            Positioned.fill(
+                                              child: Opacity(
+                                                opacity: 0.6,
+                                                child: ImageFiltered(
+                                                  imageFilter: ImageFilter.blur(
+                                                    sigmaX: 10,
+                                                    sigmaY: 10,
+                                                  ),
+                                                  child: LayoutBuilder(
+                                                    builder:
+                                                        (context, constraints) {
+                                                      return CachedNetworkImage(
+                                                        fit: BoxFit.cover,
+                                                        imageUrl: info.image,
+                                                        color: isOwned
+                                                            ? null
+                                                            : Colors.black
+                                                                .withOpacity(1),
+                                                        colorBlendMode:
+                                                            BlendMode.color,
+                                                        width: constraints
+                                                            .maxWidth,
+                                                        placeholder: (
+                                                          context,
+                                                          url,
+                                                        ) =>
+                                                            const ColoredBox(
+                                                          color: Colors.white,
+                                                        ),
+                                                        errorWidget: (
+                                                          context,
+                                                          url,
+                                                          error,
+                                                        ) =>
+                                                            const Icon(
+                                                          Icons.error,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Center(
+                                              child: CachedNetworkImage(
+                                                fit: BoxFit.contain,
+                                                imageUrl: info.image,
+                                                color: isOwned
+                                                    ? null
+                                                    : Colors.black
+                                                        .withOpacity(1),
+                                                colorBlendMode: BlendMode.color,
+                                                placeholder: (context, url) =>
+                                                    const ColoredBox(
+                                                  color: Colors.white,
+                                                ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Icon(Icons.error),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
