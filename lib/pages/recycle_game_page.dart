@@ -44,9 +44,10 @@ class RecycleGamePage extends ConsumerWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              '🔥',
-                              style: context.textTheme.headlineMedium,
+                            Image.asset(
+                              'assets/images/wrong.png',
+                              width: context.width / 8,
+                              height: context.width / 8,
                             ),
                             Text(
                               l10n.notRecyclable,
@@ -61,9 +62,8 @@ class RecycleGamePage extends ConsumerWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              '♻️',
-                              style: context.textTheme.headlineMedium,
+                            RecycleIcon(
+                              size: context.width / 9,
                             ),
                             Text(
                               l10n.isRecyclable,

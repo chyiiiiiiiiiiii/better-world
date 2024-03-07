@@ -211,49 +211,53 @@ class _Item extends ConsumerWidget {
 
         ref.read(storeControllerProvider.notifier).purchase(product: product);
       },
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              product.getIcon(),
-              Gaps.h8,
-              Text(
-                product.name,
-                style: context.textTheme.titleMedium,
-              ),
-              Gaps.h8,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const RecycleIcon(),
-                  Gaps.w4,
-                  Text(
-                    '${product.price}',
-                    style:
-                        context.textTheme.titleMedium?.copyWith(height: -0.3),
-                  ),
-                ],
-              ),
-              Gaps.h4,
-              Text(
-                '+${product.addScore}/${product.validTimeSeconds}(s)',
-                style: context.textTheme.labelSmall,
-              ),
-            ],
-          ),
-        ),
-      ).animate().scale(
-            delay: Duration(
-              milliseconds: 600 + 300 * (index + 1),
+      child: AnimatedOpacity(
+        duration: Durations.medium2,
+        opacity: isProductGot ? 0.8 : 1,
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                product.getIcon(),
+                Gaps.h8,
+                Text(
+                  product.name,
+                  style: context.textTheme.titleMedium,
+                ),
+                Gaps.h8,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const RecycleIcon(),
+                    Gaps.w4,
+                    Text(
+                      '${product.price}',
+                      style:
+                          context.textTheme.titleMedium?.copyWith(height: -0.3),
+                    ),
+                  ],
+                ),
+                Gaps.h4,
+                Text(
+                  '+${product.addScore}/${product.validTimeSeconds}(s)',
+                  style: context.textTheme.labelSmall,
+                ),
+              ],
             ),
-            duration: const Duration(
-              milliseconds: 300,
-            ),
-            curve: Curves.easeInOut,
-            begin: Offset.zero,
-            end: const Offset(1, 1),
           ),
+        ).animate().scale(
+              delay: Duration(
+                milliseconds: 600 + 300 * (index + 1),
+              ),
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              curve: Curves.easeInOut,
+              begin: Offset.zero,
+              end: const Offset(1, 1),
+            ),
+      ),
     );
   }
 }
