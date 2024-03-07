@@ -199,7 +199,6 @@ class _CatchGameTutorailDialogState extends State<CatchGameTutorailDialog> {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            widget.prefs.setBool('firstTimeEnterCatchGame', false);
           },
           child: const Text('Got it'),
         ),
