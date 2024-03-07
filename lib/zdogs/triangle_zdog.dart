@@ -23,7 +23,7 @@ class TriangleTreeZdog extends ConsumerWidget {
             )
             ?.map((e) => e.id) ??
         [];
-    final treePower = validPurchaseProducts.contains('1');
+    final treePower = validPurchaseProducts.contains('tree');
     return MirrorAnimationBuilder<double>(
       tween: Tween(begin: 1, end: treePower ? 1.3 : 1.05),
       duration: const Duration(milliseconds: 300),

@@ -21,19 +21,19 @@ class Product with _$Product {
 extension ProductX on Product {
   Widget getIcon({double size = 44}) {
     switch (id) {
-      case '1':
+      case 'tree':
         return Icon(
           Icons.forest_rounded,
           size: size,
           color: Colors.green,
         );
-      case '2':
+      case 'sunny':
         return Icon(
           Icons.wb_sunny_rounded,
           size: size,
           color: Colors.orange,
         );
-      case '3':
+      case 'windy':
         return Icon(
           Icons.wind_power_rounded,
           size: size,

@@ -24,7 +24,7 @@ class CircleTreeZdog extends ConsumerWidget {
             )
             ?.map((e) => e.id) ??
         [];
-    final treePower = validPurchaseProducts.contains('1');
+    final treePower = validPurchaseProducts.contains('tree');
     return MirrorAnimationBuilder<double>(
       tween: Tween(begin: 1, end: treePower ? 1.2 : 1.05),
       duration: const Duration(milliseconds: 300),
