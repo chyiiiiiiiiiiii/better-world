@@ -24,7 +24,8 @@ class WindTurbinesZdog extends ConsumerWidget {
             )
             ?.map((e) => e.id) ??
         [];
-    final windPower = validPurchaseProducts.contains('3');
+    final windPower = validPurchaseProducts.contains('windy');
+
     return LoopAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 360),
       duration: Duration(milliseconds: (windPower ? 500 : 5000)),

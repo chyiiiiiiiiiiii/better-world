@@ -24,7 +24,7 @@ class SunZdog extends ConsumerWidget {
             )
             ?.map((e) => e.id) ??
         [];
-    final solarPower = validPurchaseProducts.contains('2');
+    final solarPower = validPurchaseProducts.contains('sunny');
 
     return MirrorAnimationBuilder<double>(
       tween: Tween(begin: 0, end: solarPower ? 40 : 5),
