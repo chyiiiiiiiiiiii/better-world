@@ -47,5 +47,16 @@
 	"canRecycleGameTryAgain": "再試一次",
 	"canRecycleGameError": "不好意思，AI無法處理提供的照片。",
 	"canRecycleGameAddScore": "獲得{addScore}分",
-	"remindClickForPoint": "加把勁，持續點擊，累積能量！"
+	"remindClickForPoint": "加把勁，持續點擊，累積能量！",
+	"endangeredLevelEX": "已滅絕",
+	"endangeredLevelEW": "野外滅絕",
+	"endangeredLevelCR": "極危",
+	"endangeredLevelEN": "瀕危",
+	"endangeredLevelVU": "易危險",
+	"endangeredLevelNT": "近危",
+	"endangeredLevelLC": "無危險",
+	"endangeredLevelDataDeficient": "資料不足",
+	"pickImageMessage": "選擇你的圖像來源",
+	"pickImageCamera": "相機",
+	"pickImageAlbum": "相簿"
 }

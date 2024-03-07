@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -36,16 +37,16 @@ extension EndangeredSpeciesInfoExtension on EndangeredSpeciesInfo {
     };
   }
 
-  String get enDangerLevelName {
+  String  enDangerLevelName(AppLocalizations l10n) {
     return switch (level) {
-      'EX' => 'Extinct',
-      'EW' => 'Extinct in the Wild',
-      'CR' => 'Critically Endangered',
-      'EN' => 'Endangered',
-      'VU' => 'Vulnerable',
-      'NT' => 'Near Threatened',
-      'LC' => 'Least Concern',
-      _ => 'Data Deficient',
+      'EX' => l10n.endangeredLevelEX,
+      'EW' => l10n.endangeredLevelEW,
+      'CR' => l10n.endangeredLevelCR,
+      'EN' => l10n.endangeredLevelEN,
+      'VU' => l10n.endangeredLevelVU,
+      'NT' => l10n.endangeredLevelNT,
+      'LC' => l10n.endangeredLevelLC,
+      _ => l10n.endangeredLevelDataDeficient,
     };
   }
 

@@ -6,7 +6,6 @@ import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
-import 'package:envawareness/pages/endangered_species_cards_page.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/gaps.dart';
@@ -15,7 +14,6 @@ import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class PlayView extends ConsumerWidget {
   const PlayView({super.key});
@@ -108,18 +106,6 @@ class PlayView extends ConsumerWidget {
                           isDarkMode
                               ? Icons.light_mode_rounded
                               : Icons.dark_mode_rounded,
-                        ),
-                      ),
-                    ),
-                    Gaps.w4,
-                    AppTap(
-                      onTap: () {
-                        context.push(EndangeredSpeciesCardsPage.routePath);
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Icon(
-                          Icons.collections,
                         ),
                       ),
                     ),

@@ -159,6 +159,7 @@ class SpeciesCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final showGoogleWallet = Platform.isAndroid && isOwned;
 
     return GestureDetector(
       onTap: () {
@@ -180,14 +181,30 @@ class SpeciesCard extends ConsumerWidget {
                 childLayout: ChildLayout(
                   outer: [
                     Positioned.fill(
-                      top: 425,
+                      top: context.height / 2.2,
                       child: TiltParallax(
                         child: Padding(
                           padding: const EdgeInsets.all(8),
                           child: Column(
                             children: [
                               Text(
-                                info.enDangerLevelName,
+                                info.translatedName,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall
+                                    ?.copyWith(
+                                      color: const Color.fromARGB(
+                                        255,
+                                        49,
+                                        70,
+                                        121,
+                                      ),
+                                    ),
+                              ),
+                              Gaps.h20,
+                              Text(
+                                info.enDangerLevelName(l10n),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -241,27 +258,12 @@ class SpeciesCard extends ConsumerWidget {
                       ),
                     ),
                     Positioned.fill(
-                      top: 400,
-                      child: TiltParallax(
-                        child: Text(
-                          info.translatedName,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                color: const Color.fromARGB(255, 49, 70, 121),
-                              ),
-                        ),
-                      ),
-                    ),
-                    Positioned.fill(
                       top: 100,
                       child: Align(
                         alignment: Alignment.topCenter,
                         child: SizedBox(
                           width: double.maxFinite,
-                          height: 300,
+                          height: context.height / 3,
                           child: TiltParallax(
                             size: const Offset(30, 30),
                             child: Padding(
@@ -372,12 +374,12 @@ class SpeciesCard extends ConsumerWidget {
               ),
             ),
             Positioned(
-              top: 570,
+              top: context.height / 1.5,
               left: 0,
               right: 0,
               child: Column(
                 children: [
-                  if (Platform.isAndroid && isOwned) ...[
+                  if (showGoogleWallet) ...[
                     AddToGoogleWalletButton(
                       pass: ref
                           .read(googleWalletControllerProvider.notifier)

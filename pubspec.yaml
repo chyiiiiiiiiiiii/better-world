@@ -51,8 +51,8 @@ dependencies:
 
   url_launcher: ^6.2.5
   google_generative_ai: ^0.2.2
-  add_to_google_wallet: ^0.0.3
   uuid: ^4.3.3
+  add_to_google_wallet: ^0.0.3
 
 dev_dependencies:
   flutter_test:

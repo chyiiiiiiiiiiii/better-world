@@ -21,7 +21,7 @@ GoRouter appRouter(AppRouterRef ref) {
   final authRepository = ref.watch(authRepositoryProvider);
 
   return GoRouter(
-    initialLocation: SplashPage.routePath,
+    initialLocation: GamePage.routePath,
     navigatorKey: navigatorKey,
     observers: [],
     redirect: (context, state) async {

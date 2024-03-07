@@ -36,7 +36,6 @@ class StoreRepository {
 
     return data;
   }
-
 }
 
 @riverpod

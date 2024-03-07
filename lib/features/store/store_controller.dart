@@ -54,6 +54,7 @@ class StoreController extends _$StoreController {
       final purchaseHistory = PurchaseHistory(
         userId: _userId,
         productId: product.id,
+        productType: product.type.name,
         createdAt: DateTime.now().millisecondsSinceEpoch,
         endAt: DateTime.now()
             .add(Duration(seconds: product.validTimeSeconds))
@@ -105,7 +106,10 @@ class StoreController extends _$StoreController {
 
       final purchaseHistory = PurchaseHistory(
         userId: _userId,
-        productId: 'animal-card-$animalCardIndex',
+        productId: '''
+                animal-card-$animalCardIndex-${endangeredSpeciesInfo.nameEn.toLowerCase().split(' ').join('-')}
+            ''',
+        productType: ProductType.species.name,
         createdAt: DateTime.now().millisecondsSinceEpoch,
         endAt: 0,
       );
