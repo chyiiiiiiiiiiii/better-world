@@ -25,7 +25,7 @@ class ValidProductSideView extends StatelessWidget {
                     e.getIcon(size: 20),
                     Gaps.w4,
                     Text(
-                      '${e.name} +${e.addScore}',
+                      '${e.name} (+${e.addScore})',
                       style:
                           context.textTheme.titleMedium?.copyWith(height: -0.1),
                     )

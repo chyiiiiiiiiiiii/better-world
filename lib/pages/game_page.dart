@@ -165,7 +165,7 @@ class _GamePageState extends ConsumerState<GamePage>
                       ),
                       Positioned(
                         right: Spacings.px8,
-                        bottom: Spacings.px64,
+                        bottom: Spacings.px20,
                         child: isStoreOpened
                             ? const SizedBox.shrink()
                             : RightSideView(

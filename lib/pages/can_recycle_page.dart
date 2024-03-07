@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:envawareness/controllers/can_recycle_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
+import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
@@ -21,6 +22,8 @@ class CanRecyclePage extends ConsumerStatefulWidget {
 }
 
 class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
+  late AppLocalizations l10n = context.l10n;
+
   final picker = ImagePicker();
 
   Future<void> getImage() async {
@@ -28,18 +31,17 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
       context: context,
       builder: (_) {
         return AlertDialog(
-          title: const Text('Use camera or gallery?'),
-          content: const Text('Please select a source'),
+          title: Text(l10n.pickImageMessage),
           actions: [
             Row(
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Camera'),
-                  child: const Text('Camera'),
+                  child: Text(l10n.pickImageCamera),
                 ),
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Gallery'),
-                  child: const Text('Gallery'),
+                  child: Text(l10n.pickImageAlbum),
                 ),
               ],
             ),
@@ -55,19 +57,24 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
     final imageWidth = context.width * 1.5;
 
     XFile? image;
-    if (pickImageWay == 'Camera') {
-      image = await picker.pickImage(
-        source: ImageSource.camera,
-        maxWidth: imageWidth,
-      );
-    } else if (pickImageWay == 'Gallery') {
-      image = await picker.pickImage(
-        source: ImageSource.gallery,
-        maxWidth: imageWidth,
-      );
-    } else {
-      return;
+    try {
+      if (pickImageWay == 'Camera') {
+        image = await picker.pickImage(
+          source: ImageSource.camera,
+          maxWidth: imageWidth,
+        );
+      } else if (pickImageWay == 'Gallery') {
+        image = await picker.pickImage(
+          source: ImageSource.gallery,
+          maxWidth: imageWidth,
+        );
+      } else {
+        return;
+      }
+    } catch (error) {
+      ref.read(showMessageProvider.notifier).show('請先將裝置的相機或相簿的權限開啟，才能提供照片哦！');
     }
+
     final bytes = await image?.readAsBytes();
     if (bytes == null && mounted) {
       // await showDialog<void>(
@@ -96,8 +103,6 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
-
     final asyncState = ref.watch(canRecycleControllerProvider);
     final isLoading = asyncState.isLoading;
 

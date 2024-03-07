@@ -1,6 +1,6 @@
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
-import 'package:envawareness/pages/can_recycle_page.dart';
+import 'package:envawareness/pages/endangered_species_cards_page.dart';
 import 'package:envawareness/pages/leader_board_page.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
@@ -100,10 +100,10 @@ class BottomSideWidget extends ConsumerWidget {
         Gaps.w20,
         AppTap(
           onTap: () {
-            context.push(CanRecyclePage.routePath);
+            context.push(EndangeredSpeciesCardsPage.routePath);
           },
           child: Image.asset(
-            'assets/images/scan.png',
+            'assets/images/animals_2.png',
             width: context.width / 7,
             height: context.width / 7,
           ),
