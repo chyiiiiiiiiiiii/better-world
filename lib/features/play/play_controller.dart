@@ -312,6 +312,7 @@ class PlayController extends _$PlayController {
       return;
     }
     final random = DateTime.now().millisecondsSinceEpoch % 2;
+    await _audioPlayer?.stop();
     await _audioPlayer?.play(AssetSource('sounds/click_$random.mp3'));
 
     ref.read(confettiControllerProvider).stop();
