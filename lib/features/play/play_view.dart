@@ -94,6 +94,44 @@ class PlayView extends ConsumerWidget {
                 ),
                 Row(
                   children: [
+                    Visibility(
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.restore_rounded,
+                          color: Colors.red,
+                        ),
+                        onPressed: () async {
+                          // Temp for restoring data.
+
+                          final newPlayInfo = ref
+                              .read(playControllerProvider)
+                              .requireValue
+                              .playInfo
+                              .copyWith(
+                            currentLevel: 1,
+                            currentScore: 0,
+                            isGameCompleted: false,
+                            perClickScore: 1,
+                            totalScore: 0,
+                            usedScore: 0,
+                            animalCardDrawCount: 0,
+                            ownedAnimalCardIndexes: [],
+                          );
+
+                          await ref
+                              .watch(playControllerProvider.notifier)
+                              .updatePlayInfo(
+                                newPlayInfo,
+                              );
+                          await ref
+                              .read(playControllerProvider.notifier)
+                              .updateLevelInfo(level: 1);
+                          ref
+                              .read(playControllerProvider.notifier)
+                              .updateScoresPerSecond();
+                        },
+                      ),
+                    ),
                     AppTap(
                       onTap: () {
                         ref

@@ -6,10 +6,12 @@ import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/widgets/app_tap.dart';
+import 'package:envawareness/zdogs/dash_zdog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:zflutter/zflutter.dart';
 
 class BottomSideWidget extends ConsumerWidget {
   const BottomSideWidget({
@@ -51,50 +53,27 @@ class BottomSideWidget extends ConsumerWidget {
               },
             );
           },
-          child: Image.asset(
-            'assets/images/leaderboard.png',
-            width: context.width / 7,
-            height: context.width / 7,
+          child: SizedBox(
+            width: context.width / 8,
+            height: context.width / 8,
+            child: ZIllustration(
+              children: const [
+                CrownZdog(
+                  translate: ZVector(0, -5, 0),
+                ),
+              ],
+            ),
           ),
         ),
         Gaps.w20,
-        // IconButton(
-        //   icon: const Icon(
-        //     Icons.restore_rounded,
-        //     color: Colors.red,
-        //   ),
-        //   onPressed: () async {
-        //     // Temp for restoring data.
-
-        //     final newPlayInfo =
-        //         ref.read(playControllerProvider).requireValue.playInfo.copyWith(
-        //       currentLevel: 1,
-        //       currentScore: 0,
-        //       isGameCompleted: false,
-        //       perClickScore: 1,
-        //       totalScore: 0,
-        //       usedScore: 0,
-        //       animalCardDrawCount: 0,
-        //       ownedAnimalCardIndexes: [],
-        //     );
-
-        //     await ref.watch(playControllerProvider.notifier).updatePlayInfo(
-        //           newPlayInfo,
-        //         );
-        //     await ref
-        //         .read(playControllerProvider.notifier)
-        //         .updateLevelInfo(level: 1);
-        //     ref.read(playControllerProvider.notifier).updateScoresPerSecond();
-        //   },
-        // ),
         AppTap(
           onTap: () {
             ref.read(playControllerProvider.notifier).onStoreTap();
           },
           child: Image.asset(
             'assets/images/shop.png',
-            width: context.width / 7,
-            height: context.width / 7,
+            width: context.width / 8,
+            height: context.width / 8,
           ),
         ),
         Gaps.w20,
@@ -102,10 +81,17 @@ class BottomSideWidget extends ConsumerWidget {
           onTap: () {
             context.push(EndangeredSpeciesCardsPage.routePath);
           },
-          child: Image.asset(
-            'assets/images/animals_2.png',
-            width: context.width / 7,
-            height: context.width / 7,
+          child: SizedBox(
+            width: context.width / 8,
+            height: context.width / 8,
+            child: ZIllustration(
+              children: const [
+                DashZdog(
+                  translate: ZVector(0, 0, 100),
+                  useAnimation: false,
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -115,5 +101,49 @@ class BottomSideWidget extends ConsumerWidget {
           delay: Durations.extralong4,
         )
         .fadeIn();
+  }
+}
+
+class CrownZdog extends StatelessWidget {
+  const CrownZdog({
+    super.key,
+    this.translate = const ZVector.only(),
+  });
+  final ZVector translate;
+
+  @override
+  Widget build(BuildContext context) {
+    return ZPositioned(
+      translate: translate,
+      child: ZGroup(
+        children: [
+          ZShape(
+            path: [
+              ZMove.only(y: -10),
+              ZLine.only(x: -10, y: 5),
+              ZLine.only(
+                x: -20,
+              ),
+              ZLine.only(x: -20, y: 10),
+              ZLine.only(x: -20, y: 20),
+              ZLine.only(x: 20, y: 20),
+              ZLine.only(x: 20),
+              ZLine.only(x: 10, y: 5),
+            ],
+            // closed by default
+            stroke: 5,
+            fill: true,
+            color: const Color.fromARGB(255, 246, 191, 54),
+          ),
+          ZPositioned(
+            translate: const ZVector.only(y: 10),
+            child: ZShape(
+              stroke: 10,
+              color: const Color.fromARGB(255, 205, 65, 44),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

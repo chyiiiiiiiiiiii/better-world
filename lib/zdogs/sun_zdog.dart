@@ -1,3 +1,4 @@
+import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class SunZdog extends ConsumerWidget {
             ?.map((e) => e.id) ??
         [];
     final solarPower = validPurchaseProducts.contains('sunny');
+    final isDarkMode = ref.watch(darkModeProvider);
 
     return MirrorAnimationBuilder<double>(
       tween: Tween(begin: 0, end: solarPower ? 40 : 5),
@@ -41,18 +43,24 @@ class SunZdog extends ConsumerWidget {
                 height: 120,
                 stroke: value + (solarPower ? 60 : 0),
                 fill: true,
-                color: const Color.fromARGB(255, 255, 226, 154),
+                color: isDarkMode
+                    ? const Color.fromARGB(255, 144, 144, 144)
+                    : const Color.fromARGB(255, 255, 226, 154),
               ),
               ZEllipse(
                 width: 100,
                 height: 100,
                 stroke: value + (solarPower ? 30 : 0),
                 fill: true,
-                color: const Color.fromARGB(229, 255, 214, 110),
+                color: isDarkMode
+                    ? const Color.fromARGB(255, 197, 197, 197)
+                    : const Color.fromARGB(229, 255, 214, 110),
               ),
               ZShape(
                 stroke: 80,
-                color: const Color.fromARGB(227, 249, 183, 18),
+                color: isDarkMode
+                    ? const Color.fromARGB(255, 246, 244, 241)
+                    : const Color.fromARGB(227, 249, 183, 18),
               ),
               ZShape(
                 color: Colors.black,

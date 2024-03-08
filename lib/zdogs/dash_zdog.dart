@@ -11,11 +11,13 @@ class DashZdog extends ConsumerStatefulWidget {
     this.translate = const ZVector.all(0),
     this.scale = 1,
     this.speed = 5,
+    this.useAnimation = true,
   });
   final ZVector rotate;
   final ZVector translate;
   final double scale;
   final double speed;
+  final bool useAnimation;
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _DashZdogState();
 }
@@ -137,14 +139,14 @@ class _DashZdogState extends ConsumerState<DashZdog>
             );
             return ZPositioned(
               rotate: widget.rotate.copyWith(
-                y: widget.rotate.y + value.get('z'),
+                y: widget.rotate.y + (widget.useAnimation ? value.get('z') : 0),
               ),
               // rotate: controller.rotate,
               translate: widget.translate.copyWith(
                 // y: widget.translate.y + value.get('y'),
                 // x: widget.translate.x + value.get('x'),
-                y: -100,
-                x: -100,
+                y: widget.translate.y,
+                x: widget.translate.x,
                 z: widget.translate.z + dash,
               ),
               child: Dash(flight: dash),

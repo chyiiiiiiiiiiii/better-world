@@ -69,7 +69,12 @@ List<Widget?> levelWidgets = <Widget?>[
     ),
   ),
   // level 6
-  const DashZdog(),
+  const DashZdog(
+    translate: ZVector.only(
+      y: -100,
+      x: -100,
+    ),
+  ),
   // level 7
   TriangleTreeZdog(
     translate: const ZVector.only(
