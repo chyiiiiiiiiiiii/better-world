@@ -47,7 +47,7 @@
 	"canRecycleGameTryAgain": "もう一度試す",
 	"canRecycleGameError": "申し訳ありませんが、AIは提供された写真を処理できません。",
 	"canRecycleGameAddScore": "{addScore}ポイントを獲得",
-	"remindClickForPoint": "加把勁，持續點擊，累積能量！",
+	"remindClickForPoint": "もっと頑張って、クリックし続けて、エネルギーを貯めてください!",
 	"endangeredLevelEX": "絶滅",
 	"endangeredLevelEW": "野生絶滅",
 	"endangeredLevelCR": "極危",
@@ -56,7 +56,9 @@
 	"endangeredLevelNT": "近危",
 	"endangeredLevelLC": "低危険",
 	"endangeredLevelDataDeficient": "データ不足",
-	"pickImageMessage": "選擇你的圖像來源",
-	"pickImageCamera": "相機",
-	"pickImageAlbum": "相簿"
+	"pickImageMes​​sage": "画像ソースを選択してください",
+	"pickImageCamera": "カメラ",
+	"pickImageAlbum": "フォト アルバム",
+	"pickImageRemindPermission": "写真を提供する前に、デバイスでカメラまたはアルバムの許可を有効にしてください。",
+	"catchGameTutorialTitle": "遊び方"
 }

@@ -43,7 +43,7 @@ class RecycleGameController extends _$RecycleGameController {
     return RecycleGameState(
       totalCount: cardCount,
       cards: selectedCards,
-      addScore: addScore,
+      addScore: addScore.toInt(),
     );
   }
 

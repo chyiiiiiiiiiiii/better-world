@@ -9,7 +9,7 @@ import 'package:envawareness/firebase/firestore_helper.dart';
 /// [numItems] -> item amount of the game
 /// [maxScoreProportionToTotalScore] Max score (item score sum) proportion to total score of current level
 /// [beginLevelPassScore] -> Score of beginning level
-int calculateGamePerItemScore({
+double calculateGamePerItemScore({
   required int currentLevel,
   required int numItems,
   required double maxScoreProportionToTotalScore,
@@ -20,5 +20,5 @@ int calculateGamePerItemScore({
     p0: beginLevelPassScore.toDouble(),
   );
 
-  return totalExperience ~/ (numItems * (1 / maxScoreProportionToTotalScore));
+  return totalExperience / (numItems * (1 / maxScoreProportionToTotalScore));
 }

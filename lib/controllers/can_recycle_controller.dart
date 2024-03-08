@@ -90,7 +90,7 @@ class CanRecycleController extends _$CanRecycleController {
 
       return state.requireValue.copyWith(
         aiResponse: message,
-        addScore: addScore,
+        addScore: addScore.toInt(),
       );
     } catch (e) {
       rethrow;

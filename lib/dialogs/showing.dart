@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 Future<T?> showMessageDialog<T>(
   BuildContext context, {
   required String message,
+  VoidCallback? onConfirm,
 }) {
   return showGeneralDialog(
     context: context,
@@ -33,7 +34,10 @@ Future<T?> showMessageDialog<T>(
                     Icons.check,
                     color: Colors.green,
                   ),
-                  onPressed: () => context.pop(),
+                  onPressed: () {
+                    context.pop();
+                    onConfirm?.call();
+                  },
                 ),
               ],
             ),

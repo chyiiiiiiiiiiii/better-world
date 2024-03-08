@@ -58,5 +58,7 @@
 	"endangeredLevelDataDeficient": "資料不足",
 	"pickImageMessage": "選擇你的圖像來源",
 	"pickImageCamera": "相機",
-	"pickImageAlbum": "相簿"
+	"pickImageAlbum": "相簿",
+	"pickImageRemindPermission": "請先將裝置的相機或相簿的權限開啟，才能提供照片哦！",
+	"catchGameTutorialTitle": "遊戲教學"
 }

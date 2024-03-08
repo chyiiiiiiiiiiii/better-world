@@ -47,7 +47,7 @@
 	"canRecycleGameTryAgain": "Try again",
 	"canRecycleGameError": "Sorry, the AI cannot process the provided photo.",
 	"canRecycleGameAddScore": "Earn {addScore} points",
-	"remindClickForPoint": "加把勁，持續點擊，累積能量！",
+	"remindClickForPoint": "Work harder, keep clicking, and accumulate energy!",
 	"endangeredLevelEX": "Extinct",
 	"endangeredLevelEW": "Extinct in the Wild",
 	"endangeredLevelCR": "Critically Endangered",
@@ -56,7 +56,9 @@
 	"endangeredLevelNT": "Near Threatened",
 	"endangeredLevelLC": "Least Concern",
 	"endangeredLevelDataDeficient": "Data Deficient",
-	"pickImageMessage": "選擇你的圖像來源",
-	"pickImageCamera": "相機",
-	"pickImageAlbum": "相簿"
+	"pickImageMessage": "Choose your image source",
+	"pickImageCamera": "Camera",
+	"pickImageAlbum": "Photo album",
+	"pickImageRemindPermission": "If you have any questions or concerns, please contact us and we will provide you with the talent!",
+	"catchGameTutorialTitle": "How to play"
 }

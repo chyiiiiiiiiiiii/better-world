@@ -7,7 +7,7 @@ final class Constants {
   static const appName = 'Better World';
 
   static const appTotalLevels = 200;
-  static const beginLevelPassScore = 80;
+  static const beginLevelPassScore = 200;
 
   static const googleWalletIssuerId = '3388000000022320262';
   static const googleWalletIssuerEmail = 'ab20803@gmail.com';
