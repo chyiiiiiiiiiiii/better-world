@@ -23,33 +23,28 @@ class PlusOneEntry {
 }
 
 class TapPlusOneDemo extends ConsumerStatefulWidget {
-  const TapPlusOneDemo({super.key, this.tapPosition});
-  final Offset? tapPosition;
+  const TapPlusOneDemo({
+    required this.entries,
+    super.key,
+  });
+  final List<PlusOneEntry> entries;
 
   @override
   _TapPlusOneDemoState createState() => _TapPlusOneDemoState();
 }
 
 class _TapPlusOneDemoState extends ConsumerState<TapPlusOneDemo> {
-  List<PlusOneEntry> entries = [];
+  late List<PlusOneEntry> entries;
   Timer? timer;
-
   @override
   void didUpdateWidget(covariant TapPlusOneDemo oldWidget) {
-    if (widget.tapPosition != null &&
-        widget.tapPosition != oldWidget.tapPosition) {
-      entries.add(PlusOneEntry(widget.tapPosition!));
-    }
-
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   void initState() {
+    entries = widget.entries;
     super.initState();
-    if (widget.tapPosition != null) {
-      entries.add(PlusOneEntry(widget.tapPosition!));
-    }
 
     timer = Timer.periodic(const Duration(milliseconds: 16), (timer) {
       setState(() {

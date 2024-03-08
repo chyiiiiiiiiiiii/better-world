@@ -63,6 +63,7 @@ class _EarthZDogState extends ConsumerState<GameZdog> {
   double _rotationX = 0;
   double _rotationY = 0;
   Offset? tapPosition;
+  List<PlusOneEntry> entries = [];
 
   @override
   void initState() {
@@ -99,6 +100,9 @@ class _EarthZDogState extends ConsumerState<GameZdog> {
       },
       onTapUp: (details) {
         tapPosition = details.globalPosition;
+        if (tapPosition != null) {
+          entries.add(PlusOneEntry(tapPosition!));
+        }
         setState(() {});
       },
       child: CustomAnimationBuilder<Movie>(
@@ -163,7 +167,7 @@ class _EarthZDogState extends ConsumerState<GameZdog> {
                       );
                     },
                   ),
-                  TapPlusOneDemo(tapPosition: tapPosition),
+                  TapPlusOneDemo(entries: entries),
                 ],
               );
             },
