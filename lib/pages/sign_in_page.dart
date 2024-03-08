@@ -4,8 +4,11 @@ import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/widgets/app_tap.dart';
+import 'package:envawareness/zdogs/earth_zdog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:zflutter/zflutter.dart';
 
 class SignInPage extends ConsumerWidget {
   const SignInPage({super.key});
@@ -33,39 +36,77 @@ class SignInPage extends ConsumerWidget {
     final isLoading = ref.read(authControllerProvider).isLoading;
 
     return Material(
-      child: AppTap(
-        onTap: ref.read(authControllerProvider.notifier).signIn,
-        child: Center(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: context.colorScheme.background,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 8,
-                  spreadRadius: 4,
+      child: SafeArea(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: context.colorScheme.background,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 8,
+                spreadRadius: 4,
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: ZIllustration(
+                          children: [
+                            const EarthZdog(rotateValue: ZVector.zero),
+                            ZBoxToBoxAdapter(
+                              width: 100,
+                              height: 100,
+                              depth: 20,
+                              color: Colors.red,
+                            ),
+                          ],
+                        ),
+                      ).animate().moveY(
+                            begin: -20,
+                            end: 0,
+                            duration: const Duration(milliseconds: 5000),
+                          ),
+                      Center(
+                        child: Text(
+                          'BETTER\n WORLD',
+                          style: context.textTheme.headlineSmall,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: isLoading
-                  ? const CircularProgressIndicator()
-                  : Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(
-                          'assets/images/google.png',
-                          width: screenWidth * 0.1,
-                        ),
-                        const SizedBox(width: 20),
-                        Text(
-                          l10n.signInWithGoogle,
-                          style: context.textTheme.headlineMedium,
-                        ),
-                      ],
+                if (isLoading)
+                  const CircularProgressIndicator()
+                else
+                  AppTap(
+                    onTap: ref.read(authControllerProvider.notifier).signIn,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 32),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            'assets/images/google.png',
+                            width: screenWidth * 0.1,
+                          ),
+                          const SizedBox(width: 20),
+                          Text(
+                            l10n.signInWithGoogle,
+                            style: context.textTheme.headlineSmall,
+                          ),
+                        ],
+                      ),
                     ),
+                  ),
+              ],
             ),
           ),
         ),
