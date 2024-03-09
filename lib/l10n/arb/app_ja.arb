@@ -28,6 +28,8 @@
 	"recyclableGameWinnerName3": "リサイクル上級者",
 	"recyclableGameWinnerName4": "リサイクルマスター",
 	"recyclableGameWinnerName5": "リサイクルの天使",
+	"recyclableGameAnsweredCorrect": "正解項目",
+	"recyclableGameAnsweredWrong": "誤答項目",
 	"recyclableGameGetReward": "報酬を受け取る",
 	"endangeredSpecies": "絶滅危惧種",
 	"endangeredSpeciesISaved": "私が救った絶滅危惧種",
@@ -60,5 +62,11 @@
 	"pickImageCamera": "カメラ",
 	"pickImageAlbum": "フォト アルバム",
 	"pickImageRemindPermission": "写真を提供する前に、デバイスでカメラまたはアルバムの許可を有効にしてください。",
-	"catchGameTutorialTitle": "遊び方"
+	"catchGameTutorialTitle": "遊び方",
+	"catchGameTutorialMessage": "ゴミ箱をドラッグしてリサイクル可能なアイテムを見つけます",
+	"catchGameTutorialRecyclable": "リサイクル可能",
+	"catchGameTutorialNotRecyclable": "リサイクル不可",
+	"catchGameTutorialDoNotShow": "今後表示しない",
+	"catchGameTutorialConfirm": "わかりました",
+	"catchGameTutorialLoading": "読み込み中"
 }

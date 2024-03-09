@@ -28,6 +28,8 @@
 	"recyclableGameWinnerName3": "Recycling Expert",
 	"recyclableGameWinnerName4": "Recycling Master",
 	"recyclableGameWinnerName5": "Recycling Angel",
+	"recyclableGameAnsweredCorrect": "Correct",
+	"recyclableGameAnsweredWrong": "Wrong",
 	"recyclableGameGetReward": "Get Reward",
 	"endangeredSpecies": "Endangered Species",
 	"endangeredSpeciesISaved": "Endangered Species I Saved",
@@ -60,5 +62,11 @@
 	"pickImageCamera": "Camera",
 	"pickImageAlbum": "Photo album",
 	"pickImageRemindPermission": "If you have any questions or concerns, please contact us and we will provide you with the talent!",
-	"catchGameTutorialTitle": "How to play"
+	"catchGameTutorialTitle": "How to play",
+	"catchGameTutorialMessage": "Drag the trash can to catch the recyclable items",
+	"catchGameTutorialRecyclable": "Recyclable",
+	"catchGameTutorialNotRecyclable": "Not Recyclable",
+	"catchGameTutorialDoNotShow": "Don't show again",
+	"catchGameTutorialConfirm": "Got it",
+	"catchGameTutorialLoading": "Loading"
 }

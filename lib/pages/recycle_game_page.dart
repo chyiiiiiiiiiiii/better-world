@@ -241,7 +241,7 @@ class RecycleGamePage extends ConsumerWidget {
                                                 CrossAxisAlignment.stretch,
                                             children: [
                                               Text(
-                                                '答對物品',
+                                                l10n.recyclableGameAnsweredCorrect,
                                                 style: context
                                                     .textTheme.titleMedium,
                                               ),
@@ -316,7 +316,7 @@ class RecycleGamePage extends ConsumerWidget {
                                               ),
                                               Gaps.h20,
                                               Text(
-                                                '答錯物品',
+                                                l10n.recyclableGameAnsweredWrong,
                                                 style: context
                                                     .textTheme.titleMedium,
                                               ),

@@ -3,6 +3,8 @@ import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
+import 'package:envawareness/utils/gaps.dart';
+import 'package:envawareness/utils/spacings.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:envawareness/zdogs/earth_zdog.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +35,7 @@ class SignInPage extends ConsumerWidget {
       ref.invalidate(showMessageProvider);
     });
 
-    final isLoading = ref.read(authControllerProvider).isLoading;
+    final isLoading = ref.watch(authControllerProvider).isLoading;
 
     return Material(
       child: SafeArea(
@@ -83,29 +85,33 @@ class SignInPage extends ConsumerWidget {
                     ],
                   ),
                 ),
-                if (isLoading)
-                  const CircularProgressIndicator()
-                else
-                  AppTap(
-                    onTap: ref.read(authControllerProvider.notifier).signIn,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 32),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            'assets/images/google.png',
-                            width: screenWidth * 0.1,
+                AnimatedSwitcher(
+                  duration: Durations.medium2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(Spacings.px32),
+                    child: isLoading
+                        ? const CircularProgressIndicator()
+                        : AppTap(
+                            onTap: ref
+                                .read(authControllerProvider.notifier)
+                                .signIn,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  'assets/images/google.png',
+                                  width: screenWidth * 0.05,
+                                ),
+                                Gaps.w20,
+                                Text(
+                                  l10n.signInWithGoogle,
+                                  style: context.textTheme.titleMedium,
+                                ),
+                              ],
+                            ),
                           ),
-                          const SizedBox(width: 20),
-                          Text(
-                            l10n.signInWithGoogle,
-                            style: context.textTheme.headlineSmall,
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
+                ),
               ],
             ),
           ),

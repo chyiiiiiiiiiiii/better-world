@@ -107,6 +107,15 @@ class CatchGameTutorailDialog extends StatefulWidget {
 class _CatchGameTutorailDialogState extends State<CatchGameTutorailDialog> {
   bool dontShowAgain = false;
 
+  void onCheckBoxTap(bool? value) {
+    final doNotShow = value ?? false;
+    widget.prefs.setBool('firstTimeEnterCatchGame', !doNotShow);
+
+    setState(() {
+      dontShowAgain = value ?? false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -117,12 +126,13 @@ class _CatchGameTutorailDialogState extends State<CatchGameTutorailDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Drag the trash can to catch the recyclable items',
-          ),
-          Gaps.h12,
           Text(
-            'Recyclable',
+            l10n.catchGameTutorialMessage,
+          ),
+          Gaps.h20,
+
+          Text(
+            l10n.catchGameTutorialRecyclable,
             style: context.theme.textTheme.bodyLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -157,7 +167,7 @@ class _CatchGameTutorailDialogState extends State<CatchGameTutorailDialog> {
           ),
           Gaps.h8,
           Text(
-            'Non-recyclable',
+            l10n.catchGameTutorialNotRecyclable,
             style: context.theme.textTheme.bodyLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -185,20 +195,19 @@ class _CatchGameTutorailDialogState extends State<CatchGameTutorailDialog> {
           ),
           // dont show again
           Gaps.h12,
-          Row(
-            children: [
-              Checkbox(
-                value: dontShowAgain,
-                onChanged: (value) {
-                  final dontShow = value ?? false;
-                  widget.prefs.setBool('firstTimeEnterCatchGame', !dontShow);
-                  setState(() {
-                    dontShowAgain = value ?? false;
-                  });
-                },
-              ),
-              const Text("Don't show again"),
-            ],
+          GestureDetector(
+            onTap: () => onCheckBoxTap(!dontShowAgain),
+            child: Row(
+              children: [
+                Checkbox(
+                  value: dontShowAgain,
+                  onChanged: onCheckBoxTap,
+                ),
+                Text(
+                  l10n.catchGameTutorialDoNotShow,
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -207,7 +216,7 @@ class _CatchGameTutorailDialogState extends State<CatchGameTutorailDialog> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Got it'),
+          child: Text(l10n.catchGameTutorialConfirm),
         ),
       ],
     );
@@ -462,7 +471,8 @@ class _GameWidgetState extends ConsumerState<GameWidget>
               child: Column(
                 children: [
                   const CircularProgressIndicator(),
-                  Text('Loading... ${images.length}/7'),
+                  Text(
+                      '${l10n.catchGameTutorialLoading}... ${images.length}/7'),
                 ],
               ),
             )
