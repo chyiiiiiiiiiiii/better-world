@@ -11,7 +11,7 @@ class RecycleGameCard with _$RecycleGameCard {
     @Default('') String name,
     @Default('') @JsonKey(name: 'name_en') String nameEn,
     @Default('') @JsonKey(name: 'name_ja') String nameJa,
-    @Default(0) int value,
+    @Default(0) @JsonKey(name: 'recyclable_value') int recyclableValue,
     @Default('') @JsonKey(name: 'image_url') String imageUrl,
   }) = _RecycleGameCard;
 
@@ -29,4 +29,6 @@ extension RecycleGameCardExtension on RecycleGameCard {
       _ => nameEn,
     };
   }
+
+  bool get isRecyclable => recyclableValue > 0;
 }
