@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:envawareness/l10n/app_localizations_extension.dart';
+import 'package:envawareness/utils/common.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -37,7 +36,7 @@ extension EndangeredSpeciesInfoExtension on EndangeredSpeciesInfo {
     };
   }
 
-  String  enDangerLevelName(AppLocalizations l10n) {
+  String enDangerLevelName(AppLocalizations l10n) {
     return switch (level) {
       'EX' => l10n.endangeredLevelEX,
       'EW' => l10n.endangeredLevelEW,
@@ -51,9 +50,7 @@ extension EndangeredSpeciesInfoExtension on EndangeredSpeciesInfo {
   }
 
   String get translatedName {
-    final languageCode = Platform.localeName.split('_').firstOrNull ?? 'en';
-
-    return switch (languageCode) {
+    return switch (platformLocaleLanguageCode) {
       'ja' => nameJa,
       'zh' => name,
       _ => nameEn,

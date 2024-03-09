@@ -1,8 +1,8 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:envawareness/utils/spacings.dart';
 import 'package:flutter/material.dart';
+import 'package:universal_io/io.dart';
 
 extension BuildContextExtension on BuildContext {
   Size get screenSize => MediaQuery.sizeOf(this);

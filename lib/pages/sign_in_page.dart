@@ -100,12 +100,12 @@ class SignInPage extends ConsumerWidget {
                               children: [
                                 Image.asset(
                                   'assets/images/google.png',
-                                  width: screenWidth * 0.05,
+                                  width: context.height * 0.05,
                                 ),
                                 Gaps.w20,
                                 Text(
                                   l10n.signInWithGoogle,
-                                  style: context.textTheme.titleMedium,
+                                  style: context.textTheme.titleLarge,
                                 ),
                               ],
                             ),

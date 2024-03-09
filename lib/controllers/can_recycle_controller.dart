@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:envawareness/constants/constants.dart';
@@ -8,6 +7,7 @@ import 'package:envawareness/states/recycle_validator_state.dart';
 import 'package:envawareness/utils/game_helper.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:universal_io/io.dart';
 
 part 'can_recycle_controller.g.dart';
 

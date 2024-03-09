@@ -82,8 +82,8 @@ class BottomSideWidget extends ConsumerWidget {
             context.push(EndangeredSpeciesCardsPage.routePath);
           },
           child: SizedBox(
-            width: context.width / 8,
-            height: context.width / 8,
+            width: context.height / 8,
+            height: context.height / 8,
             child: ZIllustration(
               children: const [
                 DashZdog(

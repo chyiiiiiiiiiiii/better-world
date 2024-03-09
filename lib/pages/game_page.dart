@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/dialogs/showing.dart';
@@ -17,6 +16,7 @@ import 'package:envawareness/zdogs/game_zdog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:universal_io/io.dart';
 
 class GamePage extends ConsumerStatefulWidget {
   const GamePage({super.key});

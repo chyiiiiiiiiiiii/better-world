@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:add_to_google_wallet/widgets/add_to_google_wallet_button.dart';
@@ -19,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:go_router/go_router.dart';
+import 'package:universal_io/io.dart';
 
 class EndangeredSpeciesCardsPage extends ConsumerWidget {
   const EndangeredSpeciesCardsPage({super.key});

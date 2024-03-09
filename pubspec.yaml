@@ -11,14 +11,13 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: any
+  intl: ^0.18.1
 
-  flutter_gemini: ^2.0.3
   animated_text_kit: ^4.2.2
   image_picker: ^1.0.7
-  firebase_core: ^2.25.4
-  firebase_auth: ^4.17.4
-  cloud_firestore: ^4.15.5
+  firebase_core: ^2.27.0
+  firebase_auth: ^4.17.8
+  cloud_firestore: ^4.15.8
   shared_preferences: ^2.2.2
   connectivity_plus: ^5.0.2
 
@@ -40,7 +39,7 @@ dependencies:
       path: zflutter/
   confetti: ^0.7.0
   fade_out_particle: ^1.2.1
-  google_fonts: ^6.1.0
+  google_fonts: ^6.2.1
   animated_flip_counter: ^0.2.6
   simple_animations: ^5.0.2
   lottie: ^3.1.0
@@ -54,6 +53,12 @@ dependencies:
   uuid: ^4.3.3
   add_to_google_wallet: ^0.0.3
   app_settings: ^5.1.1
+
+  # For Web
+  universal_io: ^2.2.2
+
+dependency_overrides:
+  web: ^0.4.0
 
 dev_dependencies:
   flutter_test:
