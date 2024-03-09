@@ -34,7 +34,7 @@ const endangeredSpeciesJson = [
     'name_en': 'Caribbean Monk Seal',
     'name_ja': 'カリブアザラシ',
     'image':
-        'https://upload.wikimedia.org/wikipedia/commons/2/21/Cms-newyorkzoologicalsociety1910.jpg',
+        'https://p1-bk.byteimg.com/tos-cn-i-mlhdmxsy5m/c052ab5b324546ce95539c22ef8ecad7~tplv-mlhdmxsy5m-cspd:981:768.image',
     'level': 'EX',
   },
   {
@@ -803,7 +803,8 @@ const endangeredSpeciesJson = [
     'name': '鯨鯊',
     'name_en': 'Whale Shark',
     'name_ja': 'ジンベイザメ',
-    'image': 'https://cff2.earth.com/uploads/2023/08/30081416/International-Whale-Shark-Day-960x640.jpg',
+    'image':
+        'https://cff2.earth.com/uploads/2023/08/30081416/International-Whale-Shark-Day-960x640.jpg',
     'level': 'EN',
   },
   {
