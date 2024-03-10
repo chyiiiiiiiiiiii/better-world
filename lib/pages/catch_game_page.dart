@@ -3,9 +3,14 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
+import 'package:envawareness/utils/game_helper.dart';
 import 'package:envawareness/utils/gaps.dart';
+import 'package:envawareness/utils/recycle_icon.dart';
+import 'package:envawareness/utils/spacings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -102,20 +107,32 @@ class CatchGameTutorailDialog extends StatefulWidget {
 class _CatchGameTutorailDialogState extends State<CatchGameTutorailDialog> {
   bool dontShowAgain = false;
 
+  void onCheckBoxTap(bool? value) {
+    final doNotShow = value ?? false;
+    widget.prefs.setBool('firstTimeEnterCatchGame', !doNotShow);
+
+    setState(() {
+      dontShowAgain = value ?? false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return AlertDialog(
-      title: const Text('How to play'),
+      title: Text(l10n.catchGameTutorialTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Drag the trash can to catch the recyclable items',
-          ),
-          Gaps.h12,
           Text(
-            'Recyclable',
+            l10n.catchGameTutorialMessage,
+          ),
+          Gaps.h20,
+
+          Text(
+            l10n.catchGameTutorialRecyclable,
             style: context.theme.textTheme.bodyLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -150,7 +167,7 @@ class _CatchGameTutorailDialogState extends State<CatchGameTutorailDialog> {
           ),
           Gaps.h8,
           Text(
-            'Non-recyclable',
+            l10n.catchGameTutorialNotRecyclable,
             style: context.theme.textTheme.bodyLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -178,20 +195,19 @@ class _CatchGameTutorailDialogState extends State<CatchGameTutorailDialog> {
           ),
           // dont show again
           Gaps.h12,
-          Row(
-            children: [
-              Checkbox(
-                value: dontShowAgain,
-                onChanged: (value) {
-                  final dontShow = value ?? false;
-                  widget.prefs.setBool('firstTimeEnterCatchGame', !dontShow);
-                  setState(() {
-                    dontShowAgain = value ?? false;
-                  });
-                },
-              ),
-              const Text("Don't show again"),
-            ],
+          GestureDetector(
+            onTap: () => onCheckBoxTap(!dontShowAgain),
+            child: Row(
+              children: [
+                Checkbox(
+                  value: dontShowAgain,
+                  onChanged: onCheckBoxTap,
+                ),
+                Text(
+                  l10n.catchGameTutorialDoNotShow,
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -200,7 +216,7 @@ class _CatchGameTutorailDialogState extends State<CatchGameTutorailDialog> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Got it'),
+          child: Text(l10n.catchGameTutorialConfirm),
         ),
       ],
     );
@@ -226,29 +242,46 @@ class _GameWidgetState extends ConsumerState<GameWidget>
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   Timer? _timer;
-  int _start = 40;
+  int _countdownSeconds = 40;
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
-        if (_start == 0) {
+        if (_countdownSeconds == 0) {
           setState(() {
             onFinished();
             timer.cancel();
           });
         } else {
           setState(() {
-            _start--;
+            _countdownSeconds--;
           });
         }
       },
     );
   }
 
-  void onFinished() {
+  Future<void> onFinished() async {
+    final currentLevel =
+        ref.read(playControllerProvider).requireValue.playInfo.currentLevel;
+    final perAddScore = calculateGamePerItemScore(
+      currentLevel: currentLevel,
+      numItems: 50,
+      maxScoreProportionToTotalScore: 0.25,
+    );
+    final totalScore = max((_gameState.score * perAddScore).toInt(), 0);
+
+    await ref
+        .read(playControllerProvider.notifier)
+        .updateClickCount(needReset: true);
+    await ref
+        .read(playControllerProvider.notifier)
+        .updateMyScore(extraScore: totalScore);
+
     setState(() {
+      _gameState.totalScore = totalScore;
       isFinished = true;
     });
   }
@@ -260,7 +293,7 @@ class _GameWidgetState extends ConsumerState<GameWidget>
     refreshTimer = Timer.periodic(const Duration(milliseconds: 16), (timer) {
       // 約每16毫秒更新一次，相當於60FPS
       setState(() {
-        final screenHeight = MediaQuery.of(context).size.height;
+        final screenHeight = MediaQuery.sizeOf(context).height;
         updateBallPositions(screenHeight);
       });
     });
@@ -374,9 +407,13 @@ class _GameWidgetState extends ConsumerState<GameWidget>
 
   @override
   void dispose() {
+    _timer?.cancel();
     refreshTimer?.cancel();
 
+    _timer = null;
     refreshTimer = null;
+
+    _controller.dispose();
     _audioPlayer.dispose();
 
     super.dispose();
@@ -384,6 +421,8 @@ class _GameWidgetState extends ConsumerState<GameWidget>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
         setState(() {
@@ -392,34 +431,48 @@ class _GameWidgetState extends ConsumerState<GameWidget>
       },
       child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 32),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Column(
-                children: [
-                  Text(
-                    'Score',
-                    style: context.theme.textTheme.headlineSmall,
-                  ),
-                  Text(
-                    _gameState.score.toString(),
-                    style: context.theme.textTheme.headlineLarge,
-                  ),
-                  Text(
-                    '$_start/s',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                ],
+          if (!isFinished)
+            Padding(
+              padding: const EdgeInsets.only(top: 32),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Column(
+                  children: [
+                    Text(
+                      l10n.score,
+                      style: context.theme.textTheme.headlineSmall,
+                    ),
+                    Text(
+                      _gameState.score.toString(),
+                      style: context.theme.textTheme.headlineLarge
+                          ?.copyWith(color: context.colorScheme.secondary),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '$_countdownSeconds',
+                          style: Theme.of(context).textTheme.displayLarge,
+                        ),
+                        Gaps.w4,
+                        Image.asset(
+                          'assets/images/hourglass.png',
+                          width: context.width / 8,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
           if (images.length < 7) // 確保圖片加載完成
             Center(
               child: Column(
                 children: [
                   const CircularProgressIndicator(),
-                  Text('Loading... ${images.length}/7'),
+                  Text(
+                      '${l10n.catchGameTutorialLoading}... ${images.length}/7'),
                 ],
               ),
             )
@@ -438,50 +491,78 @@ class _GameWidgetState extends ConsumerState<GameWidget>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Game Over',
-                    style: context.theme.textTheme.headlineLarge,
+                    '${l10n.environmentalScore}:',
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
-                  Gaps.h12,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const RecycleIcon(
+                        size: 36,
+                      ),
+                      Gaps.w8,
+                      Text(
+                        _gameState.totalScore.toString(),
+                        style: context.textTheme.displayLarge,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 100,
+                  ),
                   DefaultButton(
                     onPressed: () {
                       context.go('/');
                     },
-                    text: 'Back to Home',
+                    text: l10n.recyclableGameGetReward,
                   ),
                 ],
               ),
             ),
-          Positioned(
-            left: _gameState.trashCan.positionX - 5,
-            bottom: 0,
-            child: SizedBox(
-              width: 60,
-              child: LottieBuilder.asset(
-                'assets/animations/trash_can.json',
-                width: _gameState.trashCan.width,
-                controller: _controller,
-                fit: BoxFit.fill,
-                repeat: false,
-                onLoaded: (composition) {
-                  // Set the controller bounds based on the animation duration.
-                  _controller.duration = composition.duration;
-                },
+          if (!isFinished) ...[
+            Positioned(
+              left: _gameState.trashCan.positionX - 5,
+              bottom: 0,
+              child: SizedBox(
+                width: 60,
+                child: LottieBuilder.asset(
+                  'assets/animations/trash_can.json',
+                  width: _gameState.trashCan.width,
+                  controller: _controller,
+                  fit: BoxFit.fill,
+                  repeat: false,
+                  onLoaded: (composition) {
+                    // Set the controller bounds based on the animation duration.
+                    _controller.duration = composition.duration;
+                  },
+                ),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              onPressed: () {
-                context.pop();
-              },
-              icon: const Padding(
-                padding: EdgeInsets.all(24),
-                child: Icon(Icons.close),
-              ),
-            ),
-          ),
+            const AppCloseButton(),
+          ],
         ],
+      ),
+    );
+  }
+}
+
+class AppCloseButton extends StatelessWidget {
+  const AppCloseButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topRight,
+      child: IconButton(
+        onPressed: () {
+          context.pop();
+        },
+        icon: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: Spacings.px24),
+          child: Icon(Icons.close),
+        ),
       ),
     );
   }
@@ -590,6 +671,7 @@ class GameState {
   final TrashCan trashCan = TrashCan();
   List<Ball> balls = [];
   int score = 0;
+  int totalScore = 0;
 
   double screenWidth;
 

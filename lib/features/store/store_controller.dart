@@ -36,7 +36,7 @@ class StoreController extends _$StoreController {
     );
 
     return StoreState(
-      animalCardPrice: animalCardPrice,
+      animalCardPrice: animalCardPrice.toInt(),
     );
   }
 

@@ -53,6 +53,7 @@ dependencies:
   google_generative_ai: ^0.2.2
   uuid: ^4.3.3
   add_to_google_wallet: ^0.0.3
+  app_settings: ^5.1.1
 
 dev_dependencies:
   flutter_test:

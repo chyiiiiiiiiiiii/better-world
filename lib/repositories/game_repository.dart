@@ -79,18 +79,16 @@ class GameRepository {
   }
 
   Future<List<PlayInfo>> getLeaderBoard() async {
-    final snapshot = await playInfoCollectionReference
-        .orderBy(
-          'owned_animal_cards',
-          descending: true,
-        )
-        .limit(100)
-        .get();
+    final snapshot = await playInfoCollectionReference.limit(50).get();
     final data = snapshot.docs
         .map(
           (e) => e.data(),
         )
-        .toList();
+        .toList()
+      ..sort(
+        (a, b) => b.ownedAnimalCardsData.length
+            .compareTo(a.ownedAnimalCardsData.length),
+      );
 
     return data;
   }

@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 class RouterRefreshStream extends ChangeNotifier {
   RouterRefreshStream(Stream<dynamic> stream) {
     notifyListeners();
+
     _subscription = stream.asBroadcastStream().listen(
           (dynamic _) => notifyListeners(),
         );

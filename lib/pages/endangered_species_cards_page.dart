@@ -9,6 +9,7 @@ import 'package:envawareness/data/endangered_species_info.dart';
 import 'package:envawareness/data/google_wallet_pass_property.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
+import 'package:envawareness/pages/catch_game_page.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
@@ -32,96 +33,107 @@ class EndangeredSpeciesCardsPage extends ConsumerWidget {
     final totalSpeciesCount = endangeredSpeciesList.length;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.endangeredSpeciesISaved),
-      ),
-      body: Column(
-        children: [
-          Text.rich(
-            TextSpan(
-              text: '$ownedCardCount🦕',
-              style: context.textTheme.titleLarge?.copyWith(
-                color: context.colorScheme.secondary,
-              ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Column(
               children: [
-                TextSpan(
-                  text: '/$totalSpeciesCount',
-                  style: context.textTheme.titleMedium,
+                Text(
+                  l10n.endangeredSpeciesISaved,
+                  style: context.textTheme.titleLarge,
                 ),
-              ],
-            ),
-          ),
-          Gaps.h12,
-          Expanded(
-            child: GridView.builder(
-              padding: EdgeInsets.only(
-                left: 20,
-                right: 20,
-                bottom: context.paddingBottom,
-              ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-              ),
-              itemCount: endangeredSpeciesList.length,
-              itemBuilder: (context, index) {
-                final species = endangeredSpeciesList[index];
-                final isOwned = playInfo.ownedAnimalCardIndexes.contains(index);
-
-                return AppTap(
-                  onTap: () {
-                    showSpeciesCardDialog(
-                      context,
-                      isOwned: isOwned,
-                      info: species,
-                    );
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                Gaps.h12,
+                Text.rich(
+                  TextSpan(
+                    text: '$ownedCardCount🦕',
+                    style: context.textTheme.titleLarge?.copyWith(
+                      color: context.colorScheme.secondary,
+                    ),
                     children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: ImageFiltered(
-                            imageFilter: isOwned
-                                ? ImageFilter.blur()
-                                : ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                return CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  imageUrl: species.image,
-                                  color: isOwned
-                                      ? null
-                                      : Colors.black.withOpacity(1),
-                                  colorBlendMode: BlendMode.color,
-                                  // placeholder: (context, url) => const Center(
-                                  //   child: CircularProgressIndicator(),
-                                  // ),
-                                  width: constraints.maxWidth,
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        species.translatedName,
-                        style: context.textTheme.bodyLarge,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
+                      TextSpan(
+                        text: '/$totalSpeciesCount',
+                        style: context.textTheme.titleMedium,
                       ),
                     ],
                   ),
-                );
-              },
+                ),
+                Gaps.h12,
+                Expanded(
+                  child: GridView.builder(
+                    padding: EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      bottom: context.paddingBottom,
+                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                    ),
+                    itemCount: endangeredSpeciesList.length,
+                    itemBuilder: (context, index) {
+                      final species = endangeredSpeciesList[index];
+                      final isOwned =
+                          playInfo.ownedAnimalCardIndexes.contains(index);
+
+                      return AppTap(
+                        onTap: () {
+                          showSpeciesCardDialog(
+                            context,
+                            isOwned: isOwned,
+                            info: species,
+                          );
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(6),
+                                child: ImageFiltered(
+                                  imageFilter: isOwned
+                                      ? ImageFilter.blur()
+                                      : ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                                  child: LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      return CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl: species.image,
+                                        color: isOwned
+                                            ? null
+                                            : Colors.black.withOpacity(1),
+                                        colorBlendMode: BlendMode.color,
+                                        // placeholder: (context, url) => const Center(
+                                        //   child: CircularProgressIndicator(),
+                                        // ),
+                                        width: constraints.maxWidth,
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              species.translatedName,
+                              style: context.textTheme.bodyLarge,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+            const AppCloseButton(),
+          ],
+        ),
       ),
     );
   }

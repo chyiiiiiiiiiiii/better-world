@@ -14,6 +14,8 @@ class RecycleGameState with _$RecycleGameState {
     @Default(0) int cardPosition,
     @Default(0) int addScore,
     @Default([]) List<RecycleGameCard> cards,
+    @Default([]) List<RecycleGameCard> answeredWrongCards,
+    @Default([]) List<RecycleGameCard> answeredCorrectCards,
   }) = _RecycleGameState;
 
   factory RecycleGameState.fromJson(Map<String, dynamic> json) =>

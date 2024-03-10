@@ -24,16 +24,7 @@ class RecycleGameController extends _$RecycleGameController {
 
     final currentLevel =
         ref.read(playControllerProvider).requireValue.playInfo.currentLevel;
-    // final addScore = switch (playLevel) {
-    //   > 150 => 4000,
-    //   > 100 => 2000,
-    //   > 50 => 1000,
-    //   > 20 => 500,
-    //   > 15 => 100,
-    //   > 10 => 50,
-    //   > 5 => 0,
-    //   _ => 10,
-    // };
+
     final addScore = calculateGamePerItemScore(
       currentLevel: currentLevel,
       numItems: cardCount,
@@ -43,7 +34,7 @@ class RecycleGameController extends _$RecycleGameController {
     return RecycleGameState(
       totalCount: cardCount,
       cards: selectedCards,
-      addScore: addScore,
+      addScore: addScore.toInt(),
     );
   }
 
@@ -68,19 +59,32 @@ class RecycleGameController extends _$RecycleGameController {
     required AxisDirection direction,
     required RecycleGameCard card,
   }) {
-    if (card.value > 0 && direction == AxisDirection.right) {
-      pass();
-    } else if (card.value == 0 && direction == AxisDirection.left) {
-      pass();
+    if (card.isRecyclable && direction == AxisDirection.right) {
+      pass(card: card);
+    } else if (!card.isRecyclable && direction == AxisDirection.left) {
+      pass(card: card);
+    } else {
+      state = state.copyWith(
+        answeredWrongCards: [
+          ...state.answeredWrongCards,
+          card,
+        ],
+      );
     }
   }
 
-  void pass() {
+  void pass({
+    required RecycleGameCard card,
+  }) {
     final passCount = state.passCount + 1;
     final totalScore = state.totalScore + state.addScore;
 
     state = state.copyWith(
       passCount: passCount,
+      answeredCorrectCards: [
+        ...state.answeredCorrectCards,
+        card,
+      ],
       totalScore: totalScore,
     );
   }
