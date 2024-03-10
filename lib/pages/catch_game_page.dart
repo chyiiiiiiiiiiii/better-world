@@ -18,7 +18,7 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TrashCan {
-  TrashCan({this.positionX = 0.0, this.width = 50.0});
+  TrashCan({this.positionX = 200, this.width = 50.0,});
   double positionX;
   double width;
 }
@@ -472,7 +472,8 @@ class _GameWidgetState extends ConsumerState<GameWidget>
                 children: [
                   const CircularProgressIndicator(),
                   Text(
-                      '${l10n.catchGameTutorialLoading}... ${images.length}/7'),
+                    '${l10n.catchGameTutorialLoading}... ${images.length}/7',
+                  ),
                 ],
               ),
             )

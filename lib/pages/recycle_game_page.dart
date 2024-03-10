@@ -19,6 +19,7 @@ class RecycleGamePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final appLocale = ref.watch(appLocaleProvider).value;
     final isDarkMode = ref.watch(darkModeProvider);
 
     final state = ref.watch(recycleGameControllerProvider);
@@ -152,7 +153,8 @@ class RecycleGamePage extends ConsumerWidget {
                                       ),
                                       const SizedBox(height: 20),
                                       Text(
-                                        data.translatedName,
+                                        data.translatedName(appLocale),
+                                        textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -192,8 +194,9 @@ class RecycleGamePage extends ConsumerWidget {
                               Gaps.h12,
                               Text.rich(
                                 TextSpan(
-                                  text: l10n.recyclableGameYouAre,
+                                  text: '${l10n.recyclableGameYouAre}\n',
                                   style: context.textTheme.headlineSmall,
+
                                   children: [
                                     TextSpan(
                                       text: switch (passCount) {
@@ -300,7 +303,9 @@ class RecycleGamePage extends ConsumerWidget {
                                                               ],
                                                             ),
                                                             Text(
-                                                              card.translatedName,
+                                                              card.translatedName(
+                                                                appLocale,
+                                                              ),
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -375,7 +380,9 @@ class RecycleGamePage extends ConsumerWidget {
                                                               ],
                                                             ),
                                                             Text(
-                                                              card.translatedName,
+                                                              card.translatedName(
+                                                                appLocale,
+                                                              ),
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,

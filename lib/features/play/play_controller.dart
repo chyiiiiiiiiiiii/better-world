@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
+import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/data/level_info.dart';
 import 'package:envawareness/data/play_info.dart';
 import 'package:envawareness/data/product.dart';
@@ -291,7 +292,8 @@ class PlayController extends _$PlayController {
       return false;
     }
 
-    final l10n = await getL10n();
+    final appLocale = ref.read(appLocaleProvider).value;
+    final l10n = await getL10n(appLocale: appLocale);
     ref
         .read(showMessageProvider.notifier)
         .show(l10n.allPassCongratulationMessage);
@@ -392,7 +394,9 @@ class PlayController extends _$PlayController {
         .watch(gameRepositoryProvider)
         .updatePlayInfo(playInfo: newPlayInfo);
 
-    final l10n = await getL10n();
+    final appLocale = ref.read(appLocaleProvider).value;
+    final l10n = await getL10n(appLocale: appLocale);
+    
     final appRouter = ref.read(appRouterProvider);
     final isOnHomePage = appRouter.currentRoutePath == GamePage.routePath;
     final isStoreOpened = ref.read(isStoreOpenedProvider);

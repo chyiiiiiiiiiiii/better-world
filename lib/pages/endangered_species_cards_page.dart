@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:add_to_google_wallet/widgets/add_to_google_wallet_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envawareness/constants/endangered_specise_data.dart';
+import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/controllers/google_wallet_controller.dart';
 import 'package:envawareness/data/endangered_species_info.dart';
 import 'package:envawareness/data/google_wallet_pass_property.dart';
@@ -28,6 +29,7 @@ class EndangeredSpeciesCardsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final appLocale = ref.watch(appLocaleProvider).value;
     final playInfo = ref.watch(playControllerProvider).requireValue.playInfo;
     final ownedCardCount = playInfo.ownedAnimalCardIndexes.length;
     final totalSpeciesCount = endangeredSpeciesList.length;
@@ -118,7 +120,7 @@ class EndangeredSpeciesCardsPage extends ConsumerWidget {
                               ),
                             ),
                             Text(
-                              species.translatedName,
+                              species.translatedName(appLocale),
                               style: context.textTheme.bodyLarge,
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
@@ -172,6 +174,7 @@ class SpeciesCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final showGoogleWallet = Platform.isAndroid && isOwned;
+    final appLocale = ref.watch(appLocaleProvider).value;
 
     return GestureDetector(
       onTap: () {
@@ -200,7 +203,7 @@ class SpeciesCard extends ConsumerWidget {
                           child: Column(
                             children: [
                               Text(
-                                info.translatedName,
+                                info.translatedName(appLocale),
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context)
                                     .textTheme
@@ -396,7 +399,7 @@ class SpeciesCard extends ConsumerWidget {
                       pass: ref
                           .read(googleWalletControllerProvider.notifier)
                           .getPassJson(
-                        header: info.translatedName,
+                        header: info.translatedName(appLocale),
                         subHeader: l10n.endangeredSpecies,
                         endangeredLevel: info.level,
                         logoImageUrl: info.image,

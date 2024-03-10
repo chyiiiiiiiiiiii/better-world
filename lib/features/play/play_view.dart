@@ -3,9 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/controllers/auth_controller.dart';
 import 'package:envawareness/controllers/earth_controller.dart';
-import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
+import 'package:envawareness/pages/setting_page.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/gaps.dart';
@@ -14,6 +14,7 @@ import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class PlayView extends ConsumerWidget {
   const PlayView({super.key});
@@ -27,7 +28,7 @@ class PlayView extends ConsumerWidget {
         )
         .value;
     final username = user?.displayName ?? '';
-    final userPhotoURL = user?.photoURL ?? '';
+    final photoURL = user?.photoURL ?? '';
 
     final gameState = ref.watch(playControllerProvider).requireValue;
     final levelInfo = gameState.levelInfo;
@@ -48,90 +49,63 @@ class PlayView extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    AppTap(
-                      onTap: () {
-                        showChooseDialog(
-                          context,
-                          message: l10n.signOutTitle,
-                          onConfirm: () => ref
-                              .read(authControllerProvider.notifier)
-                              .signOut(),
-                        );
-                      },
-                      child: CachedNetworkImage(
-                        imageUrl: userPhotoURL,
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 2,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 10,
-                                spreadRadius: 1,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: CircleAvatar(
-                            backgroundImage: imageProvider,
-                            radius: 18,
-                          ),
+                Expanded(
+                  child: Row(
+                    children: [
+                      AppTap(
+                        onTap: () => context.push(SettingPage.routePath),
+                        child: AppAvatar(
+                          imageUrl: photoURL,
                         ),
                       ),
-                    ),
-                    Gaps.w12,
-                    Text(
-                      l10n.greeting(username),
-                      style: context.textTheme.titleMedium,
-                    ),
-                  ],
+                      Gaps.w12,
+                      Text(
+                        l10n.greeting(username),
+                        style: context.textTheme.titleMedium,
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   children: [
-                    Visibility(
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.restore_rounded,
-                          color: Colors.red,
-                        ),
-                        onPressed: () async {
-                          // Temp for restoring data.
+                    // Visibility(
+                    //   child: IconButton(
+                    //     icon: const Icon(
+                    //       Icons.restore_rounded,
+                    //       color: Colors.red,
+                    //     ),
+                    //     onPressed: () async {
+                    //       // Temp for restoring data.
 
-                          final newPlayInfo = ref
-                              .read(playControllerProvider)
-                              .requireValue
-                              .playInfo
-                              .copyWith(
-                            currentLevel: 1,
-                            currentScore: 0,
-                            isGameCompleted: false,
-                            perClickScore: 1,
-                            totalScore: 0,
-                            usedScore: 0,
-                            animalCardDrawCount: 0,
-                            ownedAnimalCardIndexes: [],
-                          );
+                    //       final newPlayInfo = ref
+                    //           .read(playControllerProvider)
+                    //           .requireValue
+                    //           .playInfo
+                    //           .copyWith(
+                    //         currentLevel: 1,
+                    //         currentScore: 0,
+                    //         isGameCompleted: false,
+                    //         perClickScore: 1,
+                    //         totalScore: 0,
+                    //         usedScore: 0,
+                    //         animalCardDrawCount: 0,
+                    //         ownedAnimalCardIndexes: [],
+                    //       );
 
-                          await ref
-                              .watch(playControllerProvider.notifier)
-                              .updatePlayInfo(
-                                newPlayInfo,
-                              );
-                          await ref
-                              .read(playControllerProvider.notifier)
-                              .updateLevelInfo(level: 1);
-                          ref
-                              .read(playControllerProvider.notifier)
-                              .updateScoresPerSecond();
-                        },
-                      ),
-                    ),
+                    //       await ref
+                    //           .watch(playControllerProvider.notifier)
+                    //           .updatePlayInfo(
+                    //             newPlayInfo,
+                    //           );
+                    //       await ref
+                    //           .read(playControllerProvider.notifier)
+                    //           .updateLevelInfo(level: 1);
+                    //       ref
+                    //           .read(playControllerProvider.notifier)
+                    //           .updateScoresPerSecond();
+                    //     },
+                    //   ),
+                    // ),
                     AppTap(
                       onTap: () {
                         ref
@@ -208,5 +182,45 @@ class PlayView extends ConsumerWidget {
         ),
       ),
     ).animate().fadeIn(duration: Durations.extralong4);
+  }
+}
+
+class AppAvatar extends StatelessWidget {
+  const AppAvatar({
+    required this.imageUrl,
+    super.key,
+  });
+
+  final String imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: imageUrl,
+      child: CachedNetworkImage(
+        imageUrl: imageUrl,
+        imageBuilder: (context, imageProvider) => Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Colors.white,
+              width: 2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 10,
+                spreadRadius: 1,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: CircleAvatar(
+            backgroundImage: imageProvider,
+            radius: 18,
+          ),
+        ),
+      ),
+    );
   }
 }

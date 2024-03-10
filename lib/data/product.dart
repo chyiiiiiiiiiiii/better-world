@@ -1,3 +1,4 @@
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -25,6 +26,19 @@ class Product with _$Product {
 }
 
 extension ProductX on Product {
+  String translatedName(AppLocalizations l10n) {
+    switch (id) {
+      case 'tree':
+        return l10n.storeProductTree;
+      case 'sunny':
+        return l10n.storeProductSolar;
+      case 'windy':
+        return l10n.storeProductTree;
+    }
+
+    return name;
+  }
+
   Widget getIcon({double size = 44}) {
     switch (id) {
       case 'tree':

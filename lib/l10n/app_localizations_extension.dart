@@ -8,6 +8,6 @@ extension AppLocalizationsX on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this)!;
 }
 
-Future<AppLocalizations> getL10n() async {
-  return AppLocalizations.delegate.load(platformLocale);
+Future<AppLocalizations> getL10n({Locale? appLocale}) async {
+  return AppLocalizations.delegate.load(appLocale ?? platformLocale);
 }

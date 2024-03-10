@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:envawareness/constants/endangered_specise_data.dart';
+import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/data/endangered_species_info.dart';
 import 'package:envawareness/data/play_info.dart';
 import 'package:envawareness/data/product.dart';
@@ -45,7 +46,8 @@ class StoreController extends _$StoreController {
       final availableScore =
           ref.read(playControllerProvider).requireValue.playInfo.availableScore;
       if (availableScore < product.price) {
-        final l10n = await getL10n();
+        final appLocale = ref.read(appLocaleProvider).value;
+        final l10n = await getL10n(appLocale: appLocale);
         ref.read(showMessageProvider.notifier).show(l10n.noAvailableScore);
 
         return;
@@ -87,7 +89,8 @@ class StoreController extends _$StoreController {
 
   Future<EndangeredSpeciesInfo?> purchaseAnimalCard() async {
     try {
-      final l10n = await getL10n();
+      final appLocale = ref.read(appLocaleProvider).value;
+    final l10n = await getL10n(appLocale: appLocale);
 
       final availableScore =
           ref.read(playControllerProvider).requireValue.playInfo.availableScore;

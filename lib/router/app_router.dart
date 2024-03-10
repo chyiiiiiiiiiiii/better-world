@@ -3,6 +3,7 @@ import 'package:envawareness/pages/catch_game_page.dart';
 import 'package:envawareness/pages/endangered_species_cards_page.dart';
 import 'package:envawareness/pages/game_page.dart';
 import 'package:envawareness/pages/recycle_game_page.dart';
+import 'package:envawareness/pages/setting_page.dart';
 import 'package:envawareness/pages/sign_in_page.dart';
 import 'package:envawareness/pages/splash_page.dart';
 import 'package:envawareness/pages/welcome_page.dart';
@@ -88,6 +89,13 @@ GoRouter appRouter(AppRouterRef ref) {
         name: 'can-recycle',
         builder: (context, state) {
           return const CanRecyclePage();
+        },
+      ),
+      GoRoute(
+        path: SettingPage.routePath,
+        name: 'setting',
+        builder: (context, state) {
+          return const SettingPage();
         },
       ),
     ],

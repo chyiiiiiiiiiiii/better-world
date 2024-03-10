@@ -1,5 +1,4 @@
 import 'package:envawareness/l10n/app_localizations_extension.dart';
-import 'package:envawareness/utils/common.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -49,11 +48,9 @@ extension EndangeredSpeciesInfoExtension on EndangeredSpeciesInfo {
     };
   }
 
-  String get translatedName {
-    return switch (platformLocaleLanguageCode) {
-      'ja' => nameJa,
-      'zh' => name,
-      _ => nameEn,
-    };
-  }
+  String translatedName(Locale? locale) => switch (locale?.languageCode) {
+        'ja' => nameJa,
+        'zh' => name,
+        _ => nameEn,
+      };
 }

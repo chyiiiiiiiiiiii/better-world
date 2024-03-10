@@ -136,6 +136,7 @@ class _AppState extends ConsumerState<App> {
   Widget build(BuildContext context) {
     final appRouter = ref.watch(appRouterProvider);
     final darMode = ref.watch(darkModeProvider);
+    final appLocale = ref.watch(appLocaleProvider).value;
 
     return MaterialApp.router(
       routerConfig: appRouter,
@@ -143,6 +144,7 @@ class _AppState extends ConsumerState<App> {
       title: Constants.appName,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      locale: appLocale,
       theme: darMode
           ? _buildTheme(Brightness.dark)
           : _buildTheme(Brightness.light),

@@ -20,7 +20,6 @@ class SignInPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final screenWidth = MediaQuery.sizeOf(context).width;
 
     ref.listen(showMessageProvider, (previous, next) async {
       if (next.isEmpty) {

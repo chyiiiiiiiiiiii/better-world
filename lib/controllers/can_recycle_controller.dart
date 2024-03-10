@@ -4,10 +4,10 @@ import 'package:envawareness/constants/constants.dart';
 import 'package:envawareness/constants/environment_variables.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/states/recycle_validator_state.dart';
+import 'package:envawareness/utils/common.dart';
 import 'package:envawareness/utils/game_helper.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:universal_io/io.dart';
 
 part 'can_recycle_controller.g.dart';
 
@@ -48,14 +48,14 @@ class CanRecycleController extends _$CanRecycleController {
       // );
       // return result?.content?.parts?.last.text ?? '';
 
-      final locale = Platform.localeName;
+      final languageCode = platformLocaleLanguageCode;
 
       final prompt = TextPart(
         '''
           Is this recyclable? Give me response in 30 words or less with some loverly description depend on language code I give.
           And also, return true and false in the beginning for telling me if it's recyclable or not.
 
-          This is locale $locale.
+          This is language code $languageCode.
 
           The response format is "true,<response>".
         ''',

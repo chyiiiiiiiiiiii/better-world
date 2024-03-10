@@ -222,7 +222,7 @@ class _Item extends ConsumerWidget {
                 product.getIcon(),
                 Gaps.h8,
                 Text(
-                  product.name,
+                  product.translatedName(l10n),
                   style: context.textTheme.titleMedium,
                 ),
                 Gaps.h8,

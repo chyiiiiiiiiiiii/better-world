@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:envawareness/utils/common.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -19,8 +21,8 @@ class RecycleGameCard with _$RecycleGameCard {
 }
 
 extension RecycleGameCardExtension on RecycleGameCard {
-  String get translatedName {
-    return switch (platformLocaleLanguageCode) {
+  String  translatedName(Locale? locale) {
+    return switch (locale?.languageCode) {
       'ja' => nameJa,
       'zh' => name,
       _ => nameEn,
