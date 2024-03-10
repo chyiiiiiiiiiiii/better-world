@@ -1,4 +1,3 @@
-import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -128,8 +127,8 @@ Future<T?> showLevelUpDialog<T>(
       return ScaleTransition(
         scale: animation,
         child: LevelUpDialog(
-          nextLevel: message,
-          message: nextLevel,
+          nextLevel: nextLevel,
+          message: message,
         ),
       );
     },
@@ -142,8 +141,8 @@ class LevelUpDialog extends StatelessWidget {
     required this.nextLevel,
     super.key,
   });
-  final String nextLevel;
   final String message;
+  final String nextLevel;
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +169,7 @@ class LevelUpDialog extends StatelessWidget {
               ],
             ),
             Text(
-              context.l10n.passCongratulationMessage(nextLevel),
+              message,
               style: context.textTheme.headlineSmall?.copyWith(fontSize: 14),
               textAlign: TextAlign.center,
             ),
