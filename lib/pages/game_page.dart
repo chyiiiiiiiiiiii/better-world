@@ -50,17 +50,18 @@ class _GamePageState extends ConsumerState<GamePage>
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(showMessageProvider, (previous, next) async {
+    ref.listen(showLevelUpMessageProvider, (previous, next) async {
       if (next.isEmpty) {
         return;
       }
 
-      await showMessageDialog<void>(
+      await showLevelUpDialog<void>(
         context,
-        message: next,
+        message: next[0],
+        nextLevel: next[1],
       );
 
-      ref.invalidate(showMessageProvider);
+      ref.invalidate(showLevelUpMessageProvider);
     });
 
     final isStoreOpened = ref.watch(isStoreOpenedProvider);

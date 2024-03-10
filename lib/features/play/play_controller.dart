@@ -397,10 +397,11 @@ class PlayController extends _$PlayController {
     final isOnHomePage = appRouter.currentRoutePath == GamePage.routePath;
     final isStoreOpened = ref.read(isStoreOpenedProvider);
     if (isOnHomePage && !isStoreOpened) {
-      ref.read(showMessageProvider.notifier).show(
+      ref.read(showLevelUpMessageProvider.notifier).show(
             isUpTenLevels
                 ? l10n.passCongratulationWithScoreMessage(newLevel)
                 : l10n.passCongratulationMessage(newLevel),
+            newLevel.toString(),
           );
     }
 

@@ -1,6 +1,7 @@
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 
 Future<T?> showMessageDialog<T>(
   BuildContext context, {
@@ -109,4 +110,79 @@ void showChooseDialog(
       );
     },
   );
+}
+
+Future<T?> showLevelUpDialog<T>(
+  BuildContext context, {
+  required String message,
+  required String nextLevel,
+}) {
+  return showGeneralDialog(
+    context: context,
+    pageBuilder: (
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+    ) {
+      return ScaleTransition(
+        scale: animation,
+        child: LevelUpDialog(
+          nextLevel: nextLevel,
+          message: message,
+        ),
+      );
+    },
+  );
+}
+
+class LevelUpDialog extends StatelessWidget {
+  const LevelUpDialog({
+    required this.message,
+    required this.nextLevel,
+    super.key,
+  });
+  final String message;
+  final String nextLevel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Stack(
+              children: [
+                LottieBuilder.asset(
+                  'assets/animations/level_up.json',
+                  width: 200,
+                ),
+                Positioned.fill(
+                  child: Center(
+                    child: Text(
+                      nextLevel,
+                      style: context.textTheme.headlineLarge,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              message,
+              style: context.textTheme.headlineSmall?.copyWith(fontSize: 14),
+              textAlign: TextAlign.center,
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.check,
+                color: Colors.green,
+              ),
+              onPressed: () => context.pop(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

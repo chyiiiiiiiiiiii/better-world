@@ -64,10 +64,7 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
             label: l10n.welcomeMessage,
           ),
           _SubPage(
-            zdogWidget: const ZPositioned(
-              translate: ZVector.only(x: 100, y: 60),
-              child: DashZdog(),
-            ),
+            zdogWidget: const DashZdog(),
             label: l10n.welcomeMessage2,
             onPressed: () {
               _pageController.nextPage(
