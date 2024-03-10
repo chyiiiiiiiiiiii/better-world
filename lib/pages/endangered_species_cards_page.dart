@@ -386,7 +386,7 @@ class SpeciesCard extends ConsumerWidget {
               ),
             ),
             Positioned(
-              top: context.height / 1.5,
+              top: context.height / 1.4,
               left: 0,
               right: 0,
               child: Column(
@@ -403,9 +403,12 @@ class SpeciesCard extends ConsumerWidget {
                         heroImageUrl: info.image,
                         properties: [
                           GoogleWalletPassProperty(
-                            id: 'endangered_species',
+                            id: 'endangered_level',
                             header: l10n.endangeredLevel,
-                            body: info.level,
+                            body: '${info.level} (${List.generate(
+                              info.endangerStars.length,
+                              (index) => '⭐️',
+                            ).join()})',
                           ),
                         ],
                       ),
