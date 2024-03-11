@@ -60,7 +60,7 @@
 	"endangeredLevelDataDeficient": "データ不足",
 	"pickImageMessage": "画像ソースを選択してください",
 	"pickImageCamera": "カメラ",
-	"pickImageAlbum": "フォト アルバム",
+	"pickImageAlbum": "写真",
 	"pickImageRemindPermission": "写真を提供する前に、デバイスでカメラまたはアルバムの許可を有効にしてください。",
 	"catchGameTutorialTitle": "遊び方",
 	"catchGameTutorialMessage": "ゴミ箱をドラッグしてリサイクル可能なアイテムを見つけます",

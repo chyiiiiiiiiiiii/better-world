@@ -1,11 +1,13 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:envawareness/constants/constants.dart';
 import 'package:envawareness/constants/environment_variables.dart';
+import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/states/recycle_validator_state.dart';
-import 'package:envawareness/utils/common.dart';
 import 'package:envawareness/utils/game_helper.dart';
+import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -36,19 +38,8 @@ class CanRecycleController extends _$CanRecycleController {
 
   Future<RecycleValidatorState> getImage(Uint8List bytes) async {
     try {
-      // flutter_gemini
-      // final gemini = Gemini.instance;
-      // final result = await gemini.textAndImage(
-      //   text: 'Is this recyclable? response in 25 words or less',
-
-      //   /// text
-      //   images: [bytes],
-
-      //   /// list of images
-      // );
-      // return result?.content?.parts?.last.text ?? '';
-
-      final languageCode = platformLocaleLanguageCode;
+      final appLocale = ref.read(appLocaleProvider).value;
+      final languageCode = appLocale?.languageCode;
 
       final prompt = TextPart(
         '''
@@ -57,7 +48,7 @@ class CanRecycleController extends _$CanRecycleController {
 
           This is language code $languageCode.
 
-          The response format is "true,<response>".
+          The response format is "<recyclable>#<response>".
         ''',
       );
       final imageParts = [
@@ -71,9 +62,10 @@ class CanRecycleController extends _$CanRecycleController {
       ]);
 
       final responseText = (response.text ?? '').trim();
+      debugPrint(responseText);
 
       final isRecyclable =
-          bool.tryParse(responseText.split(',').firstOrNull ?? 'false') ??
+          bool.tryParse(responseText.split('#').firstOrNull ?? 'false') ??
               false;
       final currentLevel =
           ref.read(playControllerProvider).requireValue.playInfo.currentLevel;
@@ -84,7 +76,7 @@ class CanRecycleController extends _$CanRecycleController {
       );
 
       final message = '''
-            🤖: ${responseText.split(',').elementAtOrNull(1)}
+            🤖: ${responseText.split('#').elementAtOrNull(1)}
           '''
           .trim();
 

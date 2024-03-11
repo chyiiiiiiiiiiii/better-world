@@ -18,7 +18,10 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TrashCan {
-  TrashCan({this.positionX = 200, this.width = 50.0,});
+  TrashCan({
+    this.positionX = 200,
+    this.width = 50.0,
+  });
   double positionX;
   double width;
 }
@@ -561,7 +564,7 @@ class AppCloseButton extends StatelessWidget {
           context.pop();
         },
         icon: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: Spacings.px24),
+          padding: EdgeInsets.symmetric(horizontal: Spacings.px20),
           child: Icon(Icons.close),
         ),
       ),
