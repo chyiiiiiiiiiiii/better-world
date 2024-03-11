@@ -1,11 +1,9 @@
 import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/features/play/game_level_widgets.dart';
 import 'package:envawareness/features/play/play_controller.dart';
-import 'package:envawareness/utils/radient.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:envawareness/widgets/plus_one_painter.dart';
 import 'package:envawareness/zdogs/earth_zdog.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -125,19 +123,20 @@ class _EarthZDogState extends ConsumerState<GameZdog> {
                         changingEditMode = false;
                       }
 
-                      final dynamicRotate = (kIsWeb || kDebugMode)
-                          ? zDragController.rotate
-                          : ZVector.only(
-                              y: (-(_rotationX - 130) * 0.7)
-                                  .clamp(
-                                    -30,
-                                    30,
-                                  )
-                                  .toRadius(),
-                              x: ((_rotationY + 20) * 0.7)
-                                  .clamp(-30, 30)
-                                  .toRadius(),
-                            );
+                      final dynamicRotate = zDragController.rotate;
+                      // final dynamicRotate = (kIsWeb || kDebugMode)
+                      //     ? zDragController.rotate
+                      //     : ZVector.only(
+                      //         y: (-(_rotationX - 130) * 0.7)
+                      //             .clamp(
+                      //               -30,
+                      //               30,
+                      //             )
+                      //             .toRadius(),
+                      //         x: ((_rotationY + 20) * 0.7)
+                      //             .clamp(-30, 30)
+                      //             .toRadius(),
+                      //       );
 
                       final rotateValue = editMode ? dynamicRotate : rotate;
 
