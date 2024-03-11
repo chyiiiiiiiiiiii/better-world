@@ -55,13 +55,7 @@ class BottomSideWidget extends ConsumerWidget {
           child: SizedBox(
             width: 48,
             height: 48,
-            child: ZIllustration(
-              children: const [
-                CrownZdog(
-                  translate: ZVector(0, -5, 0),
-                ),
-              ],
-            ),
+            child: Image.asset('assets/images/game_icon/leader_board.png'),
           ),
         ),
         Gaps.w32,
@@ -70,7 +64,7 @@ class BottomSideWidget extends ConsumerWidget {
             ref.read(playControllerProvider.notifier).onStoreTap();
           },
           child: Image.asset(
-            'assets/images/shop.png',
+            'assets/images/game_icon/store.png',
             width: 48,
             height: 48,
           ),

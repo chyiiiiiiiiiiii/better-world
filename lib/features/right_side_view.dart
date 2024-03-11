@@ -1,86 +1,79 @@
-import 'package:envawareness/l10n/app_localizations_extension.dart';
-import 'package:envawareness/pages/can_recycle_page.dart';
-import 'package:envawareness/pages/catch_game_page.dart';
-import 'package:envawareness/pages/recycle_game_page.dart';
-import 'package:envawareness/providers/show_message_provider.dart';
+import 'package:envawareness/dialogs/showing.dart';
+import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:envawareness/widgets/background_shinning.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class RightSideView extends ConsumerWidget {
   const RightSideView({
-    required this.canPlayRecycleGame,
     super.key,
   });
 
-  final bool canPlayRecycleGame;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
+    final gameState = ref.watch(playControllerProvider);
+    final canPlayRecycleGame =
+        gameState.valueOrNull?.canPlayRecycleGame ?? false;
+    final progress = (gameState.valueOrNull?.clickCount ?? 0) / 20;
 
-    return Column(
-      children: [
-        BackgroundShinning(
-          isShinning: canPlayRecycleGame,
-          child: AppTap(
-            onTap: () {
-              canPlayRecycleGame
-                  ? context.push(CatchGamePage.routePath)
-                  : ref
-                      .read(showMessageProvider.notifier)
-                      .show(l10n.remindClickForPoint);
-            },
-            child: AnimatedSize(
-              duration: Durations.medium2,
-              child: Image.asset(
-                'assets/images/catch.png',
-                width: canPlayRecycleGame ? 48.0 : 44.0,
-                height: canPlayRecycleGame ? 48.0 : 44.0,
-                color: canPlayRecycleGame ? null : Colors.grey,
-                colorBlendMode: BlendMode.modulate,
+    return AppTap(
+      onTap: () {
+        if (!canPlayRecycleGame) return;
+        showGamesDialog<String>(context);
+      },
+      child: BackgroundShinning(
+        isShinning: canPlayRecycleGame,
+        child: Column(
+          children: [
+            if (canPlayRecycleGame)
+              Image.asset(
+                'assets/images/game_icon/plant.png',
+                width: 48,
+              )
+            else
+              ColorFiltered(
+                colorFilter: const ColorFilter.matrix(<double>[
+                  0.2126,
+                  0.7152,
+                  0.0722,
+                  0,
+                  0,
+                  0.2126,
+                  0.7152,
+                  0.0722,
+                  0,
+                  0,
+                  0.2126,
+                  0.7152,
+                  0.0722,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                ]),
+                child: Image.asset(
+                  'assets/images/game_icon/plant.png',
+                  width: 48,
+                ),
+              ),
+            Gaps.h12,
+            SizedBox(
+              width: 48,
+              child: LinearProgressIndicator(
+                value: progress,
+                backgroundColor: Colors.white,
+                valueColor: const AlwaysStoppedAnimation(Colors.green),
               ),
             ),
-          ),
+          ],
         ),
-        Gaps.h32,
-        BackgroundShinning(
-          isShinning: canPlayRecycleGame,
-          child: AppTap(
-            onTap: () {
-              canPlayRecycleGame
-                  ? context.push(RecycleGamePage.routePath)
-                  : ref
-                      .read(showMessageProvider.notifier)
-                      .show(l10n.remindClickForPoint);
-            },
-            child: AnimatedSize(
-              duration: Durations.medium2,
-              child: Image.asset(
-                'assets/images/recycle-bin.png',
-                width: canPlayRecycleGame ? 48.0 : 44.0,
-                height: canPlayRecycleGame ? 48.0 : 44.0,
-                color: canPlayRecycleGame ? null : Colors.grey,
-                colorBlendMode: BlendMode.modulate,
-              ),
-            ),
-          ),
-        ),
-        Gaps.h32,
-        AppTap(
-          onTap: () {
-            context.push(CanRecyclePage.routePath);
-          },
-          child: Image.asset(
-            'assets/images/scan.png',
-            width: 48,
-            height: 48,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

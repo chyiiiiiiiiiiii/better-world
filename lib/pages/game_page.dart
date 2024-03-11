@@ -178,13 +178,10 @@ class _GamePageState extends ConsumerState<GamePage>
                       ),
                       Positioned(
                         right: Spacings.px8,
-                        bottom: Spacings.px20,
+                        bottom: Spacings.px100,
                         child: isStoreOpened
                             ? const SizedBox.shrink()
-                            : RightSideView(
-                                canPlayRecycleGame:
-                                    gameState.canPlayRecycleGame,
-                              )
+                            : const RightSideView()
                                 .animate(
                                   delay: Durations.extralong4,
                                 )

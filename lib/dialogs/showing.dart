@@ -1,5 +1,9 @@
+import 'package:envawareness/pages/can_recycle_page.dart';
+import 'package:envawareness/pages/catch_game_page.dart';
+import 'package:envawareness/pages/recycle_game_page.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/gaps.dart';
+import 'package:envawareness/widgets/app_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
@@ -48,6 +52,121 @@ Future<T?> showMessageDialog<T>(
       );
     },
   );
+}
+
+Future<T?> showGamesDialog<T>(
+  BuildContext context, {
+  VoidCallback? onConfirm,
+}) {
+  return showGeneralDialog(
+    context: context,
+    pageBuilder: (
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+    ) {
+      return GameDialog(
+        animation: animation,
+      );
+    },
+  );
+}
+
+class GameDialog extends StatelessWidget {
+  const GameDialog({
+    required this.animation,
+    super.key,
+  });
+  final Animation<double> animation;
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      scale: animation,
+      child: Dialog(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              children: [
+                GameDialogItem(
+                  imagePath: 'assets/images/game_icon/catch_game.png',
+                  title: 'Catch The Trash',
+                  onTap: () {
+                    context
+                      ..pop()
+                      ..push(CatchGamePage.routePath);
+                  },
+                ),
+                GameDialogItem(
+                  imagePath: 'assets/images/game_icon/recycle_game.png',
+                  title: 'Recycle Card',
+                  onTap: () {
+                    context
+                      ..pop()
+                      ..push(RecycleGamePage.routePath);
+                  },
+                ),
+                GameDialogItem(
+                  title: 'Scan Recycleable',
+                  onTap: () {
+                    context
+                      ..pop()
+                      ..push(CanRecyclePage.routePath);
+                  },
+                  imagePath: 'assets/images/game_icon/scan_game.png',
+                ),
+              ],
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.check,
+                color: Colors.green,
+              ),
+              onPressed: () {
+                context.pop();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class GameDialogItem extends StatelessWidget {
+  const GameDialogItem({
+    required this.onTap,
+    required this.imagePath,
+    required this.title,
+    super.key,
+  });
+
+  final VoidCallback onTap;
+  final String imagePath;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppTap(
+      onTap: onTap.call,
+      child: Column(
+        children: [
+          Image.asset(
+            imagePath,
+            width: 64,
+          ),
+          Gaps.h12,
+          Text(
+            title,
+            style: context.textTheme.headlineSmall?.copyWith(fontSize: 14),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 void showChooseDialog(

@@ -42,22 +42,19 @@ extension ProductX on Product {
   Widget getIcon({double size = 44}) {
     switch (id) {
       case 'tree':
-        return Icon(
-          Icons.forest_rounded,
-          size: size,
-          color: Colors.green,
+        return Image.asset(
+          'assets/images/game_icon/tree.png',
+          width: size,
         );
       case 'sunny':
-        return Icon(
-          Icons.wb_sunny_rounded,
-          size: size,
-          color: Colors.orange,
+        return Image.asset(
+          'assets/images/game_icon/sunny.png',
+          width: size,
         );
       case 'windy':
-        return Icon(
-          Icons.wind_power_rounded,
-          size: size,
-          color: Colors.lightBlue,
+        return Image.asset(
+          'assets/images/game_icon/windy.png',
+          width: size,
         );
     }
     return Icon(
