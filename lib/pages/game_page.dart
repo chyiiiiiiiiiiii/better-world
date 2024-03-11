@@ -1,4 +1,3 @@
-
 import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/bottom_side_widget.dart';
@@ -50,19 +49,32 @@ class _GamePageState extends ConsumerState<GamePage>
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(showLevelUpMessageProvider, (previous, next) async {
-      if (next.isEmpty) {
-        return;
-      }
+    ref
+      ..listen(showMessageProvider, (previous, next) async {
+        if (next.isEmpty) {
+          return;
+        }
 
-      await showLevelUpDialog<void>(
-        context,
-        message: next[0],
-        nextLevel: next[1],
-      );
+        await showMessageDialog<void>(
+          context,
+          message: next,
+        );
 
-      ref.invalidate(showLevelUpMessageProvider);
-    });
+        ref.invalidate(showMessageProvider);
+      })
+      ..listen(showLevelUpMessageProvider, (previous, next) async {
+        if (next.isEmpty) {
+          return;
+        }
+
+        await showLevelUpDialog<void>(
+          context,
+          message: next[0],
+          nextLevel: next[1],
+        );
+
+        ref.invalidate(showLevelUpMessageProvider);
+      });
 
     final isStoreOpened = ref.watch(isStoreOpenedProvider);
     final isDarkMode = ref.watch(darkModeProvider);
