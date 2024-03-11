@@ -221,92 +221,85 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
                       ),
                     ),
                   ),
-                  Flexible(
-                    child: asyncState.when(
-                      data: (data) {
-                        return Column(
-                          children: [
-                            if (hasAiResponse) ...[
-                              Flexible(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          padding: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                context.colorScheme.secondary,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            border: Border.all(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          child: SingleChildScrollView(
-                                            child: Text(
-                                              data.aiResponse,
-                                              style: context
-                                                  .theme.textTheme.titleMedium
-                                                  ?.copyWith(
-                                                color: Colors.white,
-                                              ),
-                                            ),
+                  asyncState.when(
+                    data: (data) {
+                      return Column(
+                        children: [
+                          if (hasAiResponse) ...[
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: context.colorScheme.secondary,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      child: SingleChildScrollView(
+                                        child: Text(
+                                          data.aiResponse,
+                                          style: context
+                                              .theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.white,
                                           ),
                                         ),
                                       ),
-                                      Gaps.w20,
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const RecycleIcon(
-                                            size: 24,
-                                          ),
-                                          Gaps.w8,
-                                          Text(
-                                            data.addScore.toString(),
-                                            style: context
-                                                .theme.textTheme.headlineLarge,
-                                          ),
-                                        ],
+                                    ),
+                                  ),
+                                  Gaps.w20,
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const RecycleIcon(
+                                        size: 24,
+                                      ),
+                                      Gaps.w8,
+                                      Text(
+                                        data.addScore.toString(),
+                                        style: context
+                                            .theme.textTheme.headlineLarge,
                                       ),
                                     ],
                                   ),
-                                ),
+                                ],
                               ),
-                              Gaps.h24,
-                            ],
-                            DefaultButton(
-                              onPressed: getImage,
-                              text: hasAiResponse
-                                  ? l10n.canRecycleGameNext
-                                  : l10n.canRecycleGameShoot,
                             ),
+                            Gaps.h24,
                           ],
-                        );
-                      },
-                      loading: () => const SizedBox.shrink(),
-                      error: (error, _) => Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Text(
-                              l10n.canRecycleGameError,
-                              style: context.theme.textTheme.titleMedium,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Gaps.h24,
-                          Center(
-                            child: DefaultButton(
-                              onPressed: getImage,
-                              text: l10n.canRecycleGameTryAgain,
-                            ),
+                          DefaultButton(
+                            onPressed: getImage,
+                            text: hasAiResponse
+                                ? l10n.canRecycleGameNext
+                                : l10n.canRecycleGameShoot,
                           ),
                         ],
-                      ),
+                      );
+                    },
+                    loading: () => const SizedBox.shrink(),
+                    error: (error, _) => Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            l10n.canRecycleGameError,
+                            style: context.theme.textTheme.titleMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Gaps.h24,
+                        Center(
+                          child: DefaultButton(
+                            onPressed: getImage,
+                            text: l10n.canRecycleGameTryAgain,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
