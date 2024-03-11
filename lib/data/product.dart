@@ -33,7 +33,7 @@ extension ProductX on Product {
       case 'sunny':
         return l10n.storeProductSolar;
       case 'windy':
-        return l10n.storeProductTree;
+        return l10n.storeProductWindy;
     }
 
     return name;
