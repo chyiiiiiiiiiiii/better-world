@@ -2,7 +2,6 @@ import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/endangered_species_cards_page.dart';
 import 'package:envawareness/pages/leader_board_page.dart';
-import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/widgets/app_tap.dart';
@@ -54,8 +53,8 @@ class BottomSideWidget extends ConsumerWidget {
             );
           },
           child: SizedBox(
-            width: context.width / 8,
-            height: context.width / 8,
+            width: 48,
+            height: 48,
             child: ZIllustration(
               children: const [
                 CrownZdog(
@@ -65,25 +64,25 @@ class BottomSideWidget extends ConsumerWidget {
             ),
           ),
         ),
-        Gaps.w20,
+        Gaps.w32,
         AppTap(
           onTap: () {
             ref.read(playControllerProvider.notifier).onStoreTap();
           },
           child: Image.asset(
             'assets/images/shop.png',
-            width: context.width / 8,
-            height: context.width / 8,
+            width: 48,
+            height: 48,
           ),
         ),
-        Gaps.w20,
+        Gaps.w32,
         AppTap(
           onTap: () {
             context.push(EndangeredSpeciesCardsPage.routePath);
           },
           child: SizedBox(
-            width: context.height / 8,
-            height: context.height / 8,
+            width: 48,
+            height: 48,
             child: ZIllustration(
               children: const [
                 DashZdog(

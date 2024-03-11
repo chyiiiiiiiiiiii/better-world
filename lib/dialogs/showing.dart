@@ -1,4 +1,5 @@
 import 'package:envawareness/utils/build_context_extension.dart';
+import 'package:envawareness/utils/gaps.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
@@ -65,45 +66,49 @@ void showChooseDialog(
       return ScaleTransition(
         scale: animation,
         child: Dialog(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  message,
-                  style: context.textTheme.headlineSmall,
-                  textAlign: TextAlign.center,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.redAccent,
+          child: SizedBox(
+            width: 300,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    message,
+                    style: context.textTheme.headlineSmall,
+                    textAlign: TextAlign.center,
+                  ),
+                  Gaps.h12,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.close,
+                            color: Colors.redAccent,
+                          ),
+                          onPressed: () {
+                            context.pop();
+                            onCancel?.call();
+                          },
                         ),
-                        onPressed: () {
-                          context.pop();
-                          onCancel?.call();
-                        },
                       ),
-                    ),
-                    Expanded(
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.check,
-                          color: Colors.green,
+                      Expanded(
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          ),
+                          onPressed: () {
+                            context.pop();
+                            onConfirm?.call();
+                          },
                         ),
-                        onPressed: () {
-                          context.pop();
-                          onConfirm?.call();
-                        },
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -147,40 +152,43 @@ class LevelUpDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
-              children: [
-                LottieBuilder.asset(
-                  'assets/animations/level_up.json',
-                  width: 200,
-                ),
-                Positioned.fill(
-                  child: Center(
-                    child: Text(
-                      nextLevel,
-                      style: context.textTheme.headlineLarge,
+      child: SizedBox(
+        width: 300,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Stack(
+                children: [
+                  LottieBuilder.asset(
+                    'assets/animations/level_up.json',
+                    width: 200,
+                  ),
+                  Positioned.fill(
+                    child: Center(
+                      child: Text(
+                        nextLevel,
+                        style: context.textTheme.headlineLarge,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Text(
-              message,
-              style: context.textTheme.headlineSmall?.copyWith(fontSize: 14),
-              textAlign: TextAlign.center,
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.check,
-                color: Colors.green,
+                ],
               ),
-              onPressed: () => context.pop(),
-            ),
-          ],
+              Text(
+                message,
+                style: context.textTheme.headlineSmall?.copyWith(fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.check,
+                  color: Colors.green,
+                ),
+                onPressed: () => context.pop(),
+              ),
+            ],
+          ),
         ),
       ),
     );

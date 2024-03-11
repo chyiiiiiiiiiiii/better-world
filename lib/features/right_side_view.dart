@@ -3,7 +3,6 @@ import 'package:envawareness/pages/can_recycle_page.dart';
 import 'package:envawareness/pages/catch_game_page.dart';
 import 'package:envawareness/pages/recycle_game_page.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
-import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:envawareness/widgets/background_shinning.dart';
@@ -39,17 +38,15 @@ class RightSideView extends ConsumerWidget {
               duration: Durations.medium2,
               child: Image.asset(
                 'assets/images/catch.png',
-                width:
-                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
-                height:
-                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
+                width: canPlayRecycleGame ? 48.0 : 44.0,
+                height: canPlayRecycleGame ? 48.0 : 44.0,
                 color: canPlayRecycleGame ? null : Colors.grey,
                 colorBlendMode: BlendMode.modulate,
               ),
             ),
           ),
         ),
-        Gaps.h24,
+        Gaps.h32,
         BackgroundShinning(
           isShinning: canPlayRecycleGame,
           child: AppTap(
@@ -64,25 +61,23 @@ class RightSideView extends ConsumerWidget {
               duration: Durations.medium2,
               child: Image.asset(
                 'assets/images/recycle-bin.png',
-                width:
-                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
-                height:
-                    canPlayRecycleGame ? context.width / 6 : context.width / 7,
+                width: canPlayRecycleGame ? 48.0 : 44.0,
+                height: canPlayRecycleGame ? 48.0 : 44.0,
                 color: canPlayRecycleGame ? null : Colors.grey,
                 colorBlendMode: BlendMode.modulate,
               ),
             ),
           ),
         ),
-        Gaps.h24,
+        Gaps.h32,
         AppTap(
           onTap: () {
             context.push(CanRecyclePage.routePath);
           },
           child: Image.asset(
             'assets/images/scan.png',
-            width: context.width / 7,
-            height: context.width / 7,
+            width: 48,
+            height: 48,
           ),
         ),
       ],

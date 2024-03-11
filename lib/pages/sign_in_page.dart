@@ -99,7 +99,7 @@ class SignInPage extends ConsumerWidget {
                               children: [
                                 Image.asset(
                                   'assets/images/google.png',
-                                  width: context.height * 0.05,
+                                  width: 32,
                                 ),
                                 Gaps.w20,
                                 Text(
