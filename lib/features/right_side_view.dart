@@ -1,5 +1,7 @@
 import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
+import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/widgets/app_tap.dart';
@@ -18,10 +20,13 @@ class RightSideView extends ConsumerWidget {
     final canPlayRecycleGame =
         gameState.valueOrNull?.canPlayRecycleGame ?? false;
     final progress = (gameState.valueOrNull?.clickCount ?? 0) / 20;
-
+    final l10n = context.l10n;
     return AppTap(
       onTap: () {
-        if (!canPlayRecycleGame) return;
+        if (!canPlayRecycleGame) {
+          ref.read(showMessageProvider.notifier).show(l10n.remindClickForPoint);
+          return;
+        }
         showGamesDialog<String>(context);
       },
       child: BackgroundShinning(
@@ -67,6 +72,7 @@ class RightSideView extends ConsumerWidget {
               width: 48,
               child: LinearProgressIndicator(
                 value: progress,
+                borderRadius: BorderRadius.circular(50),
                 backgroundColor: Colors.white,
                 valueColor: const AlwaysStoppedAnimation(Colors.green),
               ),

@@ -4,10 +4,13 @@ import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/extensions/locale_extension.dart';
 import 'package:envawareness/features/play/play_view.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
+import 'package:envawareness/pages/welcome_page.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/spacings.dart';
+import 'package:envawareness/widgets/app_tap.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -107,6 +110,13 @@ class SettingPage extends ConsumerWidget {
                   ),
                 ],
               ),
+              if (kDebugMode)
+                AppTap(
+                  onTap: () {
+                    context.pushReplacement(WelcomePage.routePath);
+                  },
+                  child: const Text('WelComePage'),
+                ),
               const Spacer(),
               Center(
                 child: DefaultButton(

@@ -188,6 +188,7 @@ class SpeciesCard extends ConsumerWidget {
           children: [
             Positioned.fill(
               child: Tilt(
+                disable: !isOwned,
                 tiltConfig: TiltConfig(
                   enableGestureTouch: !(Platform.isAndroid || Platform.isIOS),
                 ),

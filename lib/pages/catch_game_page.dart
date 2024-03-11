@@ -12,6 +12,7 @@ import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/recycle_icon.dart';
 import 'package:envawareness/utils/spacings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
@@ -310,6 +311,7 @@ class _GameWidgetState extends ConsumerState<GameWidget>
       ..reset()
       ..forward();
     await _audioPlayer.stop();
+    await HapticFeedback.lightImpact();
     if (isRecyclable) {
       await _audioPlayer.play(AssetSource('sounds/trash_in.wav'));
     } else {
@@ -389,7 +391,9 @@ class _GameWidgetState extends ConsumerState<GameWidget>
 
       // 檢查球是否碰到垃圾桶的頂部
       final hitTrashCan =
-          ball.positionY + ball.radius >= screenHeight - 100; // 假設垃圾桶的高度是固定的50
+          (ball.positionY + ball.radius >= screenHeight - 160) &&
+              (ball.positionY + ball.radius <=
+                  screenHeight - 120); // 假設垃圾桶的高度是固定的100
 
       if (withinHorizontalRange && hitTrashCan) {
         // 碰撞發生，增加分數並標記球移除
@@ -526,7 +530,7 @@ class _GameWidgetState extends ConsumerState<GameWidget>
           if (!isFinished) ...[
             Positioned(
               left: _gameState.trashCan.positionX - 5,
-              bottom: 0,
+              bottom: 40,
               child: SizedBox(
                 width: 60,
                 child: LottieBuilder.asset(
@@ -644,15 +648,15 @@ class GamePainter extends CustomPainter {
       );
     }
     // for debug
-    // for (final ball in balls) {
-    //   final ballPaint = Paint()
-    //     ..color = ball.isRecyclable ? Colors.green : Colors.red;
-    //   canvas.drawCircle(
-    //     Offset(ball.positionX, ball.positionY),
-    //     ball.radius,
-    //     ballPaint,
-    //   );
-    // }
+    for (final ball in balls) {
+      final ballPaint = Paint()
+        ..color = ball.isRecyclable ? Colors.green : Colors.red;
+      canvas.drawCircle(
+        Offset(ball.positionX, ball.positionY),
+        ball.radius,
+        ballPaint,
+      );
+    }
   }
 
   @override
