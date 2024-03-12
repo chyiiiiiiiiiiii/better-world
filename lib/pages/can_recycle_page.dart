@@ -25,10 +25,11 @@ class GeminiImagePage extends ConsumerStatefulWidget {
   final bool isElectron;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _CanRecyclePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _GeminiImagePageState();
 }
 
-class _CanRecyclePageState extends ConsumerState<GeminiImagePage> {
+class _GeminiImagePageState extends ConsumerState<GeminiImagePage> {
   late AppLocalizations l10n = context.l10n;
 
   final picker = ImagePicker();
@@ -78,7 +79,7 @@ class _CanRecyclePageState extends ConsumerState<GeminiImagePage> {
     } else {
       await ref
           .read(canRecycleControllerProvider.notifier)
-          .checkRecyclable(bytes!);
+          .checkRecyclable(bytes!, isElectron: widget.isElectron);
     }
   }
 
@@ -94,71 +95,80 @@ class _CanRecyclePageState extends ConsumerState<GeminiImagePage> {
       ) {
         return ScaleTransition(
           scale: animation,
-          child: Dialog(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    l10n.pickImageMessage,
-                    style: context.textTheme.headlineSmall,
-                    textAlign: TextAlign.center,
-                  ),
-                  Gaps.h20,
-                  Row(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: 500,
+              ),
+              child: Dialog(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (!kIsWeb || !Platform.isMacOS)
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context, 'Camera');
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Icon(
-                                  Icons.camera_alt_rounded,
-                                  color: context.colorScheme.primary,
+                      Text(
+                        l10n.pickImageMessage,
+                        style: context.textTheme.headlineSmall,
+                        textAlign: TextAlign.center,
+                      ),
+                      Gaps.h20,
+                      Row(
+                        children: [
+                          if (!kIsWeb || !Platform.isMacOS)
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context, 'Camera');
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Icon(
+                                      Icons.camera_alt_rounded,
+                                      color: context.colorScheme.primary,
+                                    ),
+                                    Gaps.w4,
+                                    Text(
+                                      l10n.pickImageCamera,
+                                      style: context.textTheme.titleLarge
+                                          ?.copyWith(
+                                        color: context.colorScheme.primary,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Gaps.w4,
-                                Text(
-                                  l10n.pickImageCamera,
-                                  style: context.textTheme.titleLarge?.copyWith(
-                                    color: context.colorScheme.primary,
+                              ),
+                            ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context, 'Gallery');
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.photo,
+                                    color: context.colorScheme.secondary,
                                   ),
-                                ),
-                              ],
+                                  Gaps.w4,
+                                  Text(
+                                    l10n.pickImageAlbum,
+                                    style:
+                                        context.textTheme.titleLarge?.copyWith(
+                                      color: context.colorScheme.secondary,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context, 'Gallery');
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.photo,
-                                color: context.colorScheme.secondary,
-                              ),
-                              Gaps.w4,
-                              Text(
-                                l10n.pickImageAlbum,
-                                style: context.textTheme.titleLarge?.copyWith(
-                                  color: context.colorScheme.secondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -192,11 +202,20 @@ class _CanRecyclePageState extends ConsumerState<GeminiImagePage> {
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      Image.asset(
+                        widget.isElectron
+                            ? 'assets/images/game_icon/electron.png'
+                            : 'assets/images/game_icon/recyclable.png',
+                        fit: BoxFit.contain,
+                        width: 80,
+                      ),
+                      Gaps.h20,
                       if (pickedImage.isEmpty)
                         Text(
-                          l10n.canRecycleGameText,
+                          widget.isElectron
+                              ? l10n.electronGameText
+                              : l10n.canRecycleGameText,
                           style: context.theme.textTheme.titleLarge,
                           textAlign: TextAlign.center,
                         ),

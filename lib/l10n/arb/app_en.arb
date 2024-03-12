@@ -45,11 +45,12 @@
   "haveBoughtIt": "You have already purchased it.",
   "leaderBoard": "Love Earth Leaderboard",
   "canRecycleGameText": "Find recyclable items around you, the environmental AI can help you confirm",
+  "electronGameText": "Point the camera at electrical appliances, the environmental AI can help you confirm the power consumption of this appliance and learn energy-saving knowledge together!",
   "canRecycleGameShoot": "Take a photo",
   "canRecycleGameNext": "Keep Looking",
   "canRecycleGameTryAgain": "Try again",
   "canRecycleGameError": "Sorry, the AI cannot process the provided photo.",
-	"canRecyclePermissionError": "Please enable the camera or album permissions on your device before you can provide photos!",
+  "canRecyclePermissionError": "Please enable the camera or album permissions on your device before you can provide photos!",
   "remindClickForPoint": "Work harder, keep tapping, and accumulate energy!",
   "endangeredLevelEX": "Extinct",
   "endangeredLevelEW": "Extinct in the Wild",
@@ -76,5 +77,5 @@
   "languageJa": "Japanese",
   "languageZh": "Chinese",
   "gameStartupError": "Initializing the game failed, please contact the official, thank you.",
-	"internetNotConnected": "Please make sure your internet connection is stable to keep the game running smoothly."
+  "internetNotConnected": "Please make sure your internet connection is stable to keep the game running smoothly."
 }
