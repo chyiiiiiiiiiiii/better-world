@@ -187,15 +187,15 @@ class _GeminiImagePageState extends ConsumerState<GeminiImagePage> {
 
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: context.paddingTop,
-                left: Spacings.px20,
-                right: Spacings.px20,
-              ),
-              child: Center(
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: context.paddingTop == 0 ? Spacings.px20 : 0,
+            left: Spacings.px20,
+            right: Spacings.px20,
+          ),
+          child: Stack(
+            children: [
+              Center(
                 child: Container(
                   constraints: const BoxConstraints(
                     maxWidth: 600,
@@ -264,8 +264,9 @@ class _GeminiImagePageState extends ConsumerState<GeminiImagePage> {
                                           decoration: BoxDecoration(
                                             color:
                                                 context.colorScheme.secondary,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                            borderRadius: BorderRadius.circular(
+                                              Spacings.px20,
+                                            ),
                                             border: Border.all(
                                               color: Colors.white,
                                             ),
@@ -337,9 +338,9 @@ class _GeminiImagePageState extends ConsumerState<GeminiImagePage> {
                   ),
                 ),
               ),
-            ),
-            const AppCloseButton(),
-          ],
+              const AppCloseButton(),
+            ],
+          ),
         ),
       ),
     );

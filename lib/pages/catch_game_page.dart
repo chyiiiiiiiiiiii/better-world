@@ -437,37 +437,38 @@ class _GameWidgetState extends ConsumerState<GameWidget>
       child: Stack(
         children: [
           if (!isFinished)
-            Padding(
-              padding: const EdgeInsets.only(top: 32),
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Column(
-                  children: [
-                    Text(
-                      l10n.score,
-                      style: context.theme.textTheme.headlineSmall,
-                    ),
-                    Text(
-                      _gameState.score.toString(),
-                      style: context.theme.textTheme.headlineLarge
-                          ?.copyWith(color: context.colorScheme.secondary),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '$_countdownSeconds',
-                          style: Theme.of(context).textTheme.displayLarge,
-                        ),
-                        Gaps.w4,
-                        Image.asset(
-                          'assets/images/hourglass.png',
-                          width: context.width / 8,
-                        ),
-                      ],
-                    ),
-                  ],
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Column(
+                    children: [
+                      Text(
+                        l10n.score,
+                        style: context.theme.textTheme.headlineSmall,
+                      ),
+                      Text(
+                        _gameState.score.toString(),
+                        style: context.theme.textTheme.headlineLarge
+                            ?.copyWith(color: context.colorScheme.secondary),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '$_countdownSeconds',
+                            style: Theme.of(context).textTheme.displayLarge,
+                          ),
+                          Gaps.w4,
+                          Image.asset(
+                            'assets/images/hourglass.png',
+                            width: 48,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -544,7 +545,7 @@ class _GameWidgetState extends ConsumerState<GameWidget>
                 ),
               ),
             ),
-            const AppCloseButton(),
+            const SafeArea(child: AppCloseButton()),
           ],
         ],
       ),
