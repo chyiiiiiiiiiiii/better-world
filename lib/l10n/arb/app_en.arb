@@ -76,5 +76,6 @@
   "languageJa": "Japanese",
   "languageZh": "Chinese",
   "gameStartupError": "Initializing the game failed, please contact the official, thank you.",
-	"internetNotConnected": "Please make sure your internet connection is stable to keep the game running smoothly."
+	"internetNotConnected": "Please make sure your internet connection is stable to keep the game running smoothly.",
+  "tip": "Tip"
 }

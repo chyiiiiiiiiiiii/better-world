@@ -1,4 +1,6 @@
+import 'package:envawareness/constants/environmental_tip_data.dart';
 import 'package:envawareness/controllers/app_controller.dart';
+import 'package:envawareness/data/environmental_tip.dart';
 import 'package:envawareness/dialogs/showing.dart';
 import 'package:envawareness/features/bottom_side_widget.dart';
 import 'package:envawareness/features/particle/particle.dart';
@@ -70,10 +72,22 @@ class _GamePageState extends ConsumerState<GamePage>
           return;
         }
 
+        final appLocale = ref.watch(appLocaleProvider).value;
+
+        final shuffleData = environmentTipData.toList()..shuffle();
+        final environmentTip = shuffleData
+            .map(
+              EnvironmentalTip.fromJson,
+            )
+            .toList()
+            .first;
+        final tipText = environmentTip.translatedName(appLocale);
+
         await showLevelUpDialog<void>(
           context,
           message: next[0],
           nextLevel: next[1],
+          tipText: tipText,
         );
 
         ref.invalidate(showLevelUpMessageProvider);

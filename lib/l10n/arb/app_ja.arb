@@ -76,5 +76,6 @@
 	"languageJa": "日本語",
 	"languageZh": "中国語",
 	"gameStartupError": "ゲームの初期化に問題があります。公式にご連絡ください。ありがとうございます。",
-	"internetNotConnected": "ゲームがスムーズに進行するように、インターネット接続を安定させてください。"
+	"internetNotConnected": "ゲームがスムーズに進行するように、インターネット接続を安定させてください。",
+  "tip": "チップ"
 }

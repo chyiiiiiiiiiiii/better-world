@@ -1,3 +1,4 @@
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/can_recycle_page.dart';
 import 'package:envawareness/pages/catch_game_page.dart';
 import 'package:envawareness/pages/recycle_game_page.dart';
@@ -249,6 +250,7 @@ Future<T?> showLevelUpDialog<T>(
   BuildContext context, {
   required String message,
   required String nextLevel,
+  required String tipText,
 }) {
   return showGeneralDialog(
     context: context,
@@ -262,6 +264,7 @@ Future<T?> showLevelUpDialog<T>(
         child: LevelUpDialog(
           nextLevel: nextLevel,
           message: message,
+          tipText: tipText,
         ),
       );
     },
@@ -272,13 +275,17 @@ class LevelUpDialog extends StatelessWidget {
   const LevelUpDialog({
     required this.message,
     required this.nextLevel,
+    required this.tipText,
     super.key,
   });
   final String message;
   final String nextLevel;
+  final String tipText;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Dialog(
       child: SizedBox(
         width: 300,
@@ -303,11 +310,37 @@ class LevelUpDialog extends StatelessWidget {
                   ),
                 ],
               ),
+              Gaps.h12,
               Text(
                 message,
-                style: context.textTheme.headlineSmall?.copyWith(fontSize: 14),
+                style: context.textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),
+              Gaps.h12,
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: context.colorScheme.background.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/light_bulb.png',
+                      width: 24,
+                      height: 24,
+                    ),
+                    Gaps.w12,
+                    Expanded(
+                      child: Text(
+                        '${l10n.tip}: $tipText',
+                        style: context.textTheme.bodySmall,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Gaps.h12,
               IconButton(
                 icon: const Icon(
                   Icons.check,

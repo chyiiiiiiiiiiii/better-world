@@ -76,5 +76,6 @@
   "languageJa": "日文",
   "languageZh": "中文",
   "gameStartupError": "遊戲初始化發生問題，請聯繫官方，謝謝。",
-  "internetNotConnected": "網路連線請保持暢通，確保遊戲順暢。"
+  "internetNotConnected": "網路連線請保持暢通，確保遊戲順暢。",
+  "tip": "小知識"
 }

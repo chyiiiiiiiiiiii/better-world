@@ -87,6 +87,14 @@ class _AppState extends ConsumerState<App> {
                 textStyle: baseTheme.textTheme.titleSmall,
                 fontWeight: FontWeight.w800,
               ),
+              bodyMedium: GoogleFonts.notoSansTc(
+                textStyle: baseTheme.textTheme.bodyMedium,
+                fontWeight: FontWeight.w600,
+              ),
+              bodySmall: GoogleFonts.notoSansTc(
+                textStyle: baseTheme.textTheme.bodySmall,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         _ => GoogleFonts.mPlusRounded1cTextTheme(
@@ -126,6 +134,14 @@ class _AppState extends ConsumerState<App> {
               titleSmall: GoogleFonts.mPlusRounded1c(
                 textStyle: baseTheme.textTheme.titleSmall,
                 fontWeight: FontWeight.w800,
+              ),
+              bodyMedium: GoogleFonts.mPlusRounded1c(
+                textStyle: baseTheme.textTheme.bodyMedium,
+                fontWeight: FontWeight.w800,
+              ),
+              bodySmall: GoogleFonts.mPlusRounded1c(
+                textStyle: baseTheme.textTheme.bodySmall,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
