@@ -163,7 +163,6 @@ class _GamePageState extends ConsumerState<GamePage>
                         const PlayView()
                       else
                         const Positioned.fill(
-                          top: 100,
                           child: StoreView(),
                         ),
                       const Positioned(

@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:envawareness/controllers/app_controller.dart';
+import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/data/level_info.dart';
 import 'package:envawareness/data/play_info.dart';
 import 'package:envawareness/data/product.dart';
@@ -396,7 +397,7 @@ class PlayController extends _$PlayController {
 
     final appLocale = ref.read(appLocaleProvider).value;
     final l10n = await getL10n(appLocale: appLocale);
-    
+
     final appRouter = ref.read(appRouterProvider);
     final isOnHomePage = appRouter.currentRoutePath == GamePage.routePath;
     final isStoreOpened = ref.read(isStoreOpenedProvider);
@@ -417,6 +418,7 @@ class PlayController extends _$PlayController {
   }
 
   void onStoreTap() {
+    ref.read(editModeProvider.notifier).close();
     ref.read(isStoreOpenedProvider.notifier).state =
         !ref.read(isStoreOpenedProvider);
 
