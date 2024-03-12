@@ -11,6 +11,7 @@ import 'package:envawareness/utils/game_helper.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/recycle_icon.dart';
 import 'package:envawareness/utils/spacings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -648,14 +649,16 @@ class GamePainter extends CustomPainter {
       );
     }
     // for debug
-    for (final ball in balls) {
-      final ballPaint = Paint()
-        ..color = ball.isRecyclable ? Colors.green : Colors.red;
-      canvas.drawCircle(
-        Offset(ball.positionX, ball.positionY),
-        ball.radius,
-        ballPaint,
-      );
+    if (kDebugMode) {
+      for (final ball in balls) {
+        final ballPaint = Paint()
+          ..color = ball.isRecyclable ? Colors.green : Colors.red;
+        canvas.drawCircle(
+          Offset(ball.positionX, ball.positionY),
+          ball.radius,
+          ballPaint,
+        );
+      }
     }
   }
 
