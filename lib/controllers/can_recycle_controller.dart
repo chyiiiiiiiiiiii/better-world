@@ -60,7 +60,7 @@ class CanRecycleController extends _$CanRecycleController {
           Is this recyclable? Give me response in 30 words or less with some loverly description depend on language code I give.
           And also, return true and false in the beginning for telling me if it's recyclable or not.
 
-          This is language code $languageCode.
+          This is language code $languageCode. 如果是中文，請用正體中文回答。
 
           The response format is "<recyclable>#<response>".
         ''',
