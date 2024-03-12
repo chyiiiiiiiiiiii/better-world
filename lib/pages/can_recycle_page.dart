@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:app_settings/app_settings.dart';
@@ -11,9 +10,11 @@ import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/recycle_icon.dart';
 import 'package:envawareness/utils/spacings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:universal_io/io.dart';
 
 class CanRecyclePage extends ConsumerStatefulWidget {
   const CanRecyclePage({super.key});
@@ -59,7 +60,7 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
 
       await showMessageDialog<void>(
         context,
-        message: '請先將裝置的相機或相簿的權限開啟，才能提供照片哦！',
+        message: l10n.canRecyclePermissionError,
         onConfirm: AppSettings.openAppSettings,
       );
     }
@@ -100,30 +101,31 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
                   Gaps.h20,
                   Row(
                     children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context, 'Camera');
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Icon(
-                                Icons.camera_alt_rounded,
-                                color: context.colorScheme.primary,
-                              ),
-                              Gaps.w4,
-                              Text(
-                                l10n.pickImageCamera,
-                                style: context.textTheme.titleLarge?.copyWith(
+                      if (!kIsWeb || !Platform.isMacOS)
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context, 'Camera');
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Icon(
+                                  Icons.camera_alt_rounded,
                                   color: context.colorScheme.primary,
                                 ),
-                              ),
-                            ],
+                                Gaps.w4,
+                                Text(
+                                  l10n.pickImageCamera,
+                                  style: context.textTheme.titleLarge?.copyWith(
+                                    color: context.colorScheme.primary,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
