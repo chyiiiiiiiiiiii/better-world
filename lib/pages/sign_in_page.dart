@@ -90,24 +90,48 @@ class SignInPage extends ConsumerWidget {
                     padding: const EdgeInsets.all(Spacings.px32),
                     child: isLoading
                         ? const CircularProgressIndicator()
-                        : AppTap(
-                            onTap: ref
-                                .read(authControllerProvider.notifier)
-                                .signIn,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  'assets/images/google.png',
-                                  width: 32,
+                        : Column(
+                            children: [
+                              AppTap(
+                                onTap: ref
+                                    .read(authControllerProvider.notifier)
+                                    .signInWithApple,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/google.png',
+                                      width: 32,
+                                    ),
+                                    Gaps.w20,
+                                    Text(
+                                      l10n.signInWithGoogle,
+                                      style: context.textTheme.titleLarge,
+                                    ),
+                                  ],
                                 ),
-                                Gaps.w20,
-                                Text(
-                                  l10n.signInWithGoogle,
-                                  style: context.textTheme.titleLarge,
+                              ),
+                              Gaps.h20,
+                              AppTap(
+                                onTap: ref
+                                    .read(authControllerProvider.notifier)
+                                    .signInWithGoogle,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/google.png',
+                                      width: 32,
+                                    ),
+                                    Gaps.w20,
+                                    Text(
+                                      l10n.signInWithGoogle,
+                                      style: context.textTheme.titleLarge,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                   ),
                 ),

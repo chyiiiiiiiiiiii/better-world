@@ -38,12 +38,8 @@ class AuthRepository {
   }
 
   Future<void> signInFirebase({
-    required GoogleSignInAuthentication authentication,
+    required OAuthCredential oAuthCredential,
   }) async {
-    final oAuthCredential = GoogleAuthProvider.credential(
-      accessToken: authentication.accessToken,
-      idToken: authentication.idToken,
-    );
     await firebaseAuth.signInWithCredential(oAuthCredential);
   }
 
