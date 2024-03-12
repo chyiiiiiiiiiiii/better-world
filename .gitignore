@@ -44,6 +44,7 @@ app.*.map.json
 
 .fvm/
 .firebase/
+.firebaserc
 .vscode/
 
 # Flutter/Dart/Pub related
