@@ -105,7 +105,7 @@ class StoreController extends _$StoreController {
       final products = endangeredSpeciesList;
       final animalCardIndex = Random().nextInt(products.length);
       final endangeredSpeciesInfo = products.elementAt(animalCardIndex);
-      final animalName = endangeredSpeciesInfo.translatedName;
+      final animalName = endangeredSpeciesInfo.translatedName(appLocale);
 
       final purchaseHistory = PurchaseHistory(
         userId: _userId,
