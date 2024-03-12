@@ -1,5 +1,6 @@
 import 'package:envawareness/constants/constants.dart';
 import 'package:envawareness/controllers/app_controller.dart';
+import 'package:envawareness/features/play/play_controller.dart';
 import 'package:envawareness/router/app_router.dart';
 import 'package:envawareness/utils/common.dart';
 import 'package:envawareness/widgets/connectivity_detector.dart';
@@ -169,6 +170,11 @@ class _AppState extends ConsumerState<App> {
 
   Widget _listenConnectivity(Widget child) {
     return ConnectivityDetector(
+      onConnectivityChanged: (bool value) {
+        if (value) {
+          ref.invalidate(playControllerProvider);
+        }
+      },
       child: child,
     );
   }

@@ -110,13 +110,15 @@ class SettingPage extends ConsumerWidget {
                   ),
                 ],
               ),
-              if (kDebugMode)
+              if (kDebugMode) ...[
+                Gaps.h32,
                 AppTap(
                   onTap: () {
                     context.pushReplacement(WelcomePage.routePath);
                   },
                   child: const Text('WelComePage'),
                 ),
+              ],
               const Spacer(),
               Center(
                 child: DefaultButton(

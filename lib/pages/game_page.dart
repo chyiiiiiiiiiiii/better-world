@@ -7,6 +7,7 @@ import 'package:envawareness/features/play/play_view.dart';
 import 'package:envawareness/features/right_side_view.dart';
 import 'package:envawareness/features/store/store_view.dart';
 import 'package:envawareness/features/valid_product_side_view.dart';
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/providers/show_message_provider.dart';
 import 'package:envawareness/states/game_state.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
@@ -49,6 +50,8 @@ class _GamePageState extends ConsumerState<GamePage>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     ref
       ..listen(showMessageProvider, (previous, next) async {
         if (next.isEmpty) {
@@ -194,9 +197,18 @@ class _GamePageState extends ConsumerState<GamePage>
                   return const SizedBox.shrink();
                 },
                 error: (error, stackTrace) {
-                  return Text(
-                    '$error',
-                  );
+                  return const SizedBox.shrink();
+
+                  // return Center(
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(Spacings.px20),
+                  //     child: Text(
+                  //       l10n.gameStartupError,
+                  //       textAlign: TextAlign.center,
+                  //       style: context.textTheme.titleMedium,
+                  //     ),
+                  //   ),
+                  // );
                 },
               ),
             ),

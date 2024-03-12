@@ -73,5 +73,7 @@
   "settingDisplayLanguage": "遊戲語言",
   "languageEn": "英文",
   "languageJa": "日文",
-  "languageZh": "中文"
+  "languageZh": "中文",
+  "gameStartupError": "遊戲初始化發生問題，請聯繫官方，謝謝。",
+  "internetNotConnected": "網路連線請保持暢通，確保遊戲順暢。"
 }

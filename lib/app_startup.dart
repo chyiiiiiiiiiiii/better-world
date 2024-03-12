@@ -35,15 +35,30 @@ class AppStartupWidget extends ConsumerWidget {
 
     return Directionality(
       textDirection: TextDirection.ltr,
-      child: appStartupState.when(
-        data: (_) => onLoaded(context),
-        loading: () => const _LoadingWidget(),
-        error: (e, st) => _ErrorWidget(
-          message: e.toString(),
-          onRetry: () {
-            ref.invalidate(appStartupProvider);
-          },
-        ),
+      child: Stack(
+        children: [
+          const Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  opacity: 0.3,
+                  image: AssetImage('assets/images/bg.gif'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          appStartupState.when(
+            data: (_) => onLoaded(context),
+            loading: () => const _LoadingWidget(),
+            error: (e, st) => _ErrorWidget(
+              message: e.toString(),
+              onRetry: () {
+                ref.invalidate(appStartupProvider);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -54,10 +69,8 @@ class _LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Material(
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }
@@ -73,18 +86,16 @@ class _ErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(message, style: Theme.of(context).textTheme.headlineSmall),
-            ElevatedButton(
-              onPressed: onRetry,
-              child: const Text('Retry'),
-            ),
-          ],
-        ),
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(message, style: Theme.of(context).textTheme.headlineSmall),
+          ElevatedButton(
+            onPressed: onRetry,
+            child: const Text('Retry'),
+          ),
+        ],
       ),
     );
   }
