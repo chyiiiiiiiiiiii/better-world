@@ -82,53 +82,61 @@ class GameDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScaleTransition(
       scale: animation,
-      child: Dialog(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(
+            maxWidth: 400,
+          ),
+          child: Dialog(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                GameDialogItem(
-                  imagePath: 'assets/images/game_icon/catch_game.png',
-                  title: 'Catch The Trash',
-                  onTap: () {
-                    context
-                      ..pop()
-                      ..push(CatchGamePage.routePath);
-                  },
+                GridView.count(
+                  crossAxisCount: 2,
+                  padding: const EdgeInsets.all(16),
+                  shrinkWrap: true,
+                  children: [
+                    GameDialogItem(
+                      imagePath: 'assets/images/game_icon/catch_game.png',
+                      title: 'Catch The Trash',
+                      onTap: () {
+                        context
+                          ..pop()
+                          ..push(CatchGamePage.routePath);
+                      },
+                    ),
+                    GameDialogItem(
+                      imagePath: 'assets/images/game_icon/recycle_game.png',
+                      title: 'Recycle Card',
+                      onTap: () {
+                        context
+                          ..pop()
+                          ..push(RecycleGamePage.routePath);
+                      },
+                    ),
+                    GameDialogItem(
+                      title: 'Scan Recycleable',
+                      onTap: () {
+                        context
+                          ..pop()
+                          ..push(CanRecyclePage.routePath);
+                      },
+                      imagePath: 'assets/images/game_icon/scan_game.png',
+                    ),
+                  ],
                 ),
-                GameDialogItem(
-                  imagePath: 'assets/images/game_icon/recycle_game.png',
-                  title: 'Recycle Card',
-                  onTap: () {
-                    context
-                      ..pop()
-                      ..push(RecycleGamePage.routePath);
+                IconButton(
+                  icon: const Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  ),
+                  onPressed: () {
+                    context.pop();
                   },
-                ),
-                GameDialogItem(
-                  title: 'Scan Recycleable',
-                  onTap: () {
-                    context
-                      ..pop()
-                      ..push(CanRecyclePage.routePath);
-                  },
-                  imagePath: 'assets/images/game_icon/scan_game.png',
                 ),
               ],
             ),
-            IconButton(
-              icon: const Icon(
-                Icons.check,
-                color: Colors.green,
-              ),
-              onPressed: () {
-                context.pop();
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -152,6 +160,7 @@ class GameDialogItem extends StatelessWidget {
     return AppTap(
       onTap: onTap.call,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
             imagePath,
