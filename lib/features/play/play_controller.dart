@@ -58,8 +58,9 @@ class PlayController extends _$PlayController {
 
     final finishProgress =
         (playInfo.currentScore / levelInfo.passScore).clamp(0.0, 1.0);
-    final purchaseHistoryList =
-        await ref.read(storeRepositoryProvider).getValidPurchaseHistory();
+    final purchaseHistoryList = await ref
+        .read(storeRepositoryProvider)
+        .getValidPurchaseHistory(userId: _userId);
 
     listenPlayInfo();
 

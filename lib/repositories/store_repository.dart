@@ -20,8 +20,14 @@ class StoreRepository {
     );
   }
 
-  Future<List<PurchaseHistory>> getValidPurchaseHistory() async {
+  Future<List<PurchaseHistory>> getValidPurchaseHistory({
+    required String userId,
+  }) async {
     final query = purchaseHistoryCollectionReference
+        .where(
+          'user_id',
+          isEqualTo: userId,
+        )
         .where(
           'end_at',
           isGreaterThan: DateTime.now().millisecondsSinceEpoch,
