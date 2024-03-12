@@ -81,6 +81,8 @@ class GameDialog extends StatelessWidget {
   final Animation<double> animation;
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return ScaleTransition(
       scale: animation,
       child: Center(
@@ -99,7 +101,7 @@ class GameDialog extends StatelessWidget {
                   children: [
                     GameDialogItem(
                       imagePath: 'assets/images/game_icon/catch_game.png',
-                      title: 'Catch The Trash',
+                      title: l10n.game_catch_the_trash,
                       onTap: () {
                         context
                           ..pop()
@@ -108,7 +110,7 @@ class GameDialog extends StatelessWidget {
                     ),
                     GameDialogItem(
                       imagePath: 'assets/images/game_icon/recycle_game.png',
-                      title: 'Recycle Card',
+                      title: l10n.game_recycle_card,
                       onTap: () {
                         context
                           ..pop()
@@ -116,22 +118,22 @@ class GameDialog extends StatelessWidget {
                       },
                     ),
                     GameDialogItem(
-                      title: 'Scan Recycleable',
+                      title: l10n.game_scan_trash,
                       onTap: () {
                         context
                           ..pop()
                           ..push(GeminiImagePage.canRecycleRoutePath);
                       },
-                      imagePath: 'assets/images/game_icon/scan_game.png',
+                      imagePath: 'assets/images/game_icon/scan_recycle.png',
                     ),
                     GameDialogItem(
-                      title: 'How many power',
+                      title: l10n.game_scan_electron,
                       onTap: () {
                         context
                           ..pop()
                           ..push(GeminiImagePage.electronRoutePath);
                       },
-                      imagePath: 'assets/images/game_icon/scan_game.png',
+                      imagePath: 'assets/images/game_icon/scan_electron.png',
                     ),
                   ],
                 ),

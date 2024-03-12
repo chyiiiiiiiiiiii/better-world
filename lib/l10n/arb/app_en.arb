@@ -77,6 +77,10 @@
   "languageJa": "Japanese",
   "languageZh": "Chinese",
   "gameStartupError": "Initializing the game failed, please contact the official, thank you.",
-	"internetNotConnected": "Please make sure your internet connection is stable to keep the game running smoothly.",
-  "tip": "Tip"
+  "internetNotConnected": "Please make sure your internet connection is stable to keep the game running smoothly.",
+  "tip": "Tip",
+  "game_catch_the_trash": "Catch The Trash",
+  "game_recycle_card": "Recycle Card",
+  "game_scan_trash": "Scan Trash",
+  "game_scan_electron": "Energy Saver"
 }
