@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -35,19 +36,22 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
       return;
     }
 
-    final imageWidth = context.width * 1.5;
+    final imageWidth = min(
+      context.width * 1.5,
+      800,
+    );
 
     XFile? image;
     try {
       if (pickImageWay == 'Camera') {
         image = await picker.pickImage(
           source: ImageSource.camera,
-          maxWidth: imageWidth,
+          maxWidth: imageWidth.toDouble(),
         );
       } else if (pickImageWay == 'Gallery') {
         image = await picker.pickImage(
           source: ImageSource.gallery,
-          maxWidth: imageWidth,
+          maxWidth: imageWidth.toDouble(),
         );
       } else {
         return;
@@ -176,133 +180,138 @@ class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
                 left: Spacings.px20,
                 right: Spacings.px20,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (pickedImage.isEmpty)
-                    Text(
-                      l10n.canRecycleGameText,
-                      style: context.theme.textTheme.titleLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: pickedImage.isEmpty ? 0 : Spacings.px20,
-                    ),
-                    child: AnimatedSize(
-                      duration: Durations.short4,
-                      child: AspectRatio(
-                        aspectRatio: pickedImage.isEmpty ? 1 / 0.1 : 1 / 0.7,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(Spacings.px20),
-                          child: pickedImage.isNotEmpty
-                              ? Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Positioned.fill(
-                                      child: ImageFiltered(
-                                        imageFilter: ImageFilter.blur(
-                                          sigmaX: isLoading ? 5 : 0,
-                                          sigmaY: isLoading ? 5 : 0,
-                                        ),
-                                        child: Image.memory(
-                                          pickedImage,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                    if (isLoading)
-                                      const CircularProgressIndicator(),
-                                  ],
-                                )
-                              : const SizedBox.shrink(),
-                        ),
-                      ),
-                    ),
+              child: Center(
+                child: Container(
+                  constraints: const BoxConstraints(
+                    maxWidth: 600,
                   ),
-                  asyncState.when(
-                    data: (data) {
-                      return Column(
-                        children: [
-                          if (hasAiResponse) ...[
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                        color: context.colorScheme.secondary,
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      child: SingleChildScrollView(
-                                        child: Text(
-                                          data.aiResponse,
-                                          style: context
-                                              .theme.textTheme.titleMedium
-                                              ?.copyWith(
-                                            color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (pickedImage.isEmpty)
+                        Text(
+                          l10n.canRecycleGameText,
+                          style: context.theme.textTheme.titleLarge,
+                          textAlign: TextAlign.center,
+                        ),
+                      AnimatedSize(
+                        duration: Durations.short4,
+                        child: AspectRatio(
+                          aspectRatio: pickedImage.isEmpty ? 1 / 0.1 : 1 / 0.7,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(Spacings.px20),
+                            child: pickedImage.isNotEmpty
+                                ? Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Positioned.fill(
+                                        child: ImageFiltered(
+                                          imageFilter: ImageFilter.blur(
+                                            sigmaX: isLoading ? 5 : 0,
+                                            sigmaY: isLoading ? 5 : 0,
+                                          ),
+                                          child: Image.memory(
+                                            pickedImage,
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  Gaps.w20,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                      if (isLoading)
+                                        const CircularProgressIndicator(),
+                                    ],
+                                  )
+                                : const SizedBox.shrink(),
+                          ),
+                        ),
+                      ),
+                      asyncState.when(
+                        data: (data) {
+                          return Column(
+                            children: [
+                              if (hasAiResponse) ...[
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Row(
                                     children: [
-                                      const RecycleIcon(
-                                        size: 24,
+                                      Expanded(
+                                        child: Container(
+                                          padding: const EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                            color:
+                                                context.colorScheme.secondary,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            border: Border.all(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          child: SingleChildScrollView(
+                                            child: Text(
+                                              data.aiResponse,
+                                              style: context
+                                                  .theme.textTheme.titleMedium
+                                                  ?.copyWith(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                      Gaps.w8,
-                                      Text(
-                                        data.addScore.toString(),
-                                        style: context
-                                            .theme.textTheme.headlineLarge,
+                                      Gaps.w20,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const RecycleIcon(
+                                            size: 24,
+                                          ),
+                                          Gaps.w8,
+                                          Text(
+                                            data.addScore.toString(),
+                                            style: context
+                                                .theme.textTheme.headlineLarge,
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
+                                ),
+                                Gaps.h24,
+                              ],
+                              DefaultButton(
+                                onPressed: getImage,
+                                text: hasAiResponse
+                                    ? l10n.canRecycleGameNext
+                                    : l10n.canRecycleGameShoot,
+                              ),
+                            ],
+                          );
+                        },
+                        loading: () => const SizedBox.shrink(),
+                        error: (error, _) => Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Text(
+                                l10n.canRecycleGameError,
+                                style: context.theme.textTheme.titleMedium,
+                                textAlign: TextAlign.center,
                               ),
                             ),
                             Gaps.h24,
+                            Center(
+                              child: DefaultButton(
+                                onPressed: getImage,
+                                text: l10n.canRecycleGameTryAgain,
+                              ),
+                            ),
                           ],
-                          DefaultButton(
-                            onPressed: getImage,
-                            text: hasAiResponse
-                                ? l10n.canRecycleGameNext
-                                : l10n.canRecycleGameShoot,
-                          ),
-                        ],
-                      );
-                    },
-                    loading: () => const SizedBox.shrink(),
-                    error: (error, _) => Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            l10n.canRecycleGameError,
-                            style: context.theme.textTheme.titleMedium,
-                            textAlign: TextAlign.center,
-                          ),
                         ),
-                        Gaps.h24,
-                        Center(
-                          child: DefaultButton(
-                            onPressed: getImage,
-                            text: l10n.canRecycleGameTryAgain,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
             const AppCloseButton(),
