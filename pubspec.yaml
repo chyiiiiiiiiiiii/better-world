@@ -1,7 +1,7 @@
 name: envawareness
 description: 'A new Flutter project.'
 publish_to: 'none'
-version: 0.3.0+9
+version: 1.0.0
 
 environment:
   sdk: '>=3.2.6 <4.0.0'

@@ -55,7 +55,8 @@ class CanRecycleController extends _$CanRecycleController {
 
           This is language code $languageCode. 如果是中文，請用正體中文回答。
 
-          The response format is "<recyclable>#<response>".'''
+          The response format is "<true or false>#<response>". true means can save energy.
+          '''
             : '''
           Is this recyclable? Give me response in 30 words or less with some loverly description depend on language code I give.
           And also, return true and false in the beginning for telling me if it's recyclable or not.
@@ -78,9 +79,13 @@ class CanRecycleController extends _$CanRecycleController {
       final responseText = (response.text ?? '').trim();
       debugPrint(responseText);
 
-      final isRecyclable =
-          bool.tryParse(responseText.split('#').firstOrNull ?? 'false') ??
-              false;
+      var isRecyclable = false;
+      if (responseText.contains('#')) {
+        isRecyclable =
+            bool.tryParse(responseText.split('#').firstOrNull ?? 'false') ??
+                false;
+      }
+
       final currentLevel =
           ref.read(playControllerProvider).requireValue.playInfo.currentLevel;
       final addScore = calculateGamePerItemScore(
@@ -93,6 +98,10 @@ class CanRecycleController extends _$CanRecycleController {
             🤖: ${responseText.split('#').elementAtOrNull(1)}
           '''
           .trim();
+
+      await ref
+          .read(playControllerProvider.notifier)
+          .updateClickCount(needReset: true);
 
       return state.requireValue.copyWith(
         aiResponse: message,
