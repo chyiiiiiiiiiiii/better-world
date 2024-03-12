@@ -17,15 +17,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:universal_io/io.dart';
 
-class CanRecyclePage extends ConsumerStatefulWidget {
-  const CanRecyclePage({super.key});
-  static const routePath = '/can-recycle-page';
+class GeminiImagePage extends ConsumerStatefulWidget {
+  const GeminiImagePage({required this.isElectron, super.key});
+  static const canRecycleRoutePath = '/can-recycle-page';
+  static const electronRoutePath = '/electron-page';
+
+  final bool isElectron;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _CanRecyclePageState();
 }
 
-class _CanRecyclePageState extends ConsumerState<CanRecyclePage> {
+class _CanRecyclePageState extends ConsumerState<GeminiImagePage> {
   late AppLocalizations l10n = context.l10n;
 
   final picker = ImagePicker();

@@ -119,7 +119,16 @@ class GameDialog extends StatelessWidget {
                       onTap: () {
                         context
                           ..pop()
-                          ..push(CanRecyclePage.routePath);
+                          ..push(GeminiImagePage.canRecycleRoutePath);
+                      },
+                      imagePath: 'assets/images/game_icon/scan_game.png',
+                    ),
+                    GameDialogItem(
+                      title: 'How many power',
+                      onTap: () {
+                        context
+                          ..pop()
+                          ..push(GeminiImagePage.electronRoutePath);
                       },
                       imagePath: 'assets/images/game_icon/scan_game.png',
                     ),

@@ -85,10 +85,21 @@ GoRouter appRouter(AppRouterRef ref) {
         },
       ),
       GoRoute(
-        path: CanRecyclePage.routePath,
+        path: GeminiImagePage.canRecycleRoutePath,
         name: 'can-recycle',
         builder: (context, state) {
-          return const CanRecyclePage();
+          return const GeminiImagePage(
+            isElectron: false,
+          );
+        },
+      ),
+      GoRoute(
+        path: GeminiImagePage.electronRoutePath,
+        name: 'electron-recycle',
+        builder: (context, state) {
+          return const GeminiImagePage(
+            isElectron: true,
+          );
         },
       ),
       GoRoute(
