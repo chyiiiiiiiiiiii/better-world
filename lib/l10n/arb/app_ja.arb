@@ -40,11 +40,12 @@
 	"passCongratulationWithScoreMessage": "おめでとう！地球愛レベルが {currentLevel} に上昇し、スコアもアップしました。地球救出の旅を続けよう！",
 	"allPassCongratulationMessage": "地球を救ったおめでとう！あなたは真のヒーローだ！",
 	"noAvailableScore": "購入可能なスコアがありません。",
-	"speciesAlreadyGot": "'{animalName}'はすでに救出済みです。他の種を探しましょう！",
+	"speciesAlreadyGot": "🥲 '{animalName}'はすでに救出済みです。他の種を探しましょう！",
 	"doNotHaveEnoughScore": "スコアが足りません。",
 	"haveBoughtIt": "すでに購入済みです。",
 	"leaderBoard": "地球愛ランキング",
 	"canRecycleGameText": "周りのリサイクル可能なアイテムを探して、環境保護AIが確認をお手伝いします",
+	"electronGameText": "電化製品をターゲットにして、環境保護AIがその電力消費量を確認し、省エネの知識を学びましょう！",
 	"canRecycleGameShoot": "アイテムを撮影",
 	"canRecycleGameNext": "次を探す",
 	"canRecycleGameTryAgain": "もう一度試す",
@@ -77,5 +78,5 @@
 	"languageZh": "中国語",
 	"gameStartupError": "ゲームの初期化に問題があります。公式にご連絡ください。ありがとうございます。",
 	"internetNotConnected": "ゲームがスムーズに進行するように、インターネット接続を安定させてください。",
-  "tip": "チップ"
+	"tip": "チップ"
 }

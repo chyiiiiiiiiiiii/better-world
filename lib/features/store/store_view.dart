@@ -131,10 +131,13 @@ class _AnimalCard extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                'assets/images/animals.png',
-                colorBlendMode: BlendMode.modulate,
-                width: 200,
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Image.asset(
+                  'assets/images/endanger.png',
+                  colorBlendMode: BlendMode.modulate,
+                  width: 180,
+                ),
               ),
               Column(
                 children: [

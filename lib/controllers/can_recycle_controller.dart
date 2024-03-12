@@ -25,24 +25,38 @@ class CanRecycleController extends _$CanRecycleController {
     return RecycleValidatorState();
   }
 
-  Future<void> checkRecyclable(Uint8List bytes) async {
+  Future<void> checkRecyclable(
+    Uint8List bytes, {
+    required bool isElectron,
+  }) async {
     await update((previous) => previous.copyWith(pickedImage: bytes));
 
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final result = await getImage(bytes);
+      final result = await getImage(bytes, isElectron: isElectron);
 
       return result;
     });
   }
 
-  Future<RecycleValidatorState> getImage(Uint8List bytes) async {
+  Future<RecycleValidatorState> getImage(
+    Uint8List bytes, {
+    required bool isElectron,
+  }) async {
     try {
       final appLocale = ref.read(appLocaleProvider).value;
       final languageCode = appLocale?.languageCode;
 
       final prompt = TextPart(
-        '''
+        isElectron
+            ? '''
+          Im building an app for save energy. Give me response in 30 words or less with some loverly description depend on language code I give.
+          And also, return true and false in the beginning for telling me if it's save energy or not.
+
+          This is language code $languageCode. 如果是中文，請用正體中文回答。
+
+          The response format is "<recyclable>#<response>".'''
+            : '''
           Is this recyclable? Give me response in 30 words or less with some loverly description depend on language code I give.
           And also, return true and false in the beginning for telling me if it's recyclable or not.
 
