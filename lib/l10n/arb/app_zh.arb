@@ -78,5 +78,9 @@
   "languageZh": "中文",
   "gameStartupError": "遊戲初始化發生問題，請聯繫官方，謝謝。",
   "internetNotConnected": "網路連線請保持暢通，確保遊戲順暢。",
-  "tip": "小知識"
+  "tip": "小知識",
+  "game_catch_the_trash": "接住！回收垃圾",
+  "game_recycle_card": "回收知識卡",
+  "game_scan_trash": "可以回收嗎？",
+  "game_scan_electron": "節能電器"
 }
