@@ -49,6 +49,7 @@
   "canRecycleGameNext": "繼續尋找",
   "canRecycleGameTryAgain": "再試一次",
   "canRecycleGameError": "不好意思，AI無法處理提供的照片。",
+  "canRecyclePermissionError": "請先將裝置的相機或相簿的權限開啟，才能提供照片哦！",
   "remindClickForPoint": "加把勁，持續點擊，累積能量！",
   "endangeredLevelEX": "已滅絕",
   "endangeredLevelEW": "野外滅絕",

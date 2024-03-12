@@ -49,6 +49,7 @@
   "canRecycleGameNext": "Keep Looking",
   "canRecycleGameTryAgain": "Try again",
   "canRecycleGameError": "Sorry, the AI cannot process the provided photo.",
+	"canRecyclePermissionError": "Please enable the camera or album permissions on your device before you can provide photos!",
   "remindClickForPoint": "Work harder, keep tapping, and accumulate energy!",
   "endangeredLevelEX": "Extinct",
   "endangeredLevelEW": "Extinct in the Wild",

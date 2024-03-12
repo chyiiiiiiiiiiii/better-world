@@ -49,6 +49,7 @@
 	"canRecycleGameNext": "次を探す",
 	"canRecycleGameTryAgain": "もう一度試す",
 	"canRecycleGameError": "申し訳ありませんが、AIは提供された写真を処理できません。",
+	"canRecyclePermissionError": "写真を提供する前に、デバイスでカメラまたはアルバムの許可を有効にしてください。",
 	"remindClickForPoint": "もっと頑張って、クリックし続けて、エネルギーを貯めてください！",
 	"endangeredLevelEX": "絶滅",
 	"endangeredLevelEW": "野生絶滅",
