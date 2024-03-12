@@ -134,8 +134,7 @@ class _AnimalCard extends ConsumerWidget {
               Image.asset(
                 'assets/images/animals.png',
                 colorBlendMode: BlendMode.modulate,
-                width: context.width / 3,
-                height: context.width / 3,
+                width: 200,
               ),
               Column(
                 children: [
