@@ -36,43 +36,52 @@ class StoreView extends ConsumerWidget {
       ),
     );
 
-    return Padding(
-      padding: const EdgeInsets.all(Spacings.px20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            l10n.store,
-            style: Theme.of(context).textTheme.displayLarge,
-          ),
-          Gaps.h64,
-          Gaps.h12,
-          Text(
-            l10n.availableScore(availableScore),
-            style: context.textTheme.titleLarge,
-            textAlign: TextAlign.center,
-          ),
-          Gaps.h12,
-          Row(
-            children: products.indexed.map(
-              (e) {
-                return Expanded(
-                  child: _Item(
-                    index: e.$1,
-                    product: e.$2,
-                  ),
-                );
-              },
-            ).toList(),
-          ),
-          Gaps.h12,
-          const _AnimalCard(),
-        ],
-      ).animate().fade(
-            delay: const Duration(
-              milliseconds: 1000,
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.all(Spacings.px20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Flexible(
+              child: Container(
+                constraints: const BoxConstraints(
+                  maxHeight: 100,
+                ),
+              ),
             ),
-          ),
+            Text(
+              l10n.store,
+              style: Theme.of(context).textTheme.displayLarge,
+            ),
+            Gaps.h8,
+            Text(
+              l10n.availableScore(availableScore),
+              style: context.textTheme.titleLarge,
+              textAlign: TextAlign.center,
+            ),
+            Gaps.h12,
+            Row(
+              children: products.indexed.map(
+                (e) {
+                  return Expanded(
+                    child: _Item(
+                      index: e.$1,
+                      product: e.$2,
+                    ),
+                  );
+                },
+              ).toList(),
+            ),
+            Gaps.h12,
+            const _AnimalCard(),
+            Gaps.h32,
+          ],
+        ).animate().fade(
+              delay: const Duration(
+                milliseconds: 1000,
+              ),
+            ),
+      ),
     );
   }
 }
@@ -122,11 +131,13 @@ class _AnimalCard extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                'assets/images/animals.png',
-                colorBlendMode: BlendMode.modulate,
-                width: context.width / 3,
-                height: context.width / 3,
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Image.asset(
+                  'assets/images/endanger.png',
+                  colorBlendMode: BlendMode.modulate,
+                  width: 180,
+                ),
               ),
               Column(
                 children: [

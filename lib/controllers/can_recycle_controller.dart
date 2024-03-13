@@ -25,28 +25,43 @@ class CanRecycleController extends _$CanRecycleController {
     return RecycleValidatorState();
   }
 
-  Future<void> checkRecyclable(Uint8List bytes) async {
+  Future<void> checkRecyclable(
+    Uint8List bytes, {
+    required bool isElectron,
+  }) async {
     await update((previous) => previous.copyWith(pickedImage: bytes));
 
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final result = await getImage(bytes);
+      final result = await getImage(bytes, isElectron: isElectron);
 
       return result;
     });
   }
 
-  Future<RecycleValidatorState> getImage(Uint8List bytes) async {
+  Future<RecycleValidatorState> getImage(
+    Uint8List bytes, {
+    required bool isElectron,
+  }) async {
     try {
       final appLocale = ref.read(appLocaleProvider).value;
       final languageCode = appLocale?.languageCode;
 
       final prompt = TextPart(
-        '''
+        isElectron
+            ? '''
+          Im building an app for save energy. Give me response in 30 words or less with some loverly description depend on language code I give.
+          And also, return true and false in the beginning for telling me if it's save energy or not.
+
+          This is language code $languageCode. 如果是中文，請用正體中文回答。
+
+          The response format is "<true or false>#<response>". true means can save energy.
+          '''
+            : '''
           Is this recyclable? Give me response in 30 words or less with some loverly description depend on language code I give.
           And also, return true and false in the beginning for telling me if it's recyclable or not.
 
-          This is language code $languageCode.
+          This is language code $languageCode. 如果是中文，請用正體中文回答。
 
           The response format is "<recyclable>#<response>".
         ''',
@@ -64,9 +79,13 @@ class CanRecycleController extends _$CanRecycleController {
       final responseText = (response.text ?? '').trim();
       debugPrint(responseText);
 
-      final isRecyclable =
-          bool.tryParse(responseText.split('#').firstOrNull ?? 'false') ??
-              false;
+      var isRecyclable = false;
+      if (responseText.contains('#')) {
+        isRecyclable =
+            bool.tryParse(responseText.split('#').firstOrNull ?? 'false') ??
+                false;
+      }
+
       final currentLevel =
           ref.read(playControllerProvider).requireValue.playInfo.currentLevel;
       final addScore = calculateGamePerItemScore(
@@ -79,6 +98,10 @@ class CanRecycleController extends _$CanRecycleController {
             🤖: ${responseText.split('#').elementAtOrNull(1)}
           '''
           .trim();
+
+      await ref
+          .read(playControllerProvider.notifier)
+          .updateClickCount(needReset: true);
 
       return state.requireValue.copyWith(
         aiResponse: message,

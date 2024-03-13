@@ -111,6 +111,7 @@ class LeaderBoardPage extends ConsumerWidget {
                         ),
                         Gaps.w8,
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text.rich(
                               TextSpan(

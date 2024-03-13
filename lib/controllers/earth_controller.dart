@@ -9,6 +9,10 @@ class EditMode extends _$EditMode {
     state = !state;
   }
 
+  void close() {
+    state = false;
+  }
+
   @override
   bool build() {
     return false;

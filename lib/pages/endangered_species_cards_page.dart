@@ -181,258 +181,274 @@ class SpeciesCard extends ConsumerWidget {
         Navigator.of(context).pop();
       },
       behavior: HitTestBehavior.translucent,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned.fill(
-              child: Tilt(
-                disable: !isOwned,
-                tiltConfig: const TiltConfig(
-                  enableGestureTouch: false,
-                  enableGestureSensors: false,
-                ),
-                lightConfig: const LightConfig(disable: true),
-                shadowConfig: const ShadowConfig(disable: true),
-                childLayout: ChildLayout(
-                  outer: [
-                    Positioned.fill(
-                      top: context.height / 2.2,
-                      child: TiltParallax(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            children: [
-                              Text(
-                                info.translatedName(appLocale),
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        49,
-                                        70,
-                                        121,
-                                      ),
-                                    ),
-                              ),
-                              Gaps.h20,
-                              Text(
-                                info.enDangerLevelName(l10n),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        49,
-                                        70,
-                                        121,
-                                      ),
-                                    ),
-                              ),
-                              Gaps.h12,
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '${l10n.endangeredLevel}：',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: const Color.fromARGB(
-                                            255,
-                                            49,
-                                            70,
-                                            121,
-                                          ),
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(
+            maxWidth: 400,
+          ),
+          padding: const EdgeInsets.all(20),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned.fill(
+                child: Tilt(
+                  disable: !isOwned,
+                  tiltConfig: const TiltConfig(
+                    enableGestureTouch: false,
+                    enableGestureSensors: false,
+                  ),
+                  lightConfig: const LightConfig(disable: true),
+                  shadowConfig: const ShadowConfig(disable: true),
+                  childLayout: ChildLayout(
+                    outer: [
+                      Positioned.fill(
+                        top: context.height / 2.2,
+                        child: TiltParallax(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Column(
+                              children: [
+                                Text(
+                                  info.translatedName(appLocale),
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall
+                                      ?.copyWith(
+                                        color: const Color.fromARGB(
+                                          255,
+                                          49,
+                                          70,
+                                          121,
                                         ),
-                                  ),
-                                  ...info.endangerStars,
-                                ],
-                              ),
-                              Text(
-                                info.description,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        49,
-                                        70,
-                                        121,
                                       ),
+                                ),
+                                Gaps.h20,
+                                Text(
+                                  info.enDangerLevelName(l10n),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                        color: const Color.fromARGB(
+                                          255,
+                                          49,
+                                          70,
+                                          121,
+                                        ),
+                                      ),
+                                ),
+                                Gaps.h12,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '${l10n.endangeredLevel}：',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            color: const Color.fromARGB(
+                                              255,
+                                              49,
+                                              70,
+                                              121,
+                                            ),
+                                          ),
                                     ),
-                              ),
-                            ],
+                                    ...info.endangerStars,
+                                  ],
+                                ),
+                                Text(
+                                  info.description,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: const Color.fromARGB(
+                                          255,
+                                          49,
+                                          70,
+                                          121,
+                                        ),
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Positioned.fill(
-                      top: 100,
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: SizedBox(
-                          width: double.maxFinite,
-                          height: context.height / 3,
-                          child: TiltParallax(
-                            size: const Offset(30, 30),
-                            child: Padding(
-                              padding: const EdgeInsets.all(Spacings.px20),
-                              child: Stack(
-                                children: [
-                                  Positioned.fill(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: Colors.grey,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.2),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: const Offset(0, 3),
-                                          ),
-                                        ],
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Stack(
-                                          children: [
-                                            Positioned.fill(
-                                              child: Opacity(
-                                                opacity: 0.6,
-                                                child: ImageFiltered(
-                                                  imageFilter: ImageFilter.blur(
-                                                    sigmaX: 10,
-                                                    sigmaY: 10,
-                                                  ),
-                                                  child: LayoutBuilder(
-                                                    builder:
-                                                        (context, constraints) {
-                                                      return CachedNetworkImage(
-                                                        fit: BoxFit.cover,
-                                                        imageUrl: info.image,
-                                                        color: isOwned
-                                                            ? null
-                                                            : Colors.black
-                                                                .withOpacity(1),
-                                                        colorBlendMode:
-                                                            BlendMode.color,
-                                                        width: constraints
-                                                            .maxWidth,
-                                                        placeholder: (
-                                                          context,
-                                                          url,
-                                                        ) =>
-                                                            const ColoredBox(
-                                                          color: Colors.white,
-                                                        ),
-                                                        errorWidget: (
-                                                          context,
-                                                          url,
-                                                          error,
-                                                        ) =>
-                                                            const Icon(
-                                                          Icons.error,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Center(
-                                              child: CachedNetworkImage(
-                                                fit: BoxFit.contain,
-                                                imageUrl: info.image,
-                                                color: isOwned
-                                                    ? null
-                                                    : Colors.black
-                                                        .withOpacity(1),
-                                                colorBlendMode: BlendMode.color,
-                                                placeholder: (context, url) =>
-                                                    const ColoredBox(
-                                                  color: Colors.white,
-                                                ),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        const Icon(Icons.error),
-                                              ),
+                      Positioned.fill(
+                        top: 100,
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: SizedBox(
+                            width: double.maxFinite,
+                            height: context.height / 3,
+                            child: TiltParallax(
+                              size: const Offset(30, 30),
+                              child: Padding(
+                                padding: const EdgeInsets.all(Spacings.px20),
+                                child: Stack(
+                                  children: [
+                                    Positioned.fill(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Colors.grey,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.2),
+                                              spreadRadius: 5,
+                                              blurRadius: 7,
+                                              offset: const Offset(0, 3),
                                             ),
                                           ],
                                         ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Stack(
+                                            children: [
+                                              Positioned.fill(
+                                                child: Opacity(
+                                                  opacity: 0.6,
+                                                  child: ImageFiltered(
+                                                    imageFilter:
+                                                        ImageFilter.blur(
+                                                      sigmaX: 10,
+                                                      sigmaY: 10,
+                                                    ),
+                                                    child: LayoutBuilder(
+                                                      builder: (
+                                                        context,
+                                                        constraints,
+                                                      ) {
+                                                        return CachedNetworkImage(
+                                                          fit: BoxFit.cover,
+                                                          imageUrl: info.image,
+                                                          color: isOwned
+                                                              ? null
+                                                              : Colors.black
+                                                                  .withOpacity(
+                                                                  1,
+                                                                ),
+                                                          colorBlendMode:
+                                                              BlendMode.color,
+                                                          width: constraints
+                                                              .maxWidth,
+                                                          placeholder: (
+                                                            context,
+                                                            url,
+                                                          ) =>
+                                                              const ColoredBox(
+                                                            color: Colors.white,
+                                                          ),
+                                                          errorWidget: (
+                                                            context,
+                                                            url,
+                                                            error,
+                                                          ) =>
+                                                              const Icon(
+                                                            Icons.error,
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Center(
+                                                child: CachedNetworkImage(
+                                                  fit: BoxFit.contain,
+                                                  imageUrl: info.image,
+                                                  color: isOwned
+                                                      ? null
+                                                      : Colors.black
+                                                          .withOpacity(1),
+                                                  colorBlendMode:
+                                                      BlendMode.color,
+                                                  placeholder: (context, url) =>
+                                                      const ColoredBox(
+                                                    color: Colors.white,
+                                                  ),
+                                                  errorWidget: (
+                                                    context,
+                                                    url,
+                                                    error,
+                                                  ) =>
+                                                      const Icon(Icons.error),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                  child: Container(
+                    height: 360,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                  ],
-                ),
-                child: Container(
-                  height: 360,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              top: context.height / 1.4,
-              left: 0,
-              right: 0,
-              child: Column(
-                children: [
-                  if (showGoogleWallet) ...[
-                    AddToGoogleWalletButton(
-                      pass: ref
-                          .read(googleWalletControllerProvider.notifier)
-                          .getPassJson(
-                        header: info.translatedName(appLocale),
-                        subHeader: l10n.endangeredSpecies,
-                        endangeredLevel: info.level,
-                        logoImageUrl: info.image,
-                        heroImageUrl: info.image,
-                        properties: [
-                          GoogleWalletPassProperty(
-                            id: 'endangered_level',
-                            header: l10n.endangeredLevel,
-                            body: '${info.level} (${List.generate(
-                              info.endangerStars.length,
-                              (index) => '⭐️',
-                            ).join()})',
-                          ),
-                        ],
+              Positioned(
+                top: context.height / 1.4,
+                left: 0,
+                right: 0,
+                child: Column(
+                  children: [
+                    if (showGoogleWallet) ...[
+                      AddToGoogleWalletButton(
+                        pass: ref
+                            .read(googleWalletControllerProvider.notifier)
+                            .getPassJson(
+                          header: info.translatedName(appLocale),
+                          subHeader: l10n.endangeredSpecies,
+                          endangeredLevel: info.level,
+                          logoImageUrl: info.image,
+                          heroImageUrl: info.image,
+                          properties: [
+                            GoogleWalletPassProperty(
+                              id: 'endangered_level',
+                              header: l10n.endangeredLevel,
+                              body: '${info.level} (${List.generate(
+                                info.endangerStars.length,
+                                (index) => '⭐️',
+                              ).join()})',
+                            ),
+                          ],
+                        ),
+                        onSuccess: () {},
+                        onCanceled: () {},
+                        onError: (Object error) {},
                       ),
-                      onSuccess: () {},
-                      onCanceled: () {},
-                      onError: (Object error) {},
-                    ),
-                    Gaps.h20,
+                      Gaps.h20,
+                    ],
+                    if (canNavigateSpeciesPage)
+                      DefaultButton(
+                        text: l10n.myEndangeredSpeciesAlbum,
+                        onPressed: () =>
+                            context.push(EndangeredSpeciesCardsPage.routePath),
+                      ),
                   ],
-                  if (canNavigateSpeciesPage)
-                    DefaultButton(
-                      text: l10n.myEndangeredSpeciesAlbum,
-                      onPressed: () =>
-                          context.push(EndangeredSpeciesCardsPage.routePath),
-                    ),
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

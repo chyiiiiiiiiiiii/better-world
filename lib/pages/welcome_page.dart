@@ -39,65 +39,70 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
     final l10n = context.l10n;
 
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        children: [
-          _SubPage(
-            zdogWidget: ZGroup(
-              children: [
-                TriangleTreeZdog(
-                  translate: const ZVector.only(x: -10, y: -40),
-                  rotate: ZVector.only(x: 90.0.toRadius()),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 400),
+          child: PageView(
+            controller: _pageController,
+            children: [
+              _SubPage(
+                zdogWidget: ZGroup(
+                  children: [
+                    TriangleTreeZdog(
+                      translate: const ZVector.only(x: -10, y: -40),
+                      rotate: ZVector.only(x: 90.0.toRadius()),
+                    ),
+                    CircleTreeZdog(
+                      translate: const ZVector.only(x: 10, y: -40),
+                      rotate: ZVector.only(x: 90.0.toRadius()),
+                    ),
+                  ],
                 ),
-                CircleTreeZdog(
-                  translate: const ZVector.only(x: 10, y: -40),
-                  rotate: ZVector.only(x: 90.0.toRadius()),
-                ),
-              ],
-            ),
-            onPressed: () {
-              _pageController.nextPage(
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.easeInOut,
-              );
-            },
-            label: l10n.welcomeMessage,
-          ),
-          _SubPage(
-            zdogWidget: const DashZdog(
-              translate: ZVector.only(y: -40),
-            ),
-            label: l10n.welcomeMessage2,
-            onPressed: () {
-              _pageController.nextPage(
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.easeInOut,
-              );
-            },
-          ),
-          _SubPage(
-            zoom: 0.8,
-            zdogWidget: const ZPositioned(
-              translate: ZVector.only(y: -100),
-              child: EarthZdog(
-                rotateValue: ZVector.zero,
+                onPressed: () {
+                  _pageController.nextPage(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                label: l10n.welcomeMessage,
               ),
-            ),
-            isLast: true,
-            label: l10n.welcomeMessage3,
-            onPressed: () async {
-              final pref = await SharedPreferences.getInstance();
+              _SubPage(
+                zdogWidget: const DashZdog(
+                  translate: ZVector.only(y: -40),
+                ),
+                label: l10n.welcomeMessage2,
+                onPressed: () {
+                  _pageController.nextPage(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeInOut,
+                  );
+                },
+              ),
+              _SubPage(
+                zoom: 0.8,
+                zdogWidget: const ZPositioned(
+                  translate: ZVector.only(y: -100),
+                  child: EarthZdog(
+                    rotateValue: ZVector.zero,
+                  ),
+                ),
+                isLast: true,
+                label: l10n.welcomeMessage3,
+                onPressed: () async {
+                  final pref = await SharedPreferences.getInstance();
 
-              await pref.setBool('firstTimeEnter', false);
+                  await pref.setBool('firstTimeEnter', false);
 
-              if (!context.mounted) {
-                return;
-              }
+                  if (!context.mounted) {
+                    return;
+                  }
 
-              context.pushReplacement(GamePage.routePath);
-            },
+                  context.pushReplacement(GamePage.routePath);
+                },
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -145,8 +150,9 @@ class _SubPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                   textStyle: context.textTheme.headlineSmall?.copyWith(
                     fontSize: 16,
+                    height: 2,
                   ),
-                  speed: const Duration(milliseconds: 50),
+                  speed: const Duration(milliseconds: 40),
                 ),
               ],
             ),

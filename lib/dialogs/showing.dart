@@ -1,3 +1,4 @@
+import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/pages/can_recycle_page.dart';
 import 'package:envawareness/pages/catch_game_page.dart';
 import 'package:envawareness/pages/recycle_game_page.dart';
@@ -80,55 +81,74 @@ class GameDialog extends StatelessWidget {
   final Animation<double> animation;
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return ScaleTransition(
       scale: animation,
-      child: Dialog(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(
+            maxWidth: 400,
+          ),
+          child: Dialog(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                GameDialogItem(
-                  imagePath: 'assets/images/game_icon/catch_game.png',
-                  title: 'Catch The Trash',
-                  onTap: () {
-                    context
-                      ..pop()
-                      ..push(CatchGamePage.routePath);
-                  },
+                GridView.count(
+                  crossAxisCount: 2,
+                  padding: const EdgeInsets.all(16),
+                  shrinkWrap: true,
+                  children: [
+                    GameDialogItem(
+                      imagePath: 'assets/images/game_icon/catch_game.png',
+                      title: l10n.game_catch_the_trash,
+                      onTap: () {
+                        context
+                          ..pop()
+                          ..push(CatchGamePage.routePath);
+                      },
+                    ),
+                    GameDialogItem(
+                      imagePath: 'assets/images/game_icon/recycle_game.png',
+                      title: l10n.game_recycle_card,
+                      onTap: () {
+                        context
+                          ..pop()
+                          ..push(RecycleGamePage.routePath);
+                      },
+                    ),
+                    GameDialogItem(
+                      title: l10n.game_scan_trash,
+                      onTap: () {
+                        context
+                          ..pop()
+                          ..push(GeminiImagePage.canRecycleRoutePath);
+                      },
+                      imagePath: 'assets/images/game_icon/scan_recycle.png',
+                    ),
+                    GameDialogItem(
+                      title: l10n.game_scan_electron,
+                      onTap: () {
+                        context
+                          ..pop()
+                          ..push(GeminiImagePage.electronRoutePath);
+                      },
+                      imagePath: 'assets/images/game_icon/scan_electron.png',
+                    ),
+                  ],
                 ),
-                GameDialogItem(
-                  imagePath: 'assets/images/game_icon/recycle_game.png',
-                  title: 'Recycle Card',
-                  onTap: () {
-                    context
-                      ..pop()
-                      ..push(RecycleGamePage.routePath);
+                IconButton(
+                  icon: const Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  ),
+                  onPressed: () {
+                    context.pop();
                   },
-                ),
-                GameDialogItem(
-                  title: 'Scan Recycleable',
-                  onTap: () {
-                    context
-                      ..pop()
-                      ..push(CanRecyclePage.routePath);
-                  },
-                  imagePath: 'assets/images/game_icon/scan_game.png',
                 ),
               ],
             ),
-            IconButton(
-              icon: const Icon(
-                Icons.check,
-                color: Colors.green,
-              ),
-              onPressed: () {
-                context.pop();
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -152,6 +172,7 @@ class GameDialogItem extends StatelessWidget {
     return AppTap(
       onTap: onTap.call,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
             imagePath,
@@ -240,6 +261,7 @@ Future<T?> showLevelUpDialog<T>(
   BuildContext context, {
   required String message,
   required String nextLevel,
+  required String tipText,
 }) {
   return showGeneralDialog(
     context: context,
@@ -253,6 +275,7 @@ Future<T?> showLevelUpDialog<T>(
         child: LevelUpDialog(
           nextLevel: nextLevel,
           message: message,
+          tipText: tipText,
         ),
       );
     },
@@ -263,13 +286,17 @@ class LevelUpDialog extends StatelessWidget {
   const LevelUpDialog({
     required this.message,
     required this.nextLevel,
+    required this.tipText,
     super.key,
   });
   final String message;
   final String nextLevel;
+  final String tipText;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Dialog(
       child: SizedBox(
         width: 300,
@@ -294,11 +321,37 @@ class LevelUpDialog extends StatelessWidget {
                   ),
                 ],
               ),
+              Gaps.h12,
               Text(
                 message,
-                style: context.textTheme.headlineSmall?.copyWith(fontSize: 14),
+                style: context.textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),
+              Gaps.h12,
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: context.colorScheme.background.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/light_bulb.png',
+                      width: 24,
+                      height: 24,
+                    ),
+                    Gaps.w12,
+                    Expanded(
+                      child: Text(
+                        '${l10n.tip}: $tipText',
+                        style: context.textTheme.bodySmall,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Gaps.h12,
               IconButton(
                 icon: const Icon(
                   Icons.check,

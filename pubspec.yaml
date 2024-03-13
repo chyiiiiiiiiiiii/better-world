@@ -1,7 +1,7 @@
 name: envawareness
 description: 'A new Flutter project.'
 publish_to: 'none'
-version: 0.3.0+6
+version: 1.0.0
 
 environment:
   sdk: '>=3.2.6 <4.0.0'
@@ -20,9 +20,7 @@ dependencies:
   cloud_firestore: ^4.15.8
   shared_preferences: ^2.2.2
   connectivity_plus: ^5.0.2
-
   go_router: ^13.2.0
-
   flutter_riverpod: ^2.4.10
   riverpod_annotation: ^2.3.4
   freezed: ^2.4.7
