@@ -10,6 +10,7 @@ import 'package:envawareness/zdogs/earth_zdog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:universal_io/io.dart';
 import 'package:zflutter/zflutter.dart';
 
 class SignInPage extends ConsumerWidget {
@@ -92,26 +93,28 @@ class SignInPage extends ConsumerWidget {
                         ? const CircularProgressIndicator()
                         : Column(
                             children: [
-                              AppTap(
-                                onTap: ref
-                                    .read(authControllerProvider.notifier)
-                                    .signInWithApple,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/apple.png',
-                                      width: 32,
-                                    ),
-                                    Gaps.w20,
-                                    Text(
-                                      l10n.signInWithApple,
-                                      style: context.textTheme.titleLarge,
-                                    ),
-                                  ],
+                              if (Platform.isIOS) ...[
+                                AppTap(
+                                  onTap: ref
+                                      .read(authControllerProvider.notifier)
+                                      .signInWithApple,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/apple.png',
+                                        width: 32,
+                                      ),
+                                      Gaps.w20,
+                                      Text(
+                                        l10n.signInWithApple,
+                                        style: context.textTheme.titleLarge,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Gaps.h20,
+                                Gaps.h20,
+                              ],
                               AppTap(
                                 onTap: ref
                                     .read(authControllerProvider.notifier)

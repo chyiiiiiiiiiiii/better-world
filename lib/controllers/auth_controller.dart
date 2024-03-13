@@ -21,13 +21,16 @@ class AuthController extends _$AuthController {
     state = const AsyncValue.loading();
 
     try {
-      final authRepository = ref.watch(authRepositoryProvider);
+      final authRepository = ref.read(authRepositoryProvider);
 
       final googleAccount = await authRepository.signInGoogle();
       final authentication = await googleAccount?.authentication;
       if (authentication == null) {
         throw Exception('Sign in failed.');
       }
+
+      final name = googleAccount?.displayName ?? '';
+      final photoUrl = googleAccount?.photoUrl ?? '';
 
       final oAuthCredential = GoogleAuthProvider.credential(
         accessToken: authentication.accessToken,
@@ -39,6 +42,9 @@ class AuthController extends _$AuthController {
       );
 
       final user = authRepository.currentUser;
+      await user?.updateDisplayName(name);
+      await user?.updatePhotoURL(photoUrl);
+
       state = AsyncValue.data(user);
 
       final prefs = await SharedPreferences.getInstance();
@@ -57,7 +63,7 @@ class AuthController extends _$AuthController {
     state = const AsyncValue.loading();
 
     try {
-      final authRepository = ref.watch(authRepositoryProvider);
+      final authRepository = ref.read(authRepositoryProvider);
 
       final appleCredential = await SignInWithApple.getAppleIDCredential(
         scopes: [
@@ -65,6 +71,7 @@ class AuthController extends _$AuthController {
           AppleIDAuthorizationScopes.fullName,
         ],
       );
+      final name = appleCredential.givenName;
 
       final oAuthProvider = OAuthProvider('apple.com');
       final oAuthCredential = oAuthProvider.credential(
@@ -77,6 +84,8 @@ class AuthController extends _$AuthController {
       );
 
       final user = authRepository.currentUser;
+      await user?.updateDisplayName(name);
+
       state = AsyncValue.data(user);
 
       final prefs = await SharedPreferences.getInstance();
