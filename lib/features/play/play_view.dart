@@ -59,9 +59,11 @@ class PlayView extends ConsumerWidget {
                         ),
                       ),
                       Gaps.w12,
-                      Text(
-                        l10n.greeting(username),
-                        style: context.textTheme.titleMedium,
+                      Expanded(
+                        child: Text(
+                          l10n.greeting(username),
+                          style: context.textTheme.titleMedium,
+                        ),
                       ),
                     ],
                   ),
@@ -196,30 +198,49 @@ class AppAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: imageUrl,
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        imageBuilder: (context, imageProvider) => Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.white,
-              width: 2,
+      tag: imageUrl.isNotEmpty ? imageUrl : 'avatar',
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: Colors.white,
+            width: 2,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 10,
+              spreadRadius: 1,
+              offset: const Offset(0, 2),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                spreadRadius: 1,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: CircleAvatar(
-            backgroundImage: imageProvider,
-            radius: 18,
-          ),
+          ],
         ),
+        child: imageUrl.isNotEmpty
+            ? CachedNetworkImage(
+                imageUrl: imageUrl,
+                imageBuilder: (context, imageProvider) => ProviderScope(
+                  child: Container(
+                    child: CircleAvatar(
+                      backgroundImage: imageProvider,
+                      radius: 18,
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: Image.asset(
+                    'assets/images/child.png',
+                    width: 32,
+                  ),
+                ),
+              )
+            : CircleAvatar(
+                backgroundColor: Colors.transparent,
+                child: Image.asset(
+                  'assets/images/child.png',
+                  width: 32,
+                ),
+              ),
       ),
     );
   }

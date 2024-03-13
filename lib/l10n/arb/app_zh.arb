@@ -5,6 +5,7 @@
   "welcomeMessage3": "所以，準備好接受挑戰了嗎？讓我們一起踏上這場既是遊戲又是使命的冒險之旅，為了地球，為了我們共同的家園。",
   "welcomeConfirm": "出發！",
   "signInWithGoogle": "透過 Google 登入",
+  "signInWithApple": "透過 Apple 登入",
   "signInError": "登入失敗，請聯繫官方",
   "greeting": "嗨，{username}",
   "signOutTitle": "想要登出嗎？",

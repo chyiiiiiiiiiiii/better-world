@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:envawareness/controllers/auth_controller.dart';
 import 'package:envawareness/features/play/play_controller.dart';
+import 'package:envawareness/features/play/play_view.dart';
 import 'package:envawareness/l10n/app_localizations_extension.dart';
 import 'package:envawareness/utils/build_context_extension.dart';
 import 'package:envawareness/utils/button.dart';
@@ -71,21 +71,8 @@ class LeaderBoardPage extends ConsumerWidget {
                           alignment: Alignment.center,
                           clipBehavior: Clip.none,
                           children: [
-                            CachedNetworkImage(
+                            AppAvatar(
                               imageUrl: player.userPhotoUrl,
-                              imageBuilder: (context, imageProvider) =>
-                                  CircleAvatar(
-                                backgroundImage: imageProvider,
-                              ),
-                              placeholder: (context, url) => const CircleAvatar(
-                                backgroundColor: Colors.transparent,
-                                child: Icon(Icons.face),
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  const CircleAvatar(
-                                backgroundColor: Colors.transparent,
-                                child: Icon(Icons.face),
-                              ),
                             ),
                             if (isFirst)
                               Positioned(

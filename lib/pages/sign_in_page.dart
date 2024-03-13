@@ -100,12 +100,12 @@ class SignInPage extends ConsumerWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Image.asset(
-                                      'assets/images/google.png',
+                                      'assets/images/apple.png',
                                       width: 32,
                                     ),
                                     Gaps.w20,
                                     Text(
-                                      l10n.signInWithGoogle,
+                                      l10n.signInWithApple,
                                       style: context.textTheme.titleLarge,
                                     ),
                                   ],

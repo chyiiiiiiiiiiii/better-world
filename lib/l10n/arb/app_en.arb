@@ -5,6 +5,7 @@
   "welcomeMessage3": "Ready for the challenge? Join this vital mission-game for our planet, our shared home.",
   "welcomeConfirm": "GO!",
   "signInWithGoogle": "Sign in with Google",
+  "signInWithApple": "Sign in with Apple",
   "signInError": "Sign-in failed, please contact support",
   "greeting": "Hi, {username}",
   "signOutTitle": "Do you want to sign out?",

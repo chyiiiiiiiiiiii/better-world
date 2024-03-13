@@ -5,6 +5,7 @@
   "welcomeMessage3": "さあ、準備はいいかい？地球のため、私たちの共通の家のために、ゲームでありながらも使命を持ったこの冒険に一緒に出かけよう！",
   "welcomeConfirm": "出発する！",
   "signInWithGoogle": "Googleでサインイン",
+  "signInWithApple": "Apple でサインインする",
   "signInError": "サインインに失敗しました。公式にお問い合わせください。",
   "greeting": "こんにちは、{username}",
   "signOutTitle": "ログアウトしますか？",
