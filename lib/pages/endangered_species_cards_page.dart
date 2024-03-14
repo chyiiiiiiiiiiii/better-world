@@ -15,6 +15,7 @@ import 'package:envawareness/utils/button.dart';
 import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/spacings.dart';
 import 'package:envawareness/widgets/app_tap.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
@@ -173,7 +174,7 @@ class SpeciesCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final showGoogleWallet = Platform.isAndroid && isOwned;
+    final showGoogleWallet = Platform.isAndroid && !kIsWeb && isOwned;
     final appLocale = ref.watch(appLocaleProvider).value;
 
     return GestureDetector(

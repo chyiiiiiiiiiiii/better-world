@@ -18,7 +18,16 @@ class AuthRepository {
 
   Stream<User?> authStateChanges() => firebaseAuth.authStateChanges();
 
-  User? get currentUser => firebaseAuth.currentUser;
+  User? get currentUser {
+    final user = firebaseAuth.currentUser;
+    final email = user?.email ?? '';
+    final name = user?.displayName ?? '';
+
+    user?.updateDisplayName(name.isEmpty ? email : name);
+
+    return user;
+  }
+
   String get userId => currentUser?.uid ?? '';
   Future<bool> isAuthenticated() async {
     final user = firebaseAuth.currentUser;

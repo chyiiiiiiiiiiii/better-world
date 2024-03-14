@@ -92,6 +92,8 @@ class LeaderBoardPage extends ConsumerWidget {
                         Expanded(
                           child: Text(
                             player.username,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: context.textTheme.titleLarge
                                 ?.copyWith(color: textColor),
                           ),

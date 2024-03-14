@@ -7,6 +7,7 @@ import 'package:envawareness/utils/gaps.dart';
 import 'package:envawareness/utils/spacings.dart';
 import 'package:envawareness/widgets/app_tap.dart';
 import 'package:envawareness/zdogs/earth_zdog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,107 +40,94 @@ class SignInPage extends ConsumerWidget {
 
     return Material(
       child: SafeArea(
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: context.colorScheme.background,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 8,
-                spreadRadius: 4,
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: ZIllustration(
-                          children: [
-                            const EarthZdog(rotateValue: ZVector.zero),
-                            ZBoxToBoxAdapter(
-                              width: 100,
-                              height: 100,
-                              depth: 20,
-                              color: Colors.red,
-                            ),
-                          ],
-                        ),
-                      ).animate().moveY(
-                            begin: -20,
-                            end: 0,
-                            duration: const Duration(milliseconds: 5000),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: ZIllustration(
+                        children: [
+                          const EarthZdog(rotateValue: ZVector.zero),
+                          ZBoxToBoxAdapter(
+                            width: 100,
+                            height: 100,
+                            depth: 20,
+                            color: Colors.red,
                           ),
-                      Center(
-                        child: Text(
-                          'BETTER\n WORLD',
-                          style: context.textTheme.headlineSmall,
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ).animate().moveY(
+                          begin: -20,
+                          end: 0,
+                          duration: const Duration(milliseconds: 5000),
+                        ),
+                    Center(
+                      child: Text(
+                        'BETTER\n WORLD',
+                        style: context.textTheme.headlineSmall,
+                      ),
+                    ),
+                  ],
                 ),
-                AnimatedSwitcher(
-                  duration: Durations.medium2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(Spacings.px32),
-                    child: isLoading
-                        ? const CircularProgressIndicator()
-                        : Column(
-                            children: [
-                              if (Platform.isIOS) ...[
-                                AppTap(
-                                  onTap: ref
-                                      .read(authControllerProvider.notifier)
-                                      .signInWithApple,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/apple.png',
-                                        width: 32,
-                                      ),
-                                      Gaps.w20,
-                                      Text(
-                                        l10n.signInWithApple,
-                                        style: context.textTheme.titleLarge,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Gaps.h20,
-                              ],
+              ),
+              AnimatedSwitcher(
+                duration: Durations.medium2,
+                child: Padding(
+                  padding: const EdgeInsets.all(Spacings.px32),
+                  child: isLoading
+                      ? const CircularProgressIndicator()
+                      : Column(
+                          children: [
+                            if (Platform.isIOS && !kIsWeb) ...[
                               AppTap(
                                 onTap: ref
                                     .read(authControllerProvider.notifier)
-                                    .signInWithGoogle,
+                                    .signInWithApple,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Image.asset(
-                                      'assets/images/google.png',
+                                      'assets/images/apple.png',
                                       width: 32,
                                     ),
                                     Gaps.w20,
                                     Text(
-                                      l10n.signInWithGoogle,
+                                      l10n.signInWithApple,
                                       style: context.textTheme.titleLarge,
                                     ),
                                   ],
                                 ),
                               ),
+                              Gaps.h20,
                             ],
-                          ),
-                  ),
+                            AppTap(
+                              onTap: ref
+                                  .read(authControllerProvider.notifier)
+                                  .signInWithGoogle,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/google.png',
+                                    width: 32,
+                                  ),
+                                  Gaps.w20,
+                                  Text(
+                                    l10n.signInWithGoogle,
+                                    style: context.textTheme.titleLarge,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

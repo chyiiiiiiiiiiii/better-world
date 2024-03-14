@@ -422,9 +422,7 @@ class PlayController extends _$PlayController {
 
   void onStoreTap() {
     ref.read(editModeProvider.notifier).close();
-    ref.read(isStoreOpenedProvider.notifier).state =
-        !ref.read(isStoreOpenedProvider);
-
+    ref.read(isStoreOpenedProvider.notifier).update((previous) => !previous);
     ref.read(leaderBoardAnimationControllerProvider.notifier).toggle();
   }
 }
@@ -447,10 +445,6 @@ class ControllerNameController extends AutoDisposeNotifier<Control> {
     } else {
       state = Control.playReverse;
     }
-  }
-
-  void update(Control control) {
-    state = control;
   }
 
   @override

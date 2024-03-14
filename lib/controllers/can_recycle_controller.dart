@@ -33,7 +33,10 @@ class CanRecycleController extends _$CanRecycleController {
 
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final result = await getImage(bytes, isElectron: isElectron);
+      final result = await getImage(
+        bytes,
+        isElectron: isElectron,
+      );
 
       return result;
     });
@@ -50,20 +53,20 @@ class CanRecycleController extends _$CanRecycleController {
       final prompt = TextPart(
         isElectron
             ? '''
-          Im building an app for save energy. Give me response in 30 words or less with some loverly description depend on language code I give.
+          Im building an app for save energy. Give me response in 20 words or less with some loverly description depend on language code I give.
           And also, return true and false in the beginning for telling me if it's save energy or not.
 
-          This is language code $languageCode. 如果是中文，請用正體中文回答。
+          This is language code $languageCode.
 
-          The response format is "<true or false>#<response>". true means can save energy.
+          The response format is "<recyclable>#<response>". recyclable means can save energy, so give me true or false.
           '''
             : '''
-          Is this recyclable? Give me response in 30 words or less with some loverly description depend on language code I give.
+          Is this recyclable? Give me response in 20 words or less with some loverly description depend on language code I give.
           And also, return true and false in the beginning for telling me if it's recyclable or not.
 
-          This is language code $languageCode. 如果是中文，請用正體中文回答。
+          This is language code $languageCode.
 
-          The response format is "<recyclable>#<response>".
+          The response format is "<recyclable>#<response>". recyclable means can save energy, so give me true or false.
         ''',
       );
       final imageParts = [
@@ -79,12 +82,9 @@ class CanRecycleController extends _$CanRecycleController {
       final responseText = (response.text ?? '').trim();
       debugPrint(responseText);
 
-      var isRecyclable = false;
-      if (responseText.contains('#')) {
-        isRecyclable =
-            bool.tryParse(responseText.split('#').firstOrNull ?? 'false') ??
-                false;
-      }
+      final isRecyclable =
+          bool.tryParse(responseText.split('#').firstOrNull ?? 'false') ??
+              false;
 
       final currentLevel =
           ref.read(playControllerProvider).requireValue.playInfo.currentLevel;

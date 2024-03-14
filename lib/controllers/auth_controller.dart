@@ -29,6 +29,7 @@ class AuthController extends _$AuthController {
         throw Exception('Sign in failed.');
       }
 
+      final email = googleAccount?.email ?? '';
       final name = googleAccount?.displayName ?? '';
       final photoUrl = googleAccount?.photoUrl ?? '';
 
@@ -42,7 +43,7 @@ class AuthController extends _$AuthController {
       );
 
       final user = authRepository.currentUser;
-      await user?.updateDisplayName(name);
+      await user?.updateDisplayName(name.isEmpty ? email : name);
       await user?.updatePhotoURL(photoUrl);
 
       state = AsyncValue.data(user);
@@ -71,7 +72,9 @@ class AuthController extends _$AuthController {
           AppleIDAuthorizationScopes.fullName,
         ],
       );
-      final name = appleCredential.givenName;
+
+      final email = appleCredential.email ?? '';
+      final name = appleCredential.givenName ?? '';
 
       final oAuthProvider = OAuthProvider('apple.com');
       final oAuthCredential = oAuthProvider.credential(
@@ -84,7 +87,7 @@ class AuthController extends _$AuthController {
       );
 
       final user = authRepository.currentUser;
-      await user?.updateDisplayName(name);
+      await user?.updateDisplayName(name.isEmpty ? email : name);
 
       state = AsyncValue.data(user);
 
