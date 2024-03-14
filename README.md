@@ -1,6 +1,8 @@
 # Better World
 
-Engage kids in environmental care with our game! Earn points through eco-challenges like Garbage Sorting, save endangered species, and watch the world grow greener with each action.
+<img src="./demo/better-world.png" />
+
+**Engage kids in environmental care with our game!** Earn points through eco-challenges like Garbage Sorting, save endangered species, and watch the world grow greener with each action.
 
 🌎 Devpost - [https://devpost.com/software/better-world-i8l5sk](https://devpost.com/software/better-world-i8l5sk) \
 📹 Demo Video - [https://youtu.be/afh4jGIhhEg?si=b8-b2ijtE8x9zfJB](https://youtu.be/afh4jGIhhEg?si=b8-b2ijtE8x9zfJB) \
@@ -25,7 +27,7 @@ We've also integrated Google Wallet to transform the cards collected in the game
 We developed **Better World** using Flutter, emphasizing interactive and educational game elements with Canvas Widget and Lottie Animations. Gemini AI played a pivotal role in enhancing user interaction, linking in-game actions with real-world contexts.
 
 ## Multiple Platform Support
-**Better World** can run on mobile, desktop, and web. We hope everybody can play on which platform they like. Also, shows how powerful Flutter is. 
+**Better World** can run on mobile, desktop, and web. We hope everybody can play on which platform they like. Also, shows how powerful Flutter is.
 - Android - apk link to play (store version in review)
 - Web - link to play
 - iOS - (open test and store versions are in review)
