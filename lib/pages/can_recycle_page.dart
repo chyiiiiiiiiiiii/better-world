@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:app_settings/app_settings.dart';
 import 'package:envawareness/controllers/can_recycle_controller.dart';
@@ -230,15 +229,9 @@ class _GeminiImagePageState extends ConsumerState<GeminiImagePage> {
                                     alignment: Alignment.center,
                                     children: [
                                       Positioned.fill(
-                                        child: ImageFiltered(
-                                          imageFilter: ImageFilter.blur(
-                                            sigmaX: isLoading ? 5 : 0,
-                                            sigmaY: isLoading ? 5 : 0,
-                                          ),
-                                          child: Image.memory(
-                                            pickedImage,
-                                            fit: BoxFit.cover,
-                                          ),
+                                        child: Image.memory(
+                                          pickedImage,
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                       if (isLoading)
@@ -304,6 +297,7 @@ class _GeminiImagePageState extends ConsumerState<GeminiImagePage> {
                                 ),
                                 Gaps.h24,
                               ],
+                              Gaps.h24,
                               DefaultButton(
                                 onPressed: getImage,
                                 text: hasAiResponse
