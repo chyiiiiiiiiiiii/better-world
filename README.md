@@ -8,7 +8,7 @@
 
 🌎 Devpost - [https://devpost.com/software/better-world-i8l5sk](https://devpost.com/software/better-world-i8l5sk) \
 🕹️ iOS - [https://appstoreconnect.apple.com/apps/6478499075/testflight/ios/6e8c08e4-7b3d-414d-91cc-d9a6fc6c4291](https://appstoreconnect.apple.com/apps/6478499075/testflight/ios/6e8c08e4-7b3d-414d-91cc-d9a6fc6c4291) \
-🕹️ Android - [https://drive.google.com/file/d/1W1urHskSz4CExiHfgyALQQ3dmRsxQwOD/view](https://drive.google.com/file/d/1W1urHskSz4CExiHfgyALQQ3dmRsxQwOD/view) \
+🕹️ Android - [https://drive.google.com/file/d/1QWSD3h35g5e2BoWvAZmo6YWLMZ4Ezkp1/view?usp=sharing](https://drive.google.com/file/d/1QWSD3h35g5e2BoWvAZmo6YWLMZ4Ezkp1/view?usp=sharing) \
 🕹️ Web - [envawareness-game.firebaseapp.com](envawareness-game.firebaseapp.com)
 
 ---
