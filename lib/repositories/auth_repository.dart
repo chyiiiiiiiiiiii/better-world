@@ -29,6 +29,7 @@ class AuthRepository {
   }
 
   String get userId => currentUser?.uid ?? '';
+
   Future<bool> isAuthenticated() async {
     final user = firebaseAuth.currentUser;
 

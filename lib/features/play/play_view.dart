@@ -217,11 +217,9 @@ class AppAvatar extends StatelessWidget {
             ? CachedNetworkImage(
                 imageUrl: imageUrl,
                 imageBuilder: (context, imageProvider) => ProviderScope(
-                  child: Container(
-                    child: CircleAvatar(
-                      backgroundImage: imageProvider,
-                      radius: 18,
-                    ),
+                  child: CircleAvatar(
+                    backgroundImage: imageProvider,
+                    radius: 18,
                   ),
                 ),
                 errorWidget: (context, url, error) => CircleAvatar(

@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:envawareness/constants/constants.dart';
 import 'package:envawareness/controllers/app_controller.dart';
+import 'package:envawareness/controllers/auth_controller.dart';
 import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/data/level_info.dart';
 import 'package:envawareness/data/play_info.dart';
@@ -44,7 +45,16 @@ class PlayController extends _$PlayController {
   FutureOr<GameState> build() async {
     _audioPlayer = AudioPlayer();
 
-    final playInfo = await getPlayInfo();
+    final user = await ref.read(authControllerProvider.future);
+    final username = user?.displayName ?? '';
+    final userEmail = user?.email ?? '';
+
+    final playInfo = (await getPlayInfo()).copyWith(
+      userId: user?.uid ?? '',
+      username: username.isEmpty ? userEmail : username,
+      userPhotoUrl: user?.photoURL ?? '',
+    );
+
     final data = await (
       getLevelInfo(level: playInfo.currentLevel),
       getProducts(),
@@ -54,8 +64,17 @@ class PlayController extends _$PlayController {
 
     final levelInfo = data.$1;
     final products = data.$2;
-    final players = data.$3;
+    final leaderBoardPlayers = data.$3;
     final levelTotalCount = data.$4;
+
+    final myDataIndex = leaderBoardPlayers.indexWhere(
+      (element) => element.userId == playInfo.userId,
+    );
+    leaderBoardPlayers.replaceRange(
+      myDataIndex,
+      myDataIndex + 1,
+      [playInfo],
+    );
 
     final finishProgress =
         (playInfo.currentScore / levelInfo.passScore).clamp(0.0, 1.0);
@@ -79,7 +98,7 @@ class PlayController extends _$PlayController {
       levelTotalCount: levelTotalCount,
       validPurchases: purchaseHistoryList,
       finishProgress: finishProgress,
-      leaderBoardPlayers: players,
+      leaderBoardPlayers: leaderBoardPlayers,
     );
   }
 
