@@ -54,6 +54,35 @@ To further enrich **Better World**, we aim to:
 
 ---
 
+## Setup
+
+### Firebase
+- add "**google-services.json**" file in `android/app/`
+- add "**GoogleService-Info.plist**" file in `ios/Runner/`
+- add  "**firebase_app_id_file.json**" file in `ios/`
+- add "**firebase_options.dart**" file in `lib/`
+
+#### Firestore
+
+waiting for details..
+
+### AI Studio - Gemini AI
+Need API key for using AI feature.
+
+## Run
+```
+flutter run --dart-define AI_API_KEY=<YOUR_KEY>
+```
+
+## Build
+
+**Web**
+```
+flutter build web --web-renderer canvaskit --dart-define AI_API_KEY=<YOUR_KEY>
+```
+
+---
+
 ## Team Members
 
 Yii Chen            | Dorara
