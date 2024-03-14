@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
+import 'package:envawareness/constants/constants.dart';
 import 'package:envawareness/controllers/app_controller.dart';
 import 'package:envawareness/controllers/earth_controller.dart';
 import 'package:envawareness/data/level_info.dart';
@@ -117,7 +118,8 @@ class PlayController extends _$PlayController {
   }
 
   void startUploadScoreTimer() {
-    _uploadScoreTimer ??= Timer.periodic(const Duration(seconds: 5), (timer) {
+    _uploadScoreTimer ??= Timer.periodic(
+        const Duration(seconds: Constants.uploadToCloudSeconds), (timer) {
       final playInfo = state.value?.playInfo;
       if (playInfo == null) {
         return;
