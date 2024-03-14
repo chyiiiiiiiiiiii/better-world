@@ -1,14 +1,23 @@
 import 'dart:ui';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:envawareness/utils/change_theme_manager.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app_controller.g.dart';
 
-final darkModeProvider = StateProvider<bool>((ref) {
-  return true;
-});
+@riverpod
+class DarkMode extends _$DarkMode {
+  void toggleTheme() {
+    state = !state;
+    ThemeManager.changeThemeColor(isDark: !state);
+  }
+
+  @override
+  bool build() {
+    return true;
+  }
+}
 
 @riverpod
 class AppLocale extends _$AppLocale {

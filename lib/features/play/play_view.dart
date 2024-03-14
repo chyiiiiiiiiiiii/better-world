@@ -110,9 +110,7 @@ class PlayView extends ConsumerWidget {
                     // ),
                     AppTap(
                       onTap: () {
-                        ref
-                            .read(darkModeProvider.notifier)
-                            .update((state) => !isDarkMode);
+                        ref.read(darkModeProvider.notifier).toggleTheme();
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8),

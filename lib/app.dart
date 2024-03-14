@@ -17,10 +17,6 @@ class App extends ConsumerStatefulWidget {
 }
 
 class _AppState extends ConsumerState<App> {
-  void _toggleTheme() {
-    ref.read(darkModeProvider.notifier).state = !ref.read(darkModeProvider);
-  }
-
   // This widget is the root of your application.
   ThemeData _buildTheme(Brightness brightness) {
     final isLight = brightness == Brightness.light;
