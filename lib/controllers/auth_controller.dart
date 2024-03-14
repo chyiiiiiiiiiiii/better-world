@@ -48,8 +48,10 @@ class AuthController extends _$AuthController {
 
       state = AsyncValue.data(user);
 
-      final prefs = await SharedPreferences.getInstance();
-      if (prefs.getBool('firstTimeEnter') ?? true) {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      await sharedPreferences.setBool('isSignedIn', true);
+
+      if (sharedPreferences.getBool('firstTimeEnter') ?? true) {
         ref.read(appRouterProvider).go(WelcomePage.routePath);
         return;
       }
@@ -91,8 +93,10 @@ class AuthController extends _$AuthController {
 
       state = AsyncValue.data(user);
 
-      final prefs = await SharedPreferences.getInstance();
-      if (prefs.getBool('firstTimeEnter') ?? true) {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      await sharedPreferences.setBool('isSignedIn', true);
+
+      if (sharedPreferences.getBool('firstTimeEnter') ?? true) {
         ref.read(appRouterProvider).go(WelcomePage.routePath);
         return;
       }
@@ -104,6 +108,9 @@ class AuthController extends _$AuthController {
   }
 
   Future<void> signOut() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setBool('isSignedIn', false);
+
     await ref.watch(authRepositoryProvider).signOut();
     await ref.read(appRouterProvider).replace<void>(SignInPage.routePath);
   }

@@ -187,152 +187,156 @@ class _GeminiImagePageState extends ConsumerState<GeminiImagePage> {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: context.paddingTop == 0 ? Spacings.px20 : 0,
-            left: Spacings.px20,
-            right: Spacings.px20,
-          ),
-          child: Stack(
-            children: [
-              Container(
-                constraints: const BoxConstraints(
-                  maxWidth: 600,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      widget.isElectron
-                          ? 'assets/images/game_icon/electron.png'
-                          : 'assets/images/game_icon/recyclable.png',
-                      fit: BoxFit.contain,
-                      width: 80,
-                    ),
-                    Gaps.h20,
-                    if (pickedImage.isEmpty)
-                      Text(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: context.paddingTop == 0 ? Spacings.px20 : 0,
+              left: Spacings.px20,
+              right: Spacings.px20,
+            ),
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Container(
+                  constraints: const BoxConstraints(
+                    maxWidth: 600,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
                         widget.isElectron
-                            ? l10n.electronGameText
-                            : l10n.canRecycleGameText,
-                        style: context.theme.textTheme.titleLarge,
-                        textAlign: TextAlign.center,
+                            ? 'assets/images/game_icon/electron.png'
+                            : 'assets/images/game_icon/recyclable.png',
+                        fit: BoxFit.contain,
+                        width: 80,
                       ),
-                    AnimatedSize(
-                      duration: Durations.short4,
-                      child: AspectRatio(
-                        aspectRatio: pickedImage.isEmpty ? 1 / 0.1 : 1 / 0.7,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(Spacings.px20),
-                          child: pickedImage.isNotEmpty
-                              ? Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Positioned.fill(
-                                      child: Image.memory(
-                                        pickedImage,
-                                        fit: BoxFit.cover,
+                      Gaps.h20,
+                      if (pickedImage.isEmpty)
+                        Text(
+                          widget.isElectron
+                              ? l10n.electronGameText
+                              : l10n.canRecycleGameText,
+                          style: context.theme.textTheme.titleLarge,
+                          textAlign: TextAlign.center,
+                        ),
+                      AnimatedSize(
+                        duration: Durations.short4,
+                        child: AspectRatio(
+                          aspectRatio: pickedImage.isEmpty ? 1 / 0.1 : 1 / 0.7,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(Spacings.px20),
+                            child: pickedImage.isNotEmpty
+                                ? Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Positioned.fill(
+                                        child: Image.memory(
+                                          pickedImage,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                    ),
-                                    if (isLoading)
-                                      const CircularProgressIndicator(),
-                                  ],
-                                )
-                              : const SizedBox.shrink(),
+                                      if (isLoading)
+                                        const CircularProgressIndicator(),
+                                    ],
+                                  )
+                                : const SizedBox.shrink(),
+                          ),
                         ),
                       ),
-                    ),
-                    Gaps.h12,
-                    asyncState.when(
-                      data: (data) {
-                        return Column(
-                          children: [
-                            if (hasAiResponse) ...[
-                              Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        padding: const EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          color: context.colorScheme.secondary,
-                                          borderRadius: BorderRadius.circular(
-                                            Spacings.px20,
-                                          ),
-                                          border: Border.all(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        child: SingleChildScrollView(
-                                          child: Text(
-                                            data.aiResponse,
-                                            style: context
-                                                .theme.textTheme.titleMedium
-                                                ?.copyWith(
+                      Gaps.h12,
+                      asyncState.when(
+                        data: (data) {
+                          return Column(
+                            children: [
+                              if (hasAiResponse) ...[
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          padding: const EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                            color:
+                                                context.colorScheme.secondary,
+                                            borderRadius: BorderRadius.circular(
+                                              Spacings.px20,
+                                            ),
+                                            border: Border.all(
                                               color: Colors.white,
+                                            ),
+                                          ),
+                                          child: SingleChildScrollView(
+                                            child: Text(
+                                              data.aiResponse,
+                                              style: context
+                                                  .theme.textTheme.titleMedium
+                                                  ?.copyWith(
+                                                color: Colors.white,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Gaps.w20,
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const RecycleIcon(
-                                          size: 24,
-                                        ),
-                                        Gaps.w8,
-                                        Text(
-                                          data.addScore.toString(),
-                                          style: context
-                                              .theme.textTheme.headlineLarge,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                      Gaps.w20,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const RecycleIcon(
+                                            size: 24,
+                                          ),
+                                          Gaps.w8,
+                                          Text(
+                                            data.addScore.toString(),
+                                            style: context
+                                                .theme.textTheme.headlineLarge,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                                Gaps.h16,
+                              ],
+                              DefaultButton(
+                                onPressed: getImage,
+                                text: hasAiResponse
+                                    ? l10n.canRecycleGameNext
+                                    : l10n.canRecycleGameShoot,
                               ),
-                              Gaps.h16,
                             ],
-                            DefaultButton(
-                              onPressed: getImage,
-                              text: hasAiResponse
-                                  ? l10n.canRecycleGameNext
-                                  : l10n.canRecycleGameShoot,
+                          );
+                        },
+                        loading: () => const SizedBox.shrink(),
+                        error: (error, _) => Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Text(
+                                l10n.canRecycleGameError,
+                                style: context.theme.textTheme.titleMedium,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Gaps.h24,
+                            Center(
+                              child: DefaultButton(
+                                onPressed: getImage,
+                                text: l10n.canRecycleGameTryAgain,
+                              ),
                             ),
                           ],
-                        );
-                      },
-                      loading: () => const SizedBox.shrink(),
-                      error: (error, _) => Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Text(
-                              l10n.canRecycleGameError,
-                              style: context.theme.textTheme.titleMedium,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Gaps.h24,
-                          Center(
-                            child: DefaultButton(
-                              onPressed: getImage,
-                              text: l10n.canRecycleGameTryAgain,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                    Gaps.h12,
-                  ],
+                      Gaps.h12,
+                    ],
+                  ),
                 ),
-              ),
-              const AppCloseButton(),
-            ],
+                const AppCloseButton(),
+              ],
+            ),
           ),
         ),
       ),

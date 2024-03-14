@@ -205,7 +205,7 @@ class _GamePageState extends ConsumerState<GamePage>
                   );
                 },
                 loading: () {
-                  return const SizedBox.shrink();
+                  return const Center(child: CircularProgressIndicator());
                 },
                 error: (error, stackTrace) {
                   return const SizedBox.shrink();

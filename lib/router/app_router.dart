@@ -12,6 +12,7 @@ import 'package:envawareness/router/router_refresh_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app_router.g.dart';
 
@@ -26,10 +27,16 @@ GoRouter appRouter(AppRouterRef ref) {
     navigatorKey: navigatorKey,
     observers: [],
     redirect: (context, state) async {
-      final isAuthenticated = await authRepository.isAuthenticated();
-      if (!isAuthenticated) {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      final isSignedIn = sharedPreferences.getBool('isSignedIn') ?? false;
+      if (!isSignedIn) {
         return SignInPage.routePath;
       }
+
+      // final isAuthenticated = await authRepository.isAuthenticated();
+      // if (!isAuthenticated) {
+      //   return SignInPage.routePath;
+      // }
 
       return null;
     },
