@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:envawareness/utils/change_theme_manager.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,7 +9,6 @@ part 'app_controller.g.dart';
 class DarkMode extends _$DarkMode {
   void toggleTheme() {
     state = !state;
-    ThemeManager.changeThemeColor(isDark: !state);
   }
 
   @override

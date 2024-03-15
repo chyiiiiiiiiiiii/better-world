@@ -84,10 +84,6 @@ class _EarthZDogState extends ConsumerState<GameZdog> {
         ref.watch(leaderBoardAnimationControllerProvider);
     final editMode = ref.watch(editModeProvider);
 
-    ref.listen(editModeProvider, (_, editMode) {
-      changingEditMode = true;
-    });
-
     final gameState = ref.watch(playControllerProvider).requireValue;
     final levelInfo = gameState.levelInfo;
 
