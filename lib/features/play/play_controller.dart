@@ -103,22 +103,24 @@ class PlayController extends _$PlayController {
   }
 
   void onDispose() {
-    ref.onDispose(() {
-      _audioPlayer?.dispose();
-      _audioPlayer = null;
+    try {
+      ref.onDispose(() {
+        _audioPlayer?.dispose();
+        _audioPlayer = null;
 
-      _playInfoSubscription?.cancel();
-      _playInfoSubscription = null;
+        _playInfoSubscription?.cancel();
+        _playInfoSubscription = null;
 
-      _scoresPerSecondTimer?.cancel();
-      _scoresPerSecondTimer = null;
-      _uploadScoreTimer?.cancel();
-      _uploadScoreTimer = null;
-      _checkValidPurchaseTimer?.cancel();
-      _checkValidPurchaseTimer = null;
-      _refreshLeaderBoardTimer?.cancel();
-      _refreshLeaderBoardTimer = null;
-    });
+        _scoresPerSecondTimer?.cancel();
+        _scoresPerSecondTimer = null;
+        _uploadScoreTimer?.cancel();
+        _uploadScoreTimer = null;
+        _checkValidPurchaseTimer?.cancel();
+        _checkValidPurchaseTimer = null;
+        _refreshLeaderBoardTimer?.cancel();
+        _refreshLeaderBoardTimer = null;
+      });
+    } catch (e) {}
   }
 
   void updateScoresPerSecond() {

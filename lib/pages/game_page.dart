@@ -153,7 +153,9 @@ class _GamePageState extends ConsumerState<GamePage>
                       const ParticleArea(),
                       Positioned.fill(
                         top: 50,
-                        child: const GameZdog()
+                        child: const GameZdog(
+                          key: ValueKey('Zdog'),
+                        )
                             .animate()
                             .scale(
                               begin: const Offset(.2, .2),

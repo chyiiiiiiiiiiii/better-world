@@ -6,7 +6,6 @@ import 'package:envawareness/widgets/plus_one_painter.dart';
 import 'package:envawareness/zdogs/earth_zdog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sensors_plus/sensors_plus.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:zflutter/zflutter.dart';
 
@@ -58,23 +57,13 @@ class _EarthZDogState extends ConsumerState<GameZdog> {
 
   // for change edit mode in the first time, we need to set initial value
   bool changingEditMode = false;
-  double _rotationX = 0;
-  double _rotationY = 0;
+  final double _rotationX = 0;
+  final double _rotationY = 0;
   Offset? tapPosition;
   List<PlusOneEntry> entries = [];
 
   @override
   void initState() {
-    // 使用默认的采样频率获取陀螺仪数据流
-
-    // 监听陀螺仪事件流
-    magnetometerEventStream(samplingPeriod: SensorInterval.gameInterval)
-        .listen((event) {
-      _rotationX = event.x;
-      _rotationY = event.y;
-      setState(() {});
-    });
-
     super.initState();
   }
 
