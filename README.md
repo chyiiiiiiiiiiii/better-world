@@ -4,12 +4,17 @@
 
 **Engage kids in environmental care with our game!** Earn points through eco-challenges like Garbage Sorting, save endangered species, and watch the world grow greener with each action.
 
-### [Demo - Youtube Short](https://youtu.be/afh4jGIhhEg?si=b8-b2ijtE8x9zfJB)
+### 📺 Demo
+[https://youtu.be/afh4jGIhhEg?si=b8-b2ijtE8x9zfJB](https://youtu.be/afh4jGIhhEg?si=b8-b2ijtE8x9zfJB)
 
-🌎 Devpost - [https://devpost.com/software/better-world-i8l5sk](https://devpost.com/software/better-world-i8l5sk) \
-🕹️ iOS - [https://appstoreconnect.apple.com/apps/6478499075/testflight/ios/6e8c08e4-7b3d-414d-91cc-d9a6fc6c4291](https://appstoreconnect.apple.com/apps/6478499075/testflight/ios/6e8c08e4-7b3d-414d-91cc-d9a6fc6c4291) \
-🕹️ Android - [https://drive.google.com/file/d/1QWSD3h35g5e2BoWvAZmo6YWLMZ4Ezkp1/view?usp=sharing](https://drive.google.com/file/d/1QWSD3h35g5e2BoWvAZmo6YWLMZ4Ezkp1/view?usp=sharing) \
-🕹️ Web - [envawareness-game.firebaseapp.com](envawareness-game.firebaseapp.com)
+### 🌎 Devpost
+[https://devpost.com/software/better-world-i8l5sk](https://devpost.com/software/better-world-i8l5sk)
+
+### 🕹️ Play
+Android - [https://drive.google.com/file/d/1QWSD3h35g5e2BoWvAZmo6YWLMZ4Ezkp1/view?usp=sharing](https://drive.google.com/file/d/1QWSD3h35g5e2BoWvAZmo6YWLMZ4Ezkp1/view?usp=sharing) \
+iOS - [https://appstoreconnect.apple.com/apps/6478499075/testflight/ios/6e8c08e4-7b3d-414d-91cc-d9a6fc6c4291](https://appstoreconnect.apple.com/apps/6478499075/testflight/ios/6e8c08e4-7b3d-414d-91cc-d9a6fc6c4291) \
+macOS - [https://appstoreconnect.apple.com/apps/6478499075/testflight/ios/6e8c08e4-7b3d-414d-91cc-d9a6fc6c4291](https://appstoreconnect.apple.com/apps/6478499075/testflight/ios/6e8c08e4-7b3d-414d-91cc-d9a6fc6c4291) \
+Web - [envawareness-game.firebaseapp.com](envawareness-game.firebaseapp.com)
 
 ---
 
