@@ -54,6 +54,21 @@ To further enrich **Better World**, we aim to:
 
 ---
 
+## Feature
+- [x] Firebase OAuth Sign-in
+- [x] Firebase Firestore 
+- [x] Welcome Slider
+- [x] ZFlutter 3D UI
+- [x] Tapping Effect
+- [x] Global Leaderboard
+- [x] Google Wallet for Collection
+- [x] Slide to Recycle Game
+- [x] Catch Trash Game
+- [x] Gemini AI Interaction
+- [x] L10n Support(English, Japanese, Chinese) 
+
+---
+
 ## Setup
 
 ### Firebase
