@@ -34,10 +34,10 @@ We developed **Better World** using Flutter, emphasizing interactive and educati
 
 ## Multiple Platform Support
 **Better World** can run on mobile, desktop, and web. We hope everybody can play on which platform they like. Also, shows how powerful Flutter is.
-- Android - apk link to play (store version in review)
-- Web - link to play
-- iOS - (open test and store versions are in review)
-- macOS - (open test and store versions are in review)
+- iOS - TestFlight to play (store version is in review) [link](https://appstoreconnect.apple.com/apps/6478499075/testflight/ios/6e8c08e4-7b3d-414d-91cc-d9a6fc6c4291)
+- Android - APK link to play (store version in review) [link](https://drive.google.com/file/d/1W1urHskSz4CExiHfgyALQQ3dmRsxQwOD/view)
+- Web - link to play [link](https://envawareness-game.firebaseapp.com/)
+- macOS - (open test and store versions are in review) [link](https://appstoreconnect.apple.com/apps/6478499075/testflight/ios/6e8c08e4-7b3d-414d-91cc-d9a6fc6c4291)
 
 ## Challenges and Learning
 Balancing educational content with engaging gameplay was our main challenge, ensuring the game remains enjoyable while providing substantive learning. We focused on creating child-friendly UIs and capitalized on Flutter for consistent cross-platform performance.
