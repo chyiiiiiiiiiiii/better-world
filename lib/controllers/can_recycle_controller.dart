@@ -53,12 +53,12 @@ class CanRecycleController extends _$CanRecycleController {
       final prompt = TextPart(
         isElectron
             ? '''
-          Im building an app for save energy. Give me response in 20 words or less with some loverly description depend on language code I give.
+          I'm building an app for save energy. Give me response in 20 words or less with some loverly description depend on language code I give.
           And also, return true and false in the beginning for telling me if it's save energy or not.
 
           This is language code $languageCode.
 
-          The response format is "<recyclable>#<response>". recyclable means can save energy, so give me true or false.
+          The response format is "<can save energy>#<response>". <can save energy> means can save energy, so give me true or false.
           '''
             : '''
           Is this recyclable? Give me response in 20 words or less with some loverly description depend on language code I give.
@@ -66,7 +66,7 @@ class CanRecycleController extends _$CanRecycleController {
 
           This is language code $languageCode.
 
-          The response format is "<recyclable>#<response>". recyclable means can save energy, so give me true or false.
+          The response format is "<recyclable>#<response>". <recyclable> means the stuff can be recyclable, so give me true or false.
         ''',
       );
       final imageParts = [
