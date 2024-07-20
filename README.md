@@ -107,4 +107,4 @@ flutter build web --web-renderer canvaskit --dart-define AI_API_KEY=<YOUR_KEY>
 
 Yii Chen            | Dorara
 :-------------------------:|:-------------------------:|
-<img src="https://pbs.twimg.com/profile_images/1703313184164364288/r-rUEV5G_400x400.jpg" width=100 />  |  <img src="https://scontent.ftpe8-4.fna.fbcdn.net/v/t1.18169-9/15697358_1722461454438084_620635146075829628_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=L9SykQiDPNkAX9ABEmB&_nc_ht=scontent.ftpe8-4.fna&oh=00_AfC0CRorWMXUCTimOPx6snsndWvmYCsf3NmdvrXwuCIyJQ&oe=661933B9" width=100 />
+<img src="https://pbs.twimg.com/profile_images/1703313184164364288/r-rUEV5G_400x400.jpg" width=100 />  |  <img src="https://avatars.githubusercontent.com/u/16376623?v=4" width=100 />
